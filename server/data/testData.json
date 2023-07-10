@@ -1,0 +1,28 @@
+{
+  "_id": {
+    "$oid": "64abd63bae0e2f40e527e5e4"
+  },
+  "item": {
+    "name": "testitem",
+    "description": "testdesc"
+  },
+  "skus": [
+    {
+      "sku": "kfkf",
+      "price": 22,
+      "discount_id": "fdff",
+      "stock_quantity": 2,
+      "options": {
+        "size": "L",
+        "color": "blue",
+        "img_url": "sfdfsf"
+      }
+    }
+  ],
+
+  "categories": [
+    {
+      "category": "testcategory"
+    }
+  ]
+}

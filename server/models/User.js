@@ -7,6 +7,7 @@ const UserSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+      lowercase: true,
       validate(value) {
         if (!validator.isEmail(value)) {
           throw new Error("Email is not in a valid format");
@@ -45,5 +46,16 @@ const UserSchema = new Schema(
 
   { timestamps: true }
 );
+
+UserSchema.virtual("fullName").get(function () {
+  return this.firstName + " " + this.lastName;
+});
+
+UserSchema.virtual("fullName").set(function (name) {
+  let str = name.split(" ");
+
+  this.firstName = str[0];
+  this.lastName = str[1];
+});
 
 module.exports = User = mongoose.model("User", UserSchema);

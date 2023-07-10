@@ -25,10 +25,10 @@ const InventorySchema = new Schema(
         price: {
           type: Number,
           required: true,
-          discount_id: {
-            type: Schema.Types.ObjectID,
-            ref: "Discount",
-          },
+        },
+        discount_id: {
+          type: Schema.Types.ObjectID,
+          ref: "Discount",
         },
         stock_quantity: {
           type: Number,
@@ -37,17 +37,13 @@ const InventorySchema = new Schema(
 
         options: {
           size: {
-            name: {
-              type: String,
-              required: true,
-            },
+            type: String,
+            required: true,
           },
 
           color: {
-            name: {
-              type: String,
-              required: true,
-            },
+            type: String,
+            required: true,
           },
 
           img_url: {
