@@ -17,13 +17,13 @@ const UserSchema = new Schema(
 
     firstName: {
       type: String,
-      minLength: 1,
+      minLength: 2,
       required: true,
     },
 
     lastName: {
       type: String,
-      minLength: 1,
+      minLength: 2,
       required: true,
     },
     password: {

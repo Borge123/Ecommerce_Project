@@ -40,8 +40,7 @@ module.exports = class InventoryService {
           },
         ],
       };
-      //console.log(newItem);
-      console.log(data.skus.length);
+
       if (data.skus.length > 1) {
         for (let i = 0; i < data.skus.length - 1; i++) {
           newItem.skus.push(data.skus[i]);
@@ -54,8 +53,48 @@ module.exports = class InventoryService {
         }
       }
 
+      //TODO check skus for duplicates both the ones added and in other docs
+
       const response = await new Inventory(newItem).save();
       return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async checkDuplicateSkus(arr) {
+    try {
+      let skus = [];
+
+      for (let i = 0; i < arr.length; i++) {
+        let sku = arr[i].sku;
+
+        skus.push(sku);
+      }
+
+      const allSkus = skus.map((el) => Inventory.find({ "skus.sku": el }));
+      const result = await Promise.all(allSkus);
+
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async checkDuplicateCategories(arr) {
+    try {
+      let categories = [];
+      for (let i = 0; i < arr.length; i++) {
+        let category = arr[i].category;
+
+        categories.push(category);
+      }
+      const allCategories = categories.map((el) =>
+        Inventory.find({ "categories.category": el })
+      );
+      const result = await Promise.all(allCategories);
+
+      return result;
     } catch (error) {
       console.log(error);
     }

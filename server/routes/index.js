@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const InventoryController = require("../controllers/InventoryController");
+const UserController = require("../controllers/UserController");
+
 /* GET home page. */
 router.get("/", function (req, res, next) {
   const testData = {
@@ -33,4 +35,6 @@ router.get("/", function (req, res, next) {
 });
 
 router.post("/createItem", InventoryController.createItem);
+
+router.post("/createUser", UserController.createUser);
 module.exports = router;
