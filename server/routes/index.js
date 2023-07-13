@@ -37,4 +37,5 @@ router.get("/", function (req, res, next) {
 router.post("/createItem", InventoryController.createItem);
 
 router.post("/createUser", UserController.createUser);
+router.post("/login", UserController.login);
 module.exports = router;

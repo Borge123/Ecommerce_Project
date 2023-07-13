@@ -46,7 +46,9 @@ const UserSchema = new Schema(
 
   { timestamps: true }
 );
-
+UserSchema.post("save", function (doc) {
+  console.log("%s has been saved", doc._id);
+});
 UserSchema.virtual("fullName").get(function () {
   return this.firstName + " " + this.lastName;
 });

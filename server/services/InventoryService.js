@@ -41,6 +41,7 @@ module.exports = class InventoryService {
         ],
       };
 
+      // last object of data will be added first so have to end loop at last index - 1
       if (data.skus.length > 1) {
         for (let i = 0; i < data.skus.length - 1; i++) {
           newItem.skus.push(data.skus[i]);
@@ -49,11 +50,16 @@ module.exports = class InventoryService {
 
       if (data.categories.length > 1) {
         for (let i = 0; i < data.categories.length - 1; i++) {
-          newItem.categories.push(data.categories[i]);
+          // prevent duplicate category inside the same document
+          const result = newItem.categories.find(
+            ({ category }) => category === data.categories[i].category
+          );
+
+          if (result === undefined) {
+            newItem.categories.push(data.categories[i]);
+          }
         }
       }
-
-      //TODO check skus for duplicates both the ones added and in other docs
 
       const response = await new Inventory(newItem).save();
       return response;
