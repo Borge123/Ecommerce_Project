@@ -24,17 +24,20 @@ module.exports = class UserService {
   static async checkDuplicateEmail(data) {
     try {
       const findEmail = await User.find({ email: data.email });
-      return findEmail;
+      if (findEmail.length >= 1) {
+        return findEmail;
+      }
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 
   static async checkUserRole(id) {
     try {
       const user = await User.findById(id);
-
-      return user.role;
+      if (user.length >= 1) {
+        return user.role;
+      }
     } catch (error) {
       throw error;
     }
@@ -44,7 +47,9 @@ module.exports = class UserService {
     try {
       const user = await User.findById(id);
 
-      return user;
+      if (user) {
+        return user;
+      }
     } catch (error) {
       throw error;
     }
@@ -53,8 +58,9 @@ module.exports = class UserService {
   static async getUserByEmail(email) {
     try {
       const user = await User.find({ email: email });
-
-      return user;
+      if (user.length >= 1) {
+        return user;
+      }
     } catch (error) {
       throw error;
     }

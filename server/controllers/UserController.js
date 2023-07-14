@@ -1,19 +1,14 @@
 const UserService = require("../services/UserService");
 const bcrypt = require("bcrypt");
-module.exports = class UserController {
-  static async createUser(req, res, next) {
-    try {
-      // const checkEmail = await UserService.checkDuplicateEmail(req.body);
 
-      // if (checkEmail.length > 0) {
-      //   return res
-      //     .status(400)
-      //     .json({ "Duplicate Error": "email is already in use" });
-      // }
+module.exports = class UserController {
+  static async signup(req, res, next) {
+    try {
       const newUser = await UserService.createUser(req.body);
-      console.log(newUser);
+
       res.json(newUser);
     } catch (error) {
+      //allow database to deal with duplicate errors for now
       if (error.code === 11000) {
         return res.status(400).json({ error: "duplicate key error" });
       } else {
@@ -24,15 +19,11 @@ module.exports = class UserController {
 
   static async login(req, res, next) {
     const { email, password } = req.body;
-    if (!email) {
-      return res.status(400).json({ "email": "Email is required." });
-    }
-    if (!password) {
-      return res.status(400).json({ "password": "Password is required." });
-    }
+
     let token;
     try {
       const user = await UserService.getUserByEmail(email);
+
       if (user) {
         const id = user[0]._id.toString();
         const hash = user[0].password;
@@ -45,7 +36,7 @@ module.exports = class UserController {
             .status(200)
             .json({ "Logged in": "Success", "token": token });
         } else {
-          return res.status(400).json({ "Logged in": "Fail" });
+          return res.status(400).json({ "Logged in": "wrong password" });
         }
       }
 

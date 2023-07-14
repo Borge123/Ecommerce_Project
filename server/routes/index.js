@@ -2,7 +2,10 @@ const express = require("express");
 const router = express.Router();
 const InventoryController = require("../controllers/InventoryController");
 const UserController = require("../controllers/UserController");
-
+const {
+  validateSignup,
+  validateLogin,
+} = require("../middlewares/userValidation");
 /* GET home page. */
 router.get("/", function (req, res, next) {
   const testData = {
@@ -36,6 +39,6 @@ router.get("/", function (req, res, next) {
 
 router.post("/createItem", InventoryController.createItem);
 
-router.post("/createUser", UserController.createUser);
-router.post("/login", UserController.login);
+router.post("/signup", validateSignup, UserController.signup);
+router.post("/login", validateLogin, UserController.login);
 module.exports = router;
