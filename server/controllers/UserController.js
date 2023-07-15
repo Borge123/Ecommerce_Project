@@ -36,13 +36,33 @@ module.exports = class UserController {
             .status(200)
             .json({ "Logged in": "Success", "token": token });
         } else {
-          return res.status(400).json({ "Logged in": "wrong password" });
+          return res.status(400).json({ "password": "wrong password" });
         }
       }
 
       return res.status(400).json({ "User": "Did not find user" });
     } catch (error) {
-      return res.status(500).json({ error: error.message });
+      return res.status(500).json({ error: error.name + " " + error.message });
+    }
+  }
+
+  static async updateUser(req, res, next) {
+    try {
+      const checkIfUser = await UserService.getUserById(req.body.id);
+
+      if (checkIfUser) {
+        const result = await UserService.updateUser(req.body.id, req.body);
+        if (result) {
+          return res.status(200).json({
+            "Updated user": "Success",
+            "user": checkIfUser?.firstName,
+          });
+        }
+      } else {
+        return res.status(400).json({ "User": "user not found" });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.name + " " + error.message });
     }
   }
 };

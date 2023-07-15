@@ -35,7 +35,7 @@ module.exports = class UserService {
   static async checkUserRole(id) {
     try {
       const user = await User.findById(id);
-      if (user.length >= 1) {
+      if (user) {
         return user.role;
       }
     } catch (error) {
@@ -74,6 +74,24 @@ module.exports = class UserService {
       });
 
       return token;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async updateUser(id, data) {
+    try {
+      let result = await User.updateOne(
+        { _id: id },
+        {
+          $set: {
+            email: data.email,
+            firstName: data.firstName,
+            lastName: data.lastName,
+          },
+        }
+      );
+      return result;
     } catch (error) {
       throw error;
     }
