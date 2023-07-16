@@ -44,7 +44,14 @@ module.exports = class InventoryService {
       // last object of data will be added first so have to end loop at last index - 1
       if (data.skus.length > 1) {
         for (let i = 0; i < data.skus.length - 1; i++) {
-          newItem.skus.push(data.skus[i]);
+          //prevent duplicate sku objects being added
+          const result = newItem.skus.find(
+            ({ sku }) => sku === data.skus[i].sku
+          );
+
+          if (!result) {
+            newItem.skus.push(data.skus[i]);
+          }
         }
       }
 
@@ -55,7 +62,7 @@ module.exports = class InventoryService {
             ({ category }) => category === data.categories[i].category
           );
 
-          if (result === undefined) {
+          if (!result) {
             newItem.categories.push(data.categories[i]);
           }
         }
@@ -68,41 +75,77 @@ module.exports = class InventoryService {
     }
   }
 
-  static async checkDuplicateSkus(arr) {
+  static async updateSku(id, sku, data) {
     try {
-      let skus = [];
-
-      for (let i = 0; i < arr.length; i++) {
-        let sku = arr[i].sku;
-
-        skus.push(sku);
-      }
-
-      const allSkus = skus.map((el) => Inventory.find({ "skus.sku": el }));
-      const result = await Promise.all(allSkus);
-
-      return result;
+      const response = await Inventory.updateOne(
+        { _id: id, "skus.sku": sku },
+        {
+          $set: {
+            "skus.$": {
+              sku: data.newsku,
+              price: data.price,
+              stock_quantity: data.stock_quantity,
+              options: {
+                size: data.options.size,
+                color: data.options.color,
+                img_url: data.options.img_url,
+              },
+            },
+          },
+        }
+      );
+      return response;
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 
-  static async checkDuplicateCategories(arr) {
+  static async getItemById(id) {
     try {
-      let categories = [];
-      for (let i = 0; i < arr.length; i++) {
-        let category = arr[i].category;
+      const item = await Inventory.findById(id);
 
-        categories.push(category);
+      if (item) {
+        return item;
       }
-      const allCategories = categories.map((el) =>
-        Inventory.find({ "categories.category": el })
-      );
-      const result = await Promise.all(allCategories);
-
-      return result;
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 };
+//   static async checkDuplicateSkus(arr) {
+//     try {
+//       let skus = [];
+
+//       for (let i = 0; i < arr.length; i++) {
+//         let sku = arr[i].sku;
+
+//         skus.push(sku);
+//       }
+
+//       const allSkus = skus.map((el) => Inventory.find({ "skus.sku": el }));
+//       const result = await Promise.all(allSkus);
+
+//       return result;
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
+
+//   static async checkDuplicateCategories(arr) {
+//     try {
+//       let categories = [];
+//       for (let i = 0; i < arr.length; i++) {
+//         let category = arr[i].category;
+
+//         categories.push(category);
+//       }
+//       const allCategories = categories.map((el) =>
+//         Inventory.find({ "categories.category": el })
+//       );
+//       const result = await Promise.all(allCategories);
+
+//       return result;
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }

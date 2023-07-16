@@ -6,13 +6,17 @@ module.exports = class UserController {
     try {
       const newUser = await UserService.createUser(req.body);
 
-      res.json(newUser);
+      return res.status(200).json({ "User": "Success", "Created": newUser });
     } catch (error) {
       //allow database to deal with duplicate errors for now
       if (error.code === 11000) {
-        return res.status(400).json({ error: "duplicate key error" });
+        return res
+          .status(400)
+          .json({ error: error.name + " " + error.message });
       } else {
-        return res.status(500).json({ error: error });
+        return res
+          .status(500)
+          .json({ error: error.name + " " + error.message });
       }
     }
   }
@@ -46,6 +50,17 @@ module.exports = class UserController {
     }
   }
 
+  static async getAllUsers(req, res, next) {
+    try {
+      const users = await UserService.getAllUsers();
+
+      if (users) {
+        return res.status(200).json({ "Users": "Success", "Users": users });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.name + " " + error.message });
+    }
+  }
   static async updateUser(req, res, next) {
     try {
       const checkIfUser = await UserService.getUserById(req.body.id);
@@ -55,6 +70,28 @@ module.exports = class UserController {
         if (result) {
           return res.status(200).json({
             "Updated user": "Success",
+            "user": checkIfUser?.firstName,
+          });
+        }
+      } else {
+        return res.status(400).json({ "User": "user not found" });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.name + " " + error.message });
+    }
+  }
+
+  static async deleteUser(req, res, next) {
+    const { id } = req.body;
+
+    try {
+      const checkIfUser = await UserService.getUserById(id);
+
+      if (checkIfUser) {
+        const result = await UserService.deleteUser(id);
+        if (result) {
+          return res.status(200).json({
+            "Deleted user": "Success",
             "user": checkIfUser?.firstName,
           });
         }

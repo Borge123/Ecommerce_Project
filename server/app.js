@@ -1,10 +1,6 @@
 require("./database/db");
 require("dotenv").config();
-// require("./models/User"); //for testing REMOVE LATER
-// require("./models/Inventory");
-// require("./models/Discount");
-// require("./models/Cart");
-// require("./models/Order");
+
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");

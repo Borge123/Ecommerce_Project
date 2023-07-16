@@ -11,13 +11,45 @@ module.exports = class InventoryController {
 
       const newItem = await InventoryService.createItem(req.body);
 
-      res.json(newItem);
+      return res.status(200).json({ "Item": "Success", "Created": newItem });
     } catch (error) {
-      console.log(error);
       if (error.code === 11000) {
-        return res.status(400).json({ error: "duplicate key error" });
+        return res
+          .status(400)
+          .json({ error: error.name + " " + error.message });
       } else {
-        return res.status(500).json({ error: error.message });
+        return res
+          .status(500)
+          .json({ error: error.name + " " + error.message });
+      }
+    }
+  }
+
+  static async updateSku(req, res, next) {
+    try {
+      const { id, sku } = req.body;
+      const itemExist = await InventoryService.getItemById(id);
+
+      if (itemExist) {
+        const updatedSku = await InventoryService.updateSku(id, sku, req.body);
+        if (updatedSku) {
+          return res.status(200).json({
+            "Updated item": "Success",
+            "item": itemExist?.item.name,
+          });
+        } else {
+          return res.status(400).json({ "Item": "item not found" });
+        }
+      }
+    } catch (error) {
+      if (error.code === 11000) {
+        return res
+          .status(400)
+          .json({ error: error.name + " " + error.message });
+      } else {
+        return res
+          .status(500)
+          .json({ error: error.name + " " + error.message });
       }
     }
   }

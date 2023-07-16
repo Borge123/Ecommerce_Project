@@ -136,4 +136,19 @@ module.exports = {
 
     next();
   },
+
+  validateDeleteUser: async (req, res, next) => {
+    const { id } = req.body;
+
+    if (id === undefined || id === null) {
+      return res.status(400).json({ "id": "id is required." });
+    }
+
+    if (id === "" || typeof id !== "string") {
+      return res.status(400).json({
+        "id": "id needs to be a string and is required.",
+      });
+    }
+    next();
+  },
 };

@@ -10,6 +10,7 @@ module.exports = {
     let decodedToken;
     try {
       decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+
       const checkUser = await UserService.checkUserRole(decodedToken.id);
 
       if (checkUser === "admin") {
@@ -20,7 +21,15 @@ module.exports = {
           .json({ "Unathorized": "Access denied due to user not being admin" });
       }
     } catch (error) {
-      throw error;
+      if (error.name === "TokenExpiredError") {
+        return res
+          .status(403)
+          .json({ "Unathorized": "Access denied due to expired token" });
+      } else {
+        return res
+          .status(500)
+          .json({ error: error.name + " " + error.message });
+      }
     }
   },
 };

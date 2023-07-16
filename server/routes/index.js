@@ -3,9 +3,14 @@ const router = express.Router();
 const InventoryController = require("../controllers/InventoryController");
 const UserController = require("../controllers/UserController");
 const {
+  validateItem,
+  validateSku,
+} = require("../middlewares/InventoryValidation");
+const {
   validateSignup,
   validateUpdateUser,
   validateLogin,
+  validateDeleteUser,
 } = require("../middlewares/userValidation");
 
 const { checkIfAdmin } = require("../middlewares/auth");
@@ -40,8 +45,23 @@ router.get("/", function (req, res, next) {
   res.send({ testData });
 });
 
-router.post("/createItem", InventoryController.createItem);
+//Inventories
+router.post(
+  "/createItem",
+  checkIfAdmin,
+  validateItem,
+  InventoryController.createItem
+);
 
+router.post(
+  "/updateSku",
+  checkIfAdmin,
+  validateSku,
+  InventoryController.updateSku
+);
+
+//Users
+router.get("/users", checkIfAdmin, UserController.getAllUsers);
 router.post("/signup", validateSignup, UserController.signup);
 router.post("/login", validateLogin, UserController.login);
 router.put(
@@ -49,5 +69,12 @@ router.put(
   checkIfAdmin,
   validateUpdateUser,
   UserController.updateUser
+);
+
+router.delete(
+  "/deleteUser",
+  checkIfAdmin,
+  validateDeleteUser,
+  UserController.deleteUser
 );
 module.exports = router;

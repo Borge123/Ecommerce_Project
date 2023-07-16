@@ -21,6 +21,17 @@ module.exports = class UserService {
     }
   }
 
+  static async getAllUsers() {
+    try {
+      const result = await User.find();
+      if (result.length > 0) {
+        return result;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async checkDuplicateEmail(data) {
     try {
       const findEmail = await User.find({ email: data.email });
@@ -81,7 +92,7 @@ module.exports = class UserService {
 
   static async updateUser(id, data) {
     try {
-      let result = await User.updateOne(
+      const result = await User.updateOne(
         { _id: id },
         {
           $set: {
@@ -91,6 +102,15 @@ module.exports = class UserService {
           },
         }
       );
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deleteUser(id) {
+    try {
+      const result = await User.deleteOne({ _id: id });
       return result;
     } catch (error) {
       throw error;
