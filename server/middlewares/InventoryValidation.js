@@ -105,7 +105,7 @@ module.exports = {
     next();
   },
 
-  validateSku: async (req, res, next) => {
+  validateUpdateSku: async (req, res, next) => {
     const { id, newsku, price, stock_quantity } = req.body;
     if (id === undefined || id === null) {
       return res.status(400).json({ "id": "id is required." });
@@ -177,6 +177,44 @@ module.exports = {
         "img_url": "img_url needs to be a string and is required.",
       });
     }
+    next();
+  },
+
+  validateUpdateItem: async (req, res, next) => {
+    const { name, description } = req.body.item;
+    const { id } = req.body;
+    if (id === undefined || id === null) {
+      return res.status(400).json({ "id": "id is required." });
+    }
+
+    if (id === "" || typeof id !== "string") {
+      return res.status(400).json({
+        "id": "id needs to be a string and is required.",
+      });
+    }
+
+    if (name === undefined || name === null) {
+      return res.status(400).json({ "name": "name is required." });
+    }
+
+    if (name === "" || typeof name !== "string") {
+      return res.status(400).json({
+        "name": "name needs to be a string and is required.",
+      });
+    }
+
+    if (description === undefined || description === null) {
+      return res
+        .status(400)
+        .json({ "description": "description is required." });
+    }
+
+    if (description === "" || typeof description !== "string") {
+      return res.status(400).json({
+        "description": "description needs to be a string and is required.",
+      });
+    }
+
     next();
   },
 };

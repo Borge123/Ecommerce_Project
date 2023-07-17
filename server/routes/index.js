@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const redisStore = require("../redis/redisStore");
 const InventoryController = require("../controllers/InventoryController");
 const UserController = require("../controllers/UserController");
 const {
   validateItem,
-  validateSku,
+  validateUpdateSku,
+  validateUpdateItem,
 } = require("../middlewares/InventoryValidation");
 const {
   validateSignup,
@@ -14,38 +16,19 @@ const {
 } = require("../middlewares/userValidation");
 
 const { checkIfAdmin } = require("../middlewares/auth");
+const { sessionChecker } = require("../middlewares/sessionChecker");
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  const testData = {
-    item: {
-      name: "testitem",
-      description: "testdesc",
-    },
-    skus: [
-      {
-        sku: "kfkf",
-        price: 22,
-        discount_id: "fdff",
-        stock_quantity: 2,
-        options: {
-          size: "L",
-          color: "blue",
-          img_url: "sfdfsf",
-        },
-      },
-    ],
-    categories: [
-      {
-        category: "testcategory",
-      },
-    ],
-  };
-
-  console.log(testData.skus.length);
-  res.send({ testData });
+router.get("/", async function (req, res, next) {
+  console.log(await redisStore.client.get("key"));
+  console.log(await redisStore.client.set("key", "test"));
+  //session.cart = { "test": "tester" };
+  //req.session.destroy();
+  res.send("hello");
 });
 
 //Inventories
+router.get("/items", InventoryController.getAllItems);
+
 router.post(
   "/createItem",
   checkIfAdmin,
@@ -53,12 +36,21 @@ router.post(
   InventoryController.createItem
 );
 
-router.post(
+router.put(
   "/updateSku",
   checkIfAdmin,
-  validateSku,
+  validateUpdateSku,
   InventoryController.updateSku
 );
+
+router.put(
+  "/updateItem",
+  checkIfAdmin,
+  validateUpdateItem,
+  InventoryController.updateItem
+);
+
+router.delete("/deleteItem", checkIfAdmin, InventoryController.deleteItem);
 
 //Users
 router.get("/users", checkIfAdmin, UserController.getAllUsers);

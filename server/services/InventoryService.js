@@ -75,6 +75,17 @@ module.exports = class InventoryService {
     }
   }
 
+  static async getAllItems() {
+    try {
+      const result = await Inventory.find();
+      if (result.length > 0) {
+        return result;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async updateSku(id, sku, data) {
     try {
       const response = await Inventory.updateOne(
@@ -94,6 +105,33 @@ module.exports = class InventoryService {
           },
         }
       );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async updateItem(id, data) {
+    try {
+      const response = await Inventory.updateOne(
+        {
+          _id: id,
+        },
+        {
+          $set: {
+            item: { name: data.item.name, description: data.item.description },
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deleteItem(id) {
+    try {
+      const response = await Inventory.deleteOne({ _id: id });
       return response;
     } catch (error) {
       throw error;
