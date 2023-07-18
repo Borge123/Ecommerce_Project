@@ -21,17 +21,20 @@ app.use(
     cookie: {
       secure: false, // if true only transmit cookie over https
       httpOnly: false, // if true prevent client side JS from reading the cookie
-      maxAge: 1000 * 60 * 10, // session max age in miliseconds
+      maxAge: 1000 * 60 * 10, // * 15, // session max age in miliseconds
     },
   })
 );
-async function testRedix() {
-  //console.log(await redisStore);
-  //console.log(await redisStore.client.del("key"));
-  //console.log(await redisStore.client.get("key"));
-  //console.log(await redisStore.client.set("key", "test"));
+async function testCookies() {
+  const encodedVal =
+    "s%3AzKnVzZUSoyVMTEl126w8MOhlanvlLdXX.xb%2BQA%2BzKgV%2Bn8nFVlKRLTeEiXzo9djm6WQ9XCt0MtHM";
+
+  const decodedVal =
+    "s:zKnVzZUSoyVMTEl126w8MOhlanvlLdXX.xb+QA+zKgV+n8nFVlKRLTeEiXzo9djm6WQ9XCt0MtHM";
+  console.log(decodeURIComponent(encodedVal) === decodedVal);
+  console.log(decodedVal);
 }
-testRedix();
+testCookies();
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");

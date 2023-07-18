@@ -1,6 +1,6 @@
 const redis = require("redis");
-const RedisStore = require("connect-redis").default;
 
+const RedisStore = require("connect-redis").default;
 const redisClient = redis.createClient();
 redisClient.connect().catch(console.error);
 redisClient.on("error", function (err) {
@@ -12,6 +12,6 @@ redisClient.on("connect", function (err) {
 
 let redisStore = new RedisStore({
   client: redisClient,
-  prefix: "myapp:",
+  ttl: 30,
 });
 module.exports = redisStore;

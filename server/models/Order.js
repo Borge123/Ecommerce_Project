@@ -13,7 +13,7 @@ const OrderSchema = new Schema(
       validate(status) {
         const validStatuses = ["in process", "cancelled", "complete"];
         if (!validStatuses.includes(status.toLowerCase())) {
-          throw new Error("Not a valid role");
+          throw new Error("Not a valid status");
         }
       },
 

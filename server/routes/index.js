@@ -19,10 +19,33 @@ const { checkIfAdmin } = require("../middlewares/auth");
 const { sessionChecker } = require("../middlewares/sessionChecker");
 /* GET home page. */
 router.get("/", async function (req, res, next) {
-  console.log(await redisStore.client.get("key"));
-  console.log(await redisStore.client.set("key", "test"));
-  //session.cart = { "test": "tester" };
-  //req.session.destroy();
+  //console.log());
+  // await redisStore.client.set("user-session:123", {
+  //   "name": "John",
+  //   "surname": "Smith",
+  //   "company": "Redis",
+  //   "age": 29,
+  // });
+  //console.log(redisStore.client);
+
+  const test = await redisStore.client.get("sess:" + req.session.id);
+  if (test) {
+    const parsedData = JSON.parse(test);
+    console.log(parsedData.key);
+  }
+
+  if (!req.session.key) {
+    //req.session.key = test2;
+    req.session.key = {
+      cart: {
+        "data": "testData",
+      },
+    };
+  }
+
+  console.log(req.session);
+  console.log(req.session.id);
+
   res.send("hello");
 });
 
