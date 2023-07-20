@@ -5,8 +5,8 @@ module.exports = class OrderService {
     try {
       let itemsLength;
 
-      if (data.skus.length != 0) {
-        itemsLength = data.skus.length - 1;
+      if (data.items.length != 0) {
+        itemsLength = data.items.length - 1;
       } else {
         itemsLength = 0;
       }
@@ -16,7 +16,6 @@ module.exports = class OrderService {
         items: [
           {
             sku: data.items[itemsLength].sku,
-            name: data.items[itemsLength].name,
             quantity: data.items[itemsLength].quantity,
             price: data.items[itemsLength].price,
             total: data.items[itemsLength].total,
@@ -44,6 +43,41 @@ module.exports = class OrderService {
     }
   }
 
+  static async updateOrderStatus(id, status) {
+    try {
+      const result = await Order.updateOne({ _id: id }, { status: status });
+      if (result) {
+        return result;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async updateOrderItems(id, data) {
+    try {
+      let result;
+      for (item of data.items) {
+        result = await Order.updateOne(
+          { _id: id },
+          {
+            $set: {
+              "items.$": {
+                quantity: data.quantity,
+              },
+            },
+          }
+        );
+      }
+
+      if (result) {
+        return result;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async getAllUserOrders(user_id) {
     try {
       const orders = Order.find({ user_id: user_id });
@@ -53,6 +87,27 @@ module.exports = class OrderService {
       } else {
         throw new Error("did not find any orders");
       }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deleteOrder(id) {
+    try {
+      const result = await Order.deleteOne({ _id: id });
+      if (result) {
+        return result;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async calcTotal(items) {
+    try {
+      const sum = items.reduce((acc, currentVal) => acc + currentVal.price, 0);
+
+      return sum;
     } catch (error) {
       throw error;
     }

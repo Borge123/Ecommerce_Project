@@ -10,8 +10,9 @@ module.exports = class InventoryController {
       // );
 
       const newItem = await InventoryService.createItem(req.body);
-
-      return res.status(200).json({ "Item": "Success", "Created": newItem });
+      if (newItem) {
+        return res.status(200).json({ "Item": "Success", "Created": newItem });
+      }
     } catch (error) {
       if (error.code === 11000) {
         return res

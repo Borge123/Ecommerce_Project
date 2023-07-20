@@ -3,6 +3,7 @@ const router = express.Router();
 const redisStore = require("../redis/redisStore");
 const InventoryController = require("../controllers/InventoryController");
 const UserController = require("../controllers/UserController");
+const OrderController = require("../controllers/OrderController");
 const {
   validateItem,
   validateUpdateSku,
@@ -15,19 +16,11 @@ const {
   validateDeleteUser,
 } = require("../middlewares/userValidation");
 
+const { validateNewOrder } = require("../middlewares/orderValidation");
 const { checkIfAdmin } = require("../middlewares/auth");
 const { sessionChecker } = require("../middlewares/sessionChecker");
 /* GET home page. */
 router.get("/", async function (req, res, next) {
-  //console.log());
-  // await redisStore.client.set("user-session:123", {
-  //   "name": "John",
-  //   "surname": "Smith",
-  //   "company": "Redis",
-  //   "age": 29,
-  // });
-  //console.log(redisStore.client);
-
   const test = await redisStore.client.get("sess:" + req.session.id);
   if (test) {
     const parsedData = JSON.parse(test);
@@ -92,4 +85,9 @@ router.delete(
   validateDeleteUser,
   UserController.deleteUser
 );
+
+//orders
+
+router.post("/order", validateNewOrder, OrderController.createOrder);
+
 module.exports = router;
