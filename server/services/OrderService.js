@@ -1,8 +1,13 @@
 const Order = require("../models/Order");
 
 module.exports = class OrderService {
-  static async createOrder(data) {
+  static async createOrder(user_id, data) {
     try {
+      const total = data.items.reduce(
+        (acc, currentVal) => acc + currentVal.price * currentVal.quantity,
+        0
+      );
+
       let itemsLength;
 
       if (data.items.length != 0) {
@@ -11,23 +16,23 @@ module.exports = class OrderService {
         itemsLength = 0;
       }
       const order = {
-        user_id: data.user_id,
-        status: data.status,
+        user_id: user_id,
+        status: "in process",
         items: [
           {
             sku: data.items[itemsLength].sku,
             quantity: data.items[itemsLength].quantity,
             price: data.items[itemsLength].price,
-            total: data.items[itemsLength].total,
           },
         ],
+        total: total,
       };
 
       if (data.items.length > 1) {
         for (let i = 0; i < data.items.length - 1; i++) {
           //prevent duplicate item objects being added
           const result = order.items.find(
-            ({ item }) => item === data.items[i].item
+            ({ sku }) => sku === data.items[i].sku
           );
 
           if (!result) {
@@ -54,21 +59,39 @@ module.exports = class OrderService {
     }
   }
 
-  static async updateOrderItems(id, data) {
+  static async updateOrderItem(id, sku, quantity) {
     try {
       let result;
-      for (item of data.items) {
-        result = await Order.updateOne(
-          { _id: id },
-          {
-            $set: {
-              "items.$": {
-                quantity: data.quantity,
-              },
-            },
-          }
-        );
+
+      result = await Order.updateOne(
+        { _id: id, "items.sku": sku },
+        {
+          $set: {
+            "items.$.quantity": quantity,
+          },
+        }
+      );
+
+      if (result) {
+        return result;
       }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async updateOrderTotal(id, total) {
+    try {
+      let result;
+
+      result = await Order.updateOne(
+        { _id: id },
+        {
+          $set: {
+            total: total,
+          },
+        }
+      );
 
       if (result) {
         return result;
@@ -98,16 +121,6 @@ module.exports = class OrderService {
       if (result) {
         return result;
       }
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  static async calcTotal(items) {
-    try {
-      const sum = items.reduce((acc, currentVal) => acc + currentVal.price, 0);
-
-      return sum;
     } catch (error) {
       throw error;
     }

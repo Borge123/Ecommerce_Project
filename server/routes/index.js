@@ -16,8 +16,11 @@ const {
   validateDeleteUser,
 } = require("../middlewares/userValidation");
 
-const { validateNewOrder } = require("../middlewares/orderValidation");
-const { checkIfAdmin } = require("../middlewares/auth");
+const {
+  validateNewOrder,
+  validateUpdateOrderItem,
+} = require("../middlewares/orderValidation");
+const { checkIfAdmin, checkIfRegistered } = require("../middlewares/auth");
 const { sessionChecker } = require("../middlewares/sessionChecker");
 /* GET home page. */
 router.get("/", async function (req, res, next) {
@@ -88,6 +91,16 @@ router.delete(
 
 //orders
 
-router.post("/order", validateNewOrder, OrderController.createOrder);
-
+router.post(
+  "/order",
+  validateNewOrder,
+  checkIfRegistered,
+  OrderController.createOrder
+);
+router.put(
+  "/updateOrderItems",
+  validateUpdateOrderItem,
+  checkIfRegistered,
+  OrderController.updateOrderItems
+);
 module.exports = router;

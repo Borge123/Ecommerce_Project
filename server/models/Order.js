@@ -36,16 +36,17 @@ const OrderSchema = new Schema(
           type: Number,
           required: true,
         },
-        total: {
-          type: Number,
-          required: true,
-        },
+
         discount_id: {
           type: Schema.Types.ObjectID,
           ref: "Discount",
         },
       },
     ],
+    total: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,
