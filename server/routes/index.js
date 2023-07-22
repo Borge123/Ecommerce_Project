@@ -4,6 +4,7 @@ const redisStore = require("../redis/redisStore");
 const InventoryController = require("../controllers/InventoryController");
 const UserController = require("../controllers/UserController");
 const OrderController = require("../controllers/OrderController");
+const DiscountController = require("../controllers/DiscountController");
 const {
   validateItem,
   validateUpdateSku,
@@ -20,6 +21,8 @@ const {
   validateNewOrder,
   validateUpdateOrderItem,
 } = require("../middlewares/orderValidation");
+
+const { validateCreateDiscount } = require("../middlewares/DiscountValidation");
 const { checkIfAdmin, checkIfRegistered } = require("../middlewares/auth");
 const { sessionChecker } = require("../middlewares/sessionChecker");
 /* GET home page. */
@@ -103,4 +106,15 @@ router.put(
   checkIfRegistered,
   OrderController.updateOrderItems
 );
+
+// discounts
+
+router.post(
+  "/newDiscount",
+  validateCreateDiscount,
+  DiscountController.createDiscount
+);
+
+router.post("/addDiscount", DiscountController.addDiscount);
+router.put("/removeDiscount", DiscountController.removeDiscount);
 module.exports = router;

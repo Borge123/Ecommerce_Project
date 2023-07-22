@@ -1,5 +1,6 @@
 const Discount = require("../models/Discount");
 const Inventory = require("../models/Inventory");
+
 module.exports = class DiscountService {
   static async createDiscount(data) {
     try {
@@ -22,9 +23,7 @@ module.exports = class DiscountService {
         { _id: id, "skus.sku": sku },
         {
           $set: {
-            "skus.$": {
-              discount_id: discount_id,
-            },
+            "skus.$.discount_id": discount_id,
           },
         }
       );
@@ -37,15 +36,26 @@ module.exports = class DiscountService {
     }
   }
 
-  static async removeDiscount(id, sku) {
+  static async removeDiscount(id, sku, data) {
+    //expects to receive sku object as data
     try {
+      let newObj = {
+        options: data.options,
+        sku: data.sku,
+        price: data.price,
+        stock_quantity: data.stock_quantity,
+        _id: data._id.toString(),
+        discount_id: data.discount_id.toString(),
+      };
+      let { discount_id, ...rest } = newObj;
+
+      //destructuring data object to remove discount_id property
+
       const response = await Inventory.updateOne(
         { _id: id, "skus.sku": sku },
         {
           $set: {
-            "skus.$": {
-              discount_id: "",
-            },
+            "skus.$": rest,
           },
         }
       );
@@ -76,6 +86,18 @@ module.exports = class DiscountService {
 
       if (result) {
         return result;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getDiscountById(id) {
+    try {
+      const discount = await Discount.findById(id);
+
+      if (discount) {
+        return discount;
       }
     } catch (error) {
       throw error;

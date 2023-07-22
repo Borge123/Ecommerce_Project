@@ -149,6 +149,18 @@ module.exports = class InventoryService {
       throw error;
     }
   }
+
+  static async getItemByIdAndSku(id, sku) {
+    try {
+      const item = await Inventory.findOne({ _id: id, "skus.sku": sku });
+
+      if (item) {
+        return item;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
 };
 //   static async checkDuplicateSkus(arr) {
 //     try {
