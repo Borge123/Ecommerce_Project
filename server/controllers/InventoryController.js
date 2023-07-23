@@ -32,6 +32,8 @@ module.exports = class InventoryController {
 
       if (items) {
         return res.status(200).json({ "Items": "Success", "Items": items });
+      } else {
+        return res.status(400).json({ "Items": "items not found" });
       }
     } catch (error) {
       return res.status(500).json({ error: error.name + " " + error.message });

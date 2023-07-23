@@ -17,13 +17,13 @@ module.exports = class DiscountService {
     }
   }
 
-  static async addDiscount(id, sku, discount_id) {
+  static async addDiscount(id, discount_id) {
     try {
       const response = await Inventory.updateOne(
-        { _id: id, "skus.sku": sku },
+        { _id: id },
         {
           $set: {
-            "skus.$.discount_id": discount_id,
+            "item.discount_id": discount_id,
           },
         }
       );
@@ -36,56 +36,28 @@ module.exports = class DiscountService {
     }
   }
 
-  static async removeDiscount(id, sku, data) {
+  static async removeDiscount(id, data) {
     //expects to receive sku object as data
     try {
       let newObj = {
-        options: data.options,
-        sku: data.sku,
-        price: data.price,
-        stock_quantity: data.stock_quantity,
-        _id: data._id.toString(),
-        discount_id: data.discount_id.toString(),
+        name: data.item.name,
+        description: data.item.description,
+        discount_id: data.item.discount_id.toString(),
       };
+      //destructuring object to remove discount_id property
       let { discount_id, ...rest } = newObj;
 
-      //destructuring data object to remove discount_id property
-
       const response = await Inventory.updateOne(
-        { _id: id, "skus.sku": sku },
+        { _id: id },
         {
           $set: {
-            "skus.$": rest,
+            item: rest,
           },
         }
       );
 
       if (response) {
         return response;
-      }
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  static async updatePrice(id, data) {
-    try {
-      let result;
-      for (item of data.items) {
-        result = await Inventory.updateOne(
-          { _id: id },
-          {
-            $set: {
-              "items.$": {
-                price: data.price,
-              },
-            },
-          }
-        );
-      }
-
-      if (result) {
-        return result;
       }
     } catch (error) {
       throw error;

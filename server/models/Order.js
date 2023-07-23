@@ -19,6 +19,11 @@ const OrderSchema = new Schema(
 
       default: "in process",
     },
+
+    discount_id: {
+      type: Schema.Types.ObjectID,
+      ref: "Discount",
+    },
     items: [
       {
         sku: {
@@ -35,11 +40,6 @@ const OrderSchema = new Schema(
         price: {
           type: Number,
           required: true,
-        },
-
-        discount_id: {
-          type: Schema.Types.ObjectID,
-          ref: "Discount",
         },
       },
     ],

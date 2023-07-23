@@ -13,6 +13,11 @@ const InventorySchema = new Schema(
         type: String,
         required: true,
       },
+
+      discount_id: {
+        type: Schema.Types.ObjectID,
+        ref: "Discount",
+      },
     },
     skus: [
       {
@@ -26,10 +31,7 @@ const InventorySchema = new Schema(
           type: Number,
           required: true,
         },
-        discount_id: {
-          type: Schema.Types.ObjectID,
-          ref: "Discount",
-        },
+
         stock_quantity: {
           type: Number,
           required: true,
@@ -65,6 +67,8 @@ const InventorySchema = new Schema(
   },
   {
     timestamps: true,
+    // toJSON: { virtuals: true },
+    // toObject: { virtuals: true },
   }
 );
 InventorySchema.post("save", function (doc) {

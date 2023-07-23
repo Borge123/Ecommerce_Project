@@ -22,7 +22,11 @@ const {
   validateUpdateOrderItem,
 } = require("../middlewares/orderValidation");
 
-const { validateCreateDiscount } = require("../middlewares/DiscountValidation");
+const {
+  validateCreateDiscount,
+  validateAddDiscount,
+  validateRemoveDiscount,
+} = require("../middlewares/DiscountValidation");
 const { checkIfAdmin, checkIfRegistered } = require("../middlewares/auth");
 const { sessionChecker } = require("../middlewares/sessionChecker");
 /* GET home page. */
@@ -111,10 +115,21 @@ router.put(
 
 router.post(
   "/newDiscount",
+  checkIfAdmin,
   validateCreateDiscount,
   DiscountController.createDiscount
 );
 
-router.post("/addDiscount", DiscountController.addDiscount);
-router.put("/removeDiscount", DiscountController.removeDiscount);
+router.post(
+  "/addDiscount",
+  checkIfAdmin,
+  validateAddDiscount,
+  DiscountController.addDiscount
+);
+router.put(
+  "/removeDiscount",
+  checkIfAdmin,
+  validateRemoveDiscount,
+  DiscountController.removeDiscount
+);
 module.exports = router;

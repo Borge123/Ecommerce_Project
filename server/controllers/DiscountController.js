@@ -24,17 +24,26 @@ module.exports = class DiscountController {
 
   static async addDiscount(req, res, next) {
     try {
-      const { id, sku, discount_id } = req.body;
-      const itemExists = await InventoryService.getItemByIdAndSku(id, sku);
+      const { id, discount_id } = req.body;
+      const itemExists = await InventoryService.getOneItem(id);
       const discountExists = await DiscountService.getDiscountById(discount_id);
 
       if (itemExists && discountExists) {
         const addedDiscount = await DiscountService.addDiscount(
           id,
-          sku,
           discount_id
         );
         if (addedDiscount) {
+          const checkIfDiscountAdded = await InventoryService.getOneItem(id);
+          if (
+            checkIfDiscountAdded.item.discount_id.discount_percent != undefined
+          ) {
+            const discount = await InventoryService.decreasePrice(
+              checkIfDiscountAdded
+            );
+          }
+
+          //console.log(discount);
           return res
             .status(200)
             .json({ "Discount": "Success", "Added": addedDiscount });
@@ -55,17 +64,17 @@ module.exports = class DiscountController {
 
   static async removeDiscount(req, res, next) {
     try {
-      const { id, sku } = req.body;
-      const itemExists = await InventoryService.getItemByIdAndSku(id, sku);
+      const { id } = req.body;
+      const itemExists = await InventoryService.getItemById(id);
       //console.log(itemExists);
 
-      const dataObj = await itemExists.skus.find((el) => el.sku === sku);
       //console.log(dataObj);
 
       if (itemExists) {
+        const dataObj = itemExists;
+
         const removedDiscount = await DiscountService.removeDiscount(
           id,
-          sku,
           dataObj
         );
         if (removedDiscount) {
