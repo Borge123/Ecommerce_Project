@@ -110,6 +110,7 @@ module.exports = class InventoryService {
         return result;
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -135,6 +136,7 @@ module.exports = class InventoryService {
       );
       return response;
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -153,6 +155,7 @@ module.exports = class InventoryService {
       );
       return response;
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -162,6 +165,7 @@ module.exports = class InventoryService {
       const response = await Inventory.deleteOne({ _id: id });
       return response;
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -174,6 +178,7 @@ module.exports = class InventoryService {
         return item;
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -186,6 +191,7 @@ module.exports = class InventoryService {
         return item;
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -238,6 +244,7 @@ module.exports = class InventoryService {
 
       return response;
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }

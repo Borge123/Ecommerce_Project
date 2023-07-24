@@ -44,6 +44,7 @@ module.exports = class OrderService {
       const response = await new Order(order).save();
       return response;
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -55,6 +56,7 @@ module.exports = class OrderService {
         return result;
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -76,6 +78,7 @@ module.exports = class OrderService {
         return result;
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -97,6 +100,7 @@ module.exports = class OrderService {
         return result;
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -141,6 +145,7 @@ module.exports = class OrderService {
         return result;
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -155,6 +160,7 @@ module.exports = class OrderService {
         throw new Error("did not find any orders");
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -166,6 +172,7 @@ module.exports = class OrderService {
         return result;
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -180,6 +187,7 @@ module.exports = class OrderService {
         throw new Error("did not find any order");
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }

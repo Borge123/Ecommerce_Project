@@ -38,4 +38,24 @@ module.exports = class OrderController {
       return res.status(500).json({ error: error.name + " " + error.message });
     }
   }
+
+  static async updateOrderStatus(req, res, next) {
+    const { id, status } = req.body;
+    try {
+      const checkIfExists = await OrderService.getOrderById(id);
+
+      if (checkIfExists) {
+        const result = await OrderService.updateOrderStatus(id, status);
+        if (result) {
+          return res
+            .status(200)
+            .json({ "Order": "Success", "updated": result });
+        }
+      } else {
+        return res.status(400).json({ "Order": "order not found" });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.name + " " + error.message });
+    }
+  }
 };

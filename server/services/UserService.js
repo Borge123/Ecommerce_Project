@@ -17,6 +17,7 @@ module.exports = class UserService {
       const response = await new User(newUser).save();
       return response;
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -28,6 +29,7 @@ module.exports = class UserService {
         return result;
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -39,6 +41,7 @@ module.exports = class UserService {
         return findEmail;
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -50,6 +53,7 @@ module.exports = class UserService {
         return user.role;
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -62,6 +66,7 @@ module.exports = class UserService {
         return user;
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -73,6 +78,7 @@ module.exports = class UserService {
         return user;
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -86,6 +92,7 @@ module.exports = class UserService {
 
       return token;
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -104,6 +111,7 @@ module.exports = class UserService {
       );
       return result;
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -113,6 +121,7 @@ module.exports = class UserService {
       const result = await User.deleteOne({ _id: id });
       return result;
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }

@@ -20,6 +20,7 @@ const {
 const {
   validateNewOrder,
   validateUpdateOrderItem,
+  validateUpdateOrderStatus,
 } = require("../middlewares/orderValidation");
 
 const {
@@ -109,6 +110,13 @@ router.put(
   validateUpdateOrderItem,
   checkIfRegistered,
   OrderController.updateOrderItems
+);
+
+router.put(
+  "/updateOrderStatus",
+  validateUpdateOrderStatus,
+  checkIfRegistered,
+  OrderController.updateOrderStatus
 );
 
 // discounts

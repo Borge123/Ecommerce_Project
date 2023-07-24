@@ -13,6 +13,19 @@ module.exports = class DiscountService {
       const response = await new Discount(discount).save();
       return response;
     } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  static async getAllDiscounts() {
+    try {
+      const discounts = await Discount.find();
+      if (discounts) {
+        return discounts;
+      }
+    } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -32,6 +45,7 @@ module.exports = class DiscountService {
         return response;
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -60,6 +74,7 @@ module.exports = class DiscountService {
         return response;
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -79,6 +94,7 @@ module.exports = class DiscountService {
         return response;
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -91,6 +107,7 @@ module.exports = class DiscountService {
         return discount;
       }
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
