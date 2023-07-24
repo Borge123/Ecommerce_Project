@@ -196,7 +196,8 @@ module.exports = class InventoryService {
       let percentage = await data.item.discount_id.discount_percent;
       for (const el of data.skus) {
         const differential = el.price * percentage;
-        const newPrice = el.price - differential.toFixed(2);
+        let newPrice = el.price - differential;
+        newPrice = newPrice.toFixed(2);
         //console.log(newPrice);
         response = await Inventory.updateOne(
           { _id: data.id, "skus.sku": el.sku },
@@ -208,8 +209,6 @@ module.exports = class InventoryService {
         );
       }
 
-      console.log(response);
-
       return response;
     } catch (error) {
       console.log(error);
@@ -217,20 +216,21 @@ module.exports = class InventoryService {
     }
   }
 
-  static async increasePrice(id, data) {
+  static async increasePrice(data) {
     try {
       let response;
       let percentage = data.item.discount_id.discount_percent;
+
       for (const el of data.skus) {
-        const differential = el.price * percentage.toFixed(2);
-        const newPrice = el.price + differential;
+        const differential = 1 - percentage;
+
+        let newPrice = el.price / differential;
+        newPrice = newPrice.toFixed(2);
         response = await Inventory.updateOne(
-          { _id: id },
+          { _id: data.id, "skus.sku": el.sku },
           {
             $set: {
-              "skus.$": {
-                price: newPrice,
-              },
+              "skus.$.price": newPrice,
             },
           }
         );

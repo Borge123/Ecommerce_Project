@@ -101,6 +101,50 @@ module.exports = class OrderService {
     }
   }
 
+  static async updatePrice(data) {
+    try {
+      let response;
+      let percentage = await data.discount_id.discount_percent;
+      for (const el of data.items) {
+        const differential = el.price * percentage;
+        let newPrice = el.price - differential;
+        newPrice = newPrice.toFixed(2);
+        //console.log(newPrice);
+        response = await Order.updateOne(
+          { _id: data.id, "items.sku": el.sku },
+          {
+            $set: {
+              "items.$.price": newPrice,
+            },
+          }
+        );
+      }
+
+      return response;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  static async getOneOrder(id) {
+    try {
+      const result = await Order.findOne({
+        _id: id,
+      }).populate({
+        path: discount_id,
+        select: { _id: 1, name: 1, discount_percent: 1, active: 1 },
+        strictPopulate: false,
+      });
+
+      if (result) {
+        return result;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async getAllUserOrders(user_id) {
     try {
       const orders = Order.find({ user_id: user_id });

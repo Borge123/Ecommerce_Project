@@ -64,11 +64,33 @@ module.exports = {
       });
     }
 
-    next();
+    try {
+      const itemExists = await InventoryService.getOneItem(id);
+      const discountExists = await DiscountService.getDiscountById(discount_id);
+
+      if (itemExists && discountExists) {
+        if (!itemExists.item.discount_id) {
+          req.item = itemExists;
+          req.discount = discountExists;
+          next();
+        } else {
+          return res.status(400).json({
+            "Item": "Item already has discount added",
+          });
+        }
+      } else {
+        return res.status(400).json({
+          "Item/discount": "Item/discount not found.",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   },
 
   validateRemoveDiscount: async (req, res, next) => {
     const { id } = req.body;
+
     if (id === undefined || id === null) {
       return res.status(400).json({ "id": "id is required." });
     }
@@ -78,7 +100,20 @@ module.exports = {
         "id": "id needs to be a string and is required.",
       });
     }
-
-    next();
+    try {
+      const itemExists = await InventoryService.getOneItem(id);
+      if (itemExists) {
+        if (itemExists.item.discount_id != undefined) {
+          req.item = itemExists;
+          next();
+        } else {
+          return res.status(400).json({
+            "Item": "Item doesnt have a discount added.",
+          });
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
