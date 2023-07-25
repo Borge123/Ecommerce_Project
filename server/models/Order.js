@@ -41,6 +41,22 @@ const OrderSchema = new Schema(
           type: Number,
           required: true,
         },
+        options: {
+          size: {
+            type: String,
+            required: true,
+          },
+
+          color: {
+            type: String,
+            required: true,
+          },
+
+          img_url: {
+            type: String,
+            required: true,
+          },
+        },
       },
     ],
     total: {

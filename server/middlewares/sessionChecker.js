@@ -3,11 +3,11 @@ module.exports = {
     console.log(`Session Checker: ${req.session.id}`);
     console.log(req.session.id);
     if (req.session.cart) {
-      console.log(`Found User Session`);
+      console.log(`Found  cart`);
       next();
     } else {
-      console.log(`No User Session Found`);
-      res.send("No User session found");
+      console.log(`No cart Found`);
+      return res.status(400).json({ "Session": "No cart session found" });
     }
   },
 };

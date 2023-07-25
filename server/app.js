@@ -26,15 +26,17 @@ app.use(
   })
 );
 async function testCookies() {
-  const encodedVal =
-    "s%3AzKnVzZUSoyVMTEl126w8MOhlanvlLdXX.xb%2BQA%2BzKgV%2Bn8nFVlKRLTeEiXzo9djm6WQ9XCt0MtHM";
-
-  const decodedVal =
-    "s:zKnVzZUSoyVMTEl126w8MOhlanvlLdXX.xb+QA+zKgV+n8nFVlKRLTeEiXzo9djm6WQ9XCt0MtHM";
-  console.log(decodeURIComponent(encodedVal) === decodedVal);
-  console.log(decodedVal);
+  //console.log(session);
+  //example of encoded cookie string
+  // const encodedVal =
+  //   "s%3AzKnVzZUSoyVMTEl126w8MOhlanvlLdXX.xb%2BQA%2BzKgV%2Bn8nFVlKRLTeEiXzo9djm6WQ9XCt0MtHM";
+  // const decodedVal =
+  //   "s:zKnVzZUSoyVMTEl126w8MOhlanvlLdXX.xb+QA+zKgV+n8nFVlKRLTeEiXzo9djm6WQ9XCt0MtHM";
+  // console.log(decodeURIComponent(encodedVal) === decodedVal);
+  // console.log(decodedVal);
 }
-testCookies();
+//console.log(testCookies());
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");

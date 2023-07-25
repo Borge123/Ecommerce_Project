@@ -14,4 +14,5 @@ let redisStore = new RedisStore({
   client: redisClient,
   ttl: 30,
 });
+console.log("redisStore init");
 module.exports = redisStore;

@@ -23,6 +23,11 @@ module.exports = class OrderService {
             sku: data.items[itemsLength].sku,
             quantity: data.items[itemsLength].quantity,
             price: data.items[itemsLength].price,
+            options: {
+              size: data.items[itemsLength].options.size,
+              color: data.items[itemsLength].options.color,
+              img_url: data.items[itemsLength].options.img_url,
+            },
           },
         ],
         total: total,

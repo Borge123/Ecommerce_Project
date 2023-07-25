@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const redisStore = require("../redis/redisStore");
+//const redisStore = require("../redis/redisStore");
 const InventoryController = require("../controllers/InventoryController");
 const UserController = require("../controllers/UserController");
 const OrderController = require("../controllers/OrderController");
 const DiscountController = require("../controllers/DiscountController");
+const CartController = require("../controllers/CartController");
 const {
   validateItem,
   validateUpdateSku,
@@ -28,28 +29,38 @@ const {
   validateAddDiscount,
   validateRemoveDiscount,
 } = require("../middlewares/DiscountValidation");
+
+const { validateUpdateCart } = require("../middlewares/CartValidation");
 const { checkIfAdmin, checkIfRegistered } = require("../middlewares/auth");
 const { sessionChecker } = require("../middlewares/sessionChecker");
 /* GET home page. */
 router.get("/", async function (req, res, next) {
-  const test = await redisStore.client.get("sess:" + req.session.id);
-  if (test) {
-    const parsedData = JSON.parse(test);
-    console.log(parsedData.key);
-  }
+  // const test = await redisStore.client.get("sess:" + req.session.id);
+  // if (test) {
+  //   const parsedData = JSON.parse(test);
+  //   //console.log(parsedData);
+  // }
 
-  if (!req.session.key) {
-    //req.session.key = test2;
-    req.session.key = {
-      cart: {
-        "data": "testData",
-      },
-    };
-  }
+  // if (!req.session.cart) {
+  //   req.session.cart = {
+  //     cart: {
+  //       "data": "testData",
+  //     },
+  //   };
+  // }
 
-  console.log(req.session);
-  console.log(req.session.id);
+  const allSessions = req.sessionStore.all(function (err, sessions) {
+    if (err) {
+      return err;
+    } else {
+      return sessions;
+    }
+  });
 
+  console.log(await allSessions);
+
+  //console.log(req.session.id);
+  // console.log(req.session.cart);
   res.send("hello");
 });
 
@@ -140,4 +151,9 @@ router.put(
   validateRemoveDiscount,
   DiscountController.removeDiscount
 );
+
+// cart
+
+router.post("/updateCart", validateUpdateCart, CartController.updateCart);
+router.get("/getCartItems", sessionChecker, CartController.getCartItems);
 module.exports = router;
