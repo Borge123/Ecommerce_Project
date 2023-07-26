@@ -1,4 +1,4 @@
-const redisStore = require("../redis/redisStore");
+const { calcTotal } = require("../helpers/calcTotal");
 module.exports = class CartController {
   static async updateCart(req, res, next) {
     try {
@@ -7,11 +7,16 @@ module.exports = class CartController {
       //     const parsedData = JSON.parse(test);
       //     console.log(req.session.id);
       //   }
-      req.session.cart = req.body;
+      const cart = req.body;
+      cart.total = await calcTotal(cart.items);
 
-      return res
-        .status(200)
-        .json({ "Cart": "Success", "Updated": req.session?.cart });
+      if (cart.total) {
+        req.session.cart = cart;
+
+        return res
+          .status(200)
+          .json({ "Cart": "Success", "Updated": req.session?.cart });
+      }
     } catch (error) {
       console.log(error);
       return res.status(500).json({ error: error.name + " " + error.message });
@@ -19,7 +24,7 @@ module.exports = class CartController {
   }
   static async getCartItems(req, res, next) {
     try {
-      console.log(req.session.id);
+      //console.log(req.session.id);
       //   const cart = await redisStore.client.get("sess:" + req.session.id);
       //   if (cart) {
       //     const parsedData = JSON.parse(cart);
@@ -28,7 +33,7 @@ module.exports = class CartController {
 
       return res
         .status(200)
-        .json({ "Cart": "Success", "Items": req.session?.cart });
+        .json({ "Cart": "Success", "Data": req.session?.cart });
     } catch (error) {
       console.log(error);
       return res.status(500).json({ error: error.name + " " + error.message });
