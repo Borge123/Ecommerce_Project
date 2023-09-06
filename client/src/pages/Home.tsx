@@ -1,9 +1,12 @@
-import Navigation from "../components/Navigation";
-import Container from "react-bootstrap/Container";
+import Navigation from "../layouts/Navigation";
+import Footer from "../components/ui/footer/footer";
+import Main from "../features/home/components/Main";
 export default function Home() {
   return (
-    <Container>
+    <>
       <Navigation />
-    </Container>
+      <Main />
+      <Footer />
+    </>
   );
 }
