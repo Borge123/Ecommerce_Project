@@ -9,7 +9,7 @@ export default function Navigation() {
     <Navbar
       collapseOnSelect
       expand="lg"
-      className="bg-body-tertiary"
+      className="bg-body-tertiary pb-4"
       data-bs-theme="auto"
     >
       <Container>
