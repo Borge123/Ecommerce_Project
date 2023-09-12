@@ -11,6 +11,7 @@ export default function Navigation() {
       expand="lg"
       className="bg-body-tertiary pb-4"
       data-bs-theme="auto"
+      sticky="top"
     >
       <Container>
         <Navbar.Brand as={Link} to="/">

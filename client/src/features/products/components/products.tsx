@@ -1,16 +1,22 @@
-import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Product from "./product";
+import { useLoaderData } from "react-router-dom";
 export default function Products() {
+  const { products } = useLoaderData();
+
   return (
-    <Container>
-      <Row xs={1} md={2} l={4} xxl={4} className="g-4">
-        {Array.from({ length: 12 }).map((_, idx) => (
-          <Col key={idx}>
-            <Product />
-          </Col>
-        ))}
+    <Container className="">
+      <Row
+        xs={1}
+        md={2}
+        l={4}
+        xxl={4}
+        className=" vh-100 g-4 justify-content-md-center m-auto"
+      >
+        {products.map((product) => {
+          return <Product key={product._id} product={product} />;
+        })}
       </Row>
     </Container>
   );
