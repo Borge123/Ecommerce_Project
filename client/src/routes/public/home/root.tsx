@@ -1,5 +1,5 @@
 import HomePage from "../../../pages/HomePage";
-import ErrorPage from "../../../pages//ErrorPage";
+import ErrorPage from "../../../pages/ErrorPage";
 
 export const homeRoute = {
   path: "/",
