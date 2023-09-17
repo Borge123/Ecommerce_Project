@@ -11,7 +11,7 @@ export default function Products() {
   const [modalShow, setModalShow] = useState(false);
 
   return (
-    <Container className="">
+    <Container>
       <Row
         xs={1}
         md={2}

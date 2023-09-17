@@ -1,2 +1,9 @@
 import Layout from "../layouts/Layout";
-export default function LoginPage() {}
+import Login from "../features/authentication/components/login/login";
+export default function LoginPage() {
+  return (
+    <Layout>
+      <Login />
+    </Layout>
+  );
+}

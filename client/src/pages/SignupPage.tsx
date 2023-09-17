@@ -1,2 +1,9 @@
 import Layout from "../layouts/Layout";
-export default function SignupPage() {}
+import Signup from "../features/authentication/components/signup/signup";
+export default function SignupPage() {
+  return (
+    <Layout>
+      <Signup />
+    </Layout>
+  );
+}

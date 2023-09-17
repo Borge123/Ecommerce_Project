@@ -53,11 +53,29 @@ export default function Navigation() {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link eventKey={1} href="">
-              More deets
+            <Nav.Link
+              as={NavLink}
+              to="/signup"
+              style={({ isActive, isPending }) => {
+                return {
+                  fontWeight: isActive ? "bold" : "",
+                  color: isPending ? "red" : "black",
+                };
+              }}
+            >
+              Signup
             </Nav.Link>
-            <Nav.Link eventKey={2} href="">
-              Dank memes
+            <Nav.Link
+              as={NavLink}
+              to="/login"
+              style={({ isActive, isPending }) => {
+                return {
+                  fontWeight: isActive ? "bold" : "",
+                  color: isPending ? "red" : "black",
+                };
+              }}
+            >
+              Login
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

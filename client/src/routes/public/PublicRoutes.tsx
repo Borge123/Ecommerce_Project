@@ -1,3 +1,5 @@
 import { homeRoute } from "./home/root";
 import { productsRoute } from "./products/productsRoot";
-export const publicRoutes = [homeRoute, productsRoute];
+import { loginRoute } from "./login/loginRoot";
+import { signupRoute } from "./signup/signupRoot";
+export const publicRoutes = [homeRoute, productsRoute, loginRoute, signupRoute];
