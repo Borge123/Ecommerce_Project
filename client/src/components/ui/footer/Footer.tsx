@@ -1,5 +1,6 @@
 import "./Footer.css";
 export default function Footer() {
+  const date = new Date().getFullYear();
   return (
     <div className="footer-basic">
       <footer>
@@ -20,7 +21,7 @@ export default function Footer() {
             <a href="#">Privacy Policy</a>
           </li>
         </ul>
-        <p className="copyright">Company Name © 2023</p>
+        <p className="copyright">Company Name © {date}</p>
       </footer>
     </div>
   );
