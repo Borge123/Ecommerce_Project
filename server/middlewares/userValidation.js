@@ -53,21 +53,23 @@ module.exports = {
         "password": "password needs to be atleast 6 characters .",
       });
     }
-    if (role === undefined || role === null) {
-      return res.status(400).json({ "role": "role is required." });
-    }
 
-    if (role === "" || typeof role !== "string") {
-      return res.status(400).json({
-        "role": "role needs to be a string and is required.",
-      });
-    }
+    // might add possibility to chose role from app eventually but for now enforce admin users have to be created from the database itself
+    // if (role === undefined || role === null) {
+    //   return res.status(400).json({ "role": "role is required." });
+    // }
 
-    if (role.toLowerCase() != "admin" && role.toLowerCase() != "user") {
-      return res.status(400).json({
-        "role": "role needs to be either admin or user",
-      });
-    }
+    // if (role === "" || typeof role !== "string") {
+    //   return res.status(400).json({
+    //     "role": "role needs to be a string and is required.",
+    //   });
+    // }
+
+    // if (role.toLowerCase() != "admin" && role.toLowerCase() != "user") {
+    //   return res.status(400).json({
+    //     "role": "role needs to be either admin or user",
+    //   });
+    // }
     next();
   },
 

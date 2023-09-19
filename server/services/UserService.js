@@ -11,7 +11,7 @@ module.exports = class UserService {
         firstName: data.firstName,
         lastName: data.lastName,
         password: hashedPassword,
-        role: data.role,
+        role: "user",
       };
 
       const response = await new User(newUser).save();

@@ -1,6 +1,7 @@
 require("./database/db");
 require("dotenv").config();
 const redisStore = require("./redis/redisStore");
+const cors = require("cors");
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
@@ -11,20 +12,20 @@ var indexRouter = require("./routes/index");
 
 //console.log(model)
 const app = express();
-
-app.use(
-  session({
-    store: redisStore,
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: false, // if true only transmit cookie over https
-      httpOnly: false, // if true prevent client side JS from reading the cookie
-      maxAge: 1000 * 60 * 10, // * 15, // session max age in miliseconds
-    },
-  })
-);
+app.use(cors());
+// app.use(
+//   session({
+//     store: redisStore,
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//       secure: false, // if true only transmit cookie over https
+//       httpOnly: false, // if true prevent client side JS from reading the cookie
+//       maxAge: 1000 * 60 * 10, // * 15, // session max age in miliseconds
+//     },
+//   })
+// );
 async function testCookies() {
   //console.log(session);
   //example of encoded cookie string
