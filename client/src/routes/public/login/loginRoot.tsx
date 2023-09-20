@@ -1,7 +1,7 @@
 import LoginPage from "../../../pages/LoginPage";
 import ErrorPage from "../../../pages/ErrorPage";
 export const loginRoute = {
-  path: "/login",
+  path: "login",
   element: <LoginPage />,
   errorElement: <ErrorPage />,
 };
