@@ -12,6 +12,7 @@ var indexRouter = require("./routes/index");
 
 //console.log(model)
 const app = express();
+app.use(cookieParser());
 app.use(cors());
 // app.use(
 //   session({

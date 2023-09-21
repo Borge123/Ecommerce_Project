@@ -3,7 +3,8 @@ const UserService = require("../services/UserService");
 
 module.exports = {
   checkIfAdmin: async (req, res, next) => {
-    const token = req.headers.authorization?.split(" ")[1];
+    const token = req.cookies.access_token;
+
     if (!token) {
       return res.status(400).json({ "Unathorized": "JWT token not provided" });
     }
@@ -34,7 +35,7 @@ module.exports = {
   },
 
   checkIfRegistered: async (req, res, next) => {
-    const token = req.headers.authorization?.split(" ")[1];
+    const token = req.cookies.access_token;
     if (!token) {
       return res.status(400).json({ "Unathorized": "JWT token not provided" });
     }
@@ -62,6 +63,25 @@ module.exports = {
           .status(500)
           .json({ error: error.name + " " + error.message });
       }
+    }
+  },
+
+  authorize: async (req, res, next) => {
+    const token = req.cookies.access_token;
+    if (!token) {
+      return res
+        .status(403)
+        .json({ "Unathorized": "Access denied due to no token" });
+    }
+    let decodedToken;
+    try {
+      decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+
+      req.userId = decodedToken.id;
+      req.email = decodedToken.email;
+      next();
+    } catch (error) {
+      return res.status(403).json({ error: error.name + " " + error.message });
     }
   },
 };

@@ -83,12 +83,16 @@ module.exports = class UserService {
     }
   }
 
-  static async generateToken(id, email) {
+  static async generateToken(id, email, firstName) {
     let token;
     try {
-      token = jwt.sign({ id: id, email: email }, process.env.TOKEN_SECRET, {
-        expiresIn: "2h",
-      });
+      token = jwt.sign(
+        { id: id, email: email, firstName: firstName },
+        process.env.TOKEN_SECRET,
+        {
+          expiresIn: "2h",
+        }
+      );
 
       return token;
     } catch (error) {

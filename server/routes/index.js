@@ -31,7 +31,11 @@ const {
 } = require("../middlewares/DiscountValidation");
 
 const { validateUpdateCart } = require("../middlewares/CartValidation");
-const { checkIfAdmin, checkIfRegistered } = require("../middlewares/auth");
+const {
+  checkIfAdmin,
+  checkIfRegistered,
+  authorize,
+} = require("../middlewares/auth");
 const { sessionChecker } = require("../middlewares/sessionChecker");
 /* GET home page. */
 router.get("/", async function (req, res, next) {
@@ -92,8 +96,11 @@ router.delete("/deleteItem", checkIfAdmin, InventoryController.deleteItem);
 
 //Users
 router.get("/users", checkIfAdmin, UserController.getAllUsers);
+router.get("/protected", authorize, UserController.getAuthorizedUserInfo);
 router.post("/signup", validateSignup, UserController.signup);
 router.post("/login", validateLogin, UserController.login);
+router.post("/logout", authorize, UserController.logout);
+
 router.put(
   "/updateUser",
   checkIfAdmin,

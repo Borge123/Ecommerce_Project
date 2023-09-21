@@ -34,11 +34,18 @@ module.exports = class UserController {
         const match = await bcrypt.compare(password, hash);
 
         if (match) {
-          token = await UserService.generateToken(id, user[0].email);
-          console.log(token);
+          token = await UserService.generateToken(
+            id,
+            user[0].email,
+            user[0].firstName
+          );
+          //console.log(token);
           return res
+            .cookie("access_token", token, {
+              httpOnly: true,
+            })
             .status(200)
-            .json({ "Logged in": "Success", "token": token });
+            .json({ "Logged in": "Success" });
         } else {
           return res.status(400).json({ "password": "wrong password" });
         }
@@ -48,6 +55,17 @@ module.exports = class UserController {
     } catch (error) {
       return res.status(500).json({ error: error.name + " " + error.message });
     }
+  }
+
+  static async logout(req, res, next) {
+    return res
+      .clearCookie("access_token")
+      .status(200)
+      .json({ "message": "Successfully logged out" });
+  }
+
+  static async getAuthorizedUserInfo(req, res, next) {
+    return res.json({ user: { id: req.userId, email: req.email } });
   }
 
   static async getAllUsers(req, res, next) {
