@@ -1,6 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+
 module.exports = class UserService {
   static async createUser(data) {
     try {
@@ -77,24 +77,6 @@ module.exports = class UserService {
       if (user.length >= 1) {
         return user;
       }
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  }
-
-  static async generateToken(id, email, firstName) {
-    let token;
-    try {
-      token = jwt.sign(
-        { id: id, email: email, firstName: firstName },
-        process.env.TOKEN_SECRET,
-        {
-          expiresIn: "2h",
-        }
-      );
-
-      return token;
     } catch (error) {
       console.log(error);
       throw error;

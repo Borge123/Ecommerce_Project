@@ -67,7 +67,9 @@ module.exports = {
   },
 
   authorize: async (req, res, next) => {
-    const token = req.cookies.access_token;
+    //console.log(req.cookies);
+    const token = req.cookies.refreshToken;
+    console.log(token);
     if (!token) {
       return res
         .status(403)
@@ -79,6 +81,7 @@ module.exports = {
 
       req.userId = decodedToken.id;
       req.email = decodedToken.email;
+
       next();
     } catch (error) {
       return res.status(403).json({ error: error.name + " " + error.message });

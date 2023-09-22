@@ -1,6 +1,6 @@
 const UserService = require("../services/UserService");
 const bcrypt = require("bcrypt");
-
+const jwt = require("jsonwebtoken");
 module.exports = class UserController {
   static async signup(req, res, next) {
     try {
@@ -24,34 +24,52 @@ module.exports = class UserController {
   static async login(req, res, next) {
     const { email, password } = req.body;
 
-    let token;
+    let jwtToken;
+    let refreshToken;
+    let payload;
     try {
       const user = await UserService.getUserByEmail(email);
 
-      if (user) {
-        const id = user[0]._id.toString();
-        const hash = user[0].password;
-        const match = await bcrypt.compare(password, hash);
-
-        if (match) {
-          token = await UserService.generateToken(
-            id,
-            user[0].email,
-            user[0].firstName
-          );
-          //console.log(token);
-          return res
-            .cookie("access_token", token, {
-              httpOnly: true,
-            })
-            .status(200)
-            .json({ "Logged in": "Success" });
-        } else {
-          return res.status(400).json({ "password": "wrong password" });
-        }
+      if (!user) {
+        return res.status(400).json({ "User": "Did not find user" });
       }
 
-      return res.status(400).json({ "User": "Did not find user" });
+      const id = user[0]._id.toString();
+      const hash = user[0].password;
+      const match = await bcrypt.compare(password, hash);
+
+      if (!match) {
+        return res.status(400).json({ "password": "wrong password" });
+      }
+
+      payload = {
+        id: id,
+        email: user[0].email,
+        firstName: user[0].firstName,
+      };
+
+      jwtToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
+        expiresIn: "1h",
+      });
+
+      refreshToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
+        expiresIn: "7d",
+      });
+
+      // TODO : figure out why firefox are complaining with 'some cookies are misusing the recommended “SameSite“ attribute ' when SameSite is set to None and secure to true
+      res.cookie("refreshToken", refreshToken, {
+        secure: true, // Set to true if using HTTPS
+        httpOnly: true,
+        domain: ".app.localhost",
+        sameSite: "None", // Adjust to your requirements
+        maxAge: 7 * 24 * 60 * 60 * 1000, // Set the expiration time (7 days in this example)
+      });
+
+      res.status(200).json({
+        jwtToken,
+        refreshToken,
+        message: { "Logged in": "Success" },
+      });
     } catch (error) {
       return res.status(500).json({ error: error.name + " " + error.message });
     }
@@ -59,7 +77,9 @@ module.exports = class UserController {
 
   static async logout(req, res, next) {
     return res
-      .clearCookie("access_token")
+      .clearCookie("refreshToken", {
+        domain: ".app.localhost",
+      })
       .status(200)
       .json({ "message": "Successfully logged out" });
   }
