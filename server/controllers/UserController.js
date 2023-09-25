@@ -56,7 +56,6 @@ module.exports = class UserController {
         expiresIn: "7d",
       });
 
-      // TODO : figure out why firefox are complaining with 'some cookies are misusing the recommended “SameSite“ attribute ' when SameSite is set to None and secure to true
       res.cookie("refreshToken", refreshToken, {
         secure: true, // Set to true if using HTTPS
         httpOnly: true,
@@ -85,6 +84,34 @@ module.exports = class UserController {
       })
       .status(200)
       .json({ "message": "Successfully logged out" });
+  }
+
+  static async refreshJwt(req, res, next) {
+    if (req.cookies?.refreshToken) {
+      const cookie = req.cookies.refreshToken;
+      jwt.verify(cookie, process.env.TOKEN_SECRET, (err, decoded) => {
+        if (err) {
+          // Handle invalid or expired refresh token
+          res.status(401).json({ error: "Invalid or expired refresh token" });
+        } else {
+          // Generate a new JWT token
+          const newJwtToken = jwt.sign(
+            { userId: decoded.userId, email: decoded.email },
+            process.env.TOKEN_SECRET,
+            { expiresIn: "1h" }
+          );
+
+          // Update the JWT token in session storage
+          // Update sessionStorage in client ---
+          //sessionStorage.setItem('jwtToken', newJwtToken);
+
+          // Return the new JWT token to the client
+          res.json({ jwtToken: newJwtToken });
+        }
+      });
+    } else {
+      res.status(401).json({ error: "Refresh token not found" });
+    }
   }
 
   static async getAuthorizedUserInfo(req, res, next) {
