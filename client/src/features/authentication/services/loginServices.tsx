@@ -1,9 +1,16 @@
+//import { useUserDispatch } from "../context/AuthContext";
 type credentials = {
   email: string;
 
   password: string;
 };
-const login = async (credentials: credentials) => {
+async function Login(credentials: credentials) {
+  // dispatch({
+  //   status: "resolved",
+  //   user: userInfo,
+  //   error: null,
+  // });
+  //const { login } = useAuth();
   try {
     const res = await fetch("http://api.app.localhost:3000/login", {
       method: "POST",
@@ -21,15 +28,15 @@ const login = async (credentials: credentials) => {
     const jwtToken = data.jwtToken;
 
     sessionStorage.setItem("jwtToken", jwtToken);
-    await getUserInfo();
+    const userInfo = await getUserInfo();
 
-    if (!getUserInfo) {
+    if (!userInfo) {
       return;
     }
   } catch (error) {
     console.log(error);
   }
-};
+}
 
 const getUserInfo = async () => {
   const authRes = await fetch("http://api.app.localhost:3000/protected", {
@@ -44,4 +51,4 @@ const getUserInfo = async () => {
 
   return authRes.json();
 };
-export { login };
+export { Login };

@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import * as formik from "formik";
 import * as yup from "yup";
-import { login } from "../../services/loginServices";
+import { Login } from "../../services/loginServices";
 
 export default function LoginForm() {
   const { Formik } = formik;
@@ -27,7 +27,7 @@ export default function LoginForm() {
         setSubmitting(true);
         setTimeout(() => {
           alert(JSON.stringify(values, null, 2));
-          login(values);
+          Login(values);
           resetForm();
           setSubmitting(false);
         }, 400);

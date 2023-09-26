@@ -96,7 +96,11 @@ module.exports = class UserController {
         } else {
           // Generate a new JWT token
           const newJwtToken = jwt.sign(
-            { userId: decoded.userId, email: decoded.email },
+            {
+              userId: decoded.userId,
+              email: decoded.email,
+              firstName: decoded.firstName,
+            },
             process.env.TOKEN_SECRET,
             { expiresIn: "1h" }
           );
@@ -115,7 +119,9 @@ module.exports = class UserController {
   }
 
   static async getAuthorizedUserInfo(req, res, next) {
-    return res.json({ user: { id: req.userId, email: req.email } });
+    return res.json({
+      user: { id: req.userId, email: req.email, firstName: req.firstName },
+    });
   }
 
   static async getAllUsers(req, res, next) {

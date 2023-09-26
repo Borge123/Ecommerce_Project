@@ -5,7 +5,13 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { NavLink, Link } from "react-router-dom";
 import { logout } from "../../../features/authentication/services/logoutServices";
 import Logout from "../../../features/authentication/components/logout/logout";
+import {
+  useUserDispatch,
+  useUser,
+} from "../../../features/authentication/context/AuthContext";
 export default function Navigation() {
+  const dispatch = useUserDispatch();
+  const authState = useUser();
   return (
     <Navbar
       collapseOnSelect
@@ -79,6 +85,21 @@ export default function Navigation() {
               Login
             </Nav.Link>
             <Logout click={logout} />
+
+            <button
+              onClick={() => {
+                dispatch({
+                  type: "login",
+                  status: "complete",
+                  user: { name: "test" },
+                  error: null,
+                });
+              }}
+            >
+              testcontext
+            </button>
+
+            <button onClick={() => console.log(authState)}>testcontext2</button>
           </Nav>
         </Navbar.Collapse>
       </Container>
