@@ -1,16 +1,9 @@
-//import { useUserDispatch } from "../context/AuthContext";
 type credentials = {
   email: string;
 
   password: string;
 };
-async function Login(credentials: credentials) {
-  // dispatch({
-  //   status: "resolved",
-  //   user: userInfo,
-  //   error: null,
-  // });
-  //const { login } = useAuth();
+export async function Login(credentials: credentials) {
   try {
     const res = await fetch("http://api.app.localhost:3000/login", {
       method: "POST",
@@ -20,35 +13,34 @@ async function Login(credentials: credentials) {
       body: JSON.stringify(credentials),
       credentials: "include",
     });
-    const data = await res.json();
 
     if (!res.ok) {
       return;
     }
+    const data = await res.json();
     const jwtToken = data.jwtToken;
 
     sessionStorage.setItem("jwtToken", jwtToken);
-    const userInfo = await getUserInfo();
-
-    if (!userInfo) {
-      return;
-    }
   } catch (error) {
     console.log(error);
   }
 }
 
-const getUserInfo = async () => {
-  const authRes = await fetch("http://api.app.localhost:3000/protected", {
-    method: "GET",
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-  });
-  if (!authRes.ok) return;
+export async function getUserInfo() {
+  try {
+    const authRes = await fetch("http://api.app.localhost:3000/protected", {
+      method: "GET",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    if (!authRes.ok) return;
+    const data = await authRes.json();
 
-  return authRes.json();
-};
-export { Login };
+    return data.user;
+  } catch (error) {
+    console.log(error);
+  }
+}

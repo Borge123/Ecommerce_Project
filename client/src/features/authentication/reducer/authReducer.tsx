@@ -9,6 +9,16 @@ export default function authReducer(authState, action) {
         },
       };
     }
+
+    case "logout": {
+      return {
+        authState: {
+          status: null,
+          user: null,
+          error: null,
+        },
+      };
+    }
     default:
       return authState;
   }

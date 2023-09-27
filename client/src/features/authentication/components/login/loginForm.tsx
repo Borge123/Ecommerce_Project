@@ -5,15 +5,17 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import * as formik from "formik";
 import * as yup from "yup";
-import { Login } from "../../services/loginServices";
-
+import { Login, getUserInfo } from "../../services/loginServices";
+import { useUserDispatch } from "../../context/AuthContext";
 export default function LoginForm() {
+  const dispatch = useUserDispatch();
   const { Formik } = formik;
 
   const schema = yup.object().shape({
     email: yup.string().email("Invalid email address").required("Required"),
     password: yup.string().required("Required"),
   });
+  // const handleSubmit = () => {};
 
   return (
     <Formik
@@ -28,12 +30,32 @@ export default function LoginForm() {
         setTimeout(() => {
           alert(JSON.stringify(values, null, 2));
           Login(values);
+          let userObj;
+          const userData = getUserInfo();
+          userData.then((value) => {
+            dispatch({
+              type: "login",
+              status: "complete",
+              user: value,
+              error: null,
+            });
+            console.log(value);
+          });
+
           resetForm();
+
           setSubmitting(false);
         }, 400);
       }}
     >
-      {({ handleSubmit, handleChange, values, touched, errors }) => (
+      {({
+        handleSubmit,
+        handleChange,
+        isSubmitting,
+        values,
+        touched,
+        errors,
+      }) => (
         <Container>
           <Row
             xs={1}
@@ -82,7 +104,9 @@ export default function LoginForm() {
                   <Form.Check type="checkbox" label="Check me out" />
                 </Form.Group>
 
-                <Button type="submit">Login</Button>
+                <Button type="submit" disabled={isSubmitting}>
+                  Login
+                </Button>
               </Form>
             </Col>
           </Row>

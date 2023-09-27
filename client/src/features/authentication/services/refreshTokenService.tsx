@@ -24,4 +24,4 @@ const refreshToken = async () => {
   }
 };
 
-export { refreshToken as logout };
+export { refreshToken };
