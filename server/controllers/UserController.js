@@ -39,7 +39,7 @@ module.exports = class UserController {
       const match = await bcrypt.compare(password, hash);
 
       if (!match) {
-        return res.status(400).json({ "password": "wrong password" });
+        return res.status(401).json({ "password": "wrong password" });
       }
 
       payload = {

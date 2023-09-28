@@ -15,14 +15,21 @@ export async function Login(credentials: credentials) {
     });
 
     if (!res.ok) {
+      if (res.status === 401) {
+        return res.status;
+      }
       return;
     }
     const data = await res.json();
+
     const jwtToken = data.jwtToken;
+    console.log("loggin in");
 
     sessionStorage.setItem("jwtToken", jwtToken);
+    if (data) return res.status;
   } catch (error) {
-    console.log(error);
+    //test return error
+    console.error(error);
   }
 }
 

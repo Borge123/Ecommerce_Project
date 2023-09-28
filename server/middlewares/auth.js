@@ -69,7 +69,6 @@ module.exports = {
   authorize: async (req, res, next) => {
     if (req.cookies?.refreshToken) {
       const token = req.cookies.refreshToken;
-      console.log(token);
 
       let decodedToken;
       try {

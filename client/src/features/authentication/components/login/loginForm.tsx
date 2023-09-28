@@ -15,7 +15,6 @@ export default function LoginForm() {
     email: yup.string().email("Invalid email address").required("Required"),
     password: yup.string().required("Required"),
   });
-  // const handleSubmit = () => {};
 
   return (
     <Formik
@@ -27,25 +26,31 @@ export default function LoginForm() {
       validateOnChange={true}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setSubmitting(true);
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          Login(values);
-          let userObj;
-          const userData = getUserInfo();
-          userData.then((value) => {
-            dispatch({
-              type: "login",
-              status: "complete",
-              user: value,
-              error: null,
-            });
-            console.log(value);
-          });
+        alert(JSON.stringify(values, null, 2));
+        const loginRequest = Login(values);
 
+        loginRequest.then((value) => {
+          if (value === 200) {
+            console.log(value);
+            //TODO figure out how to properly check if fetch threw error
+            //TODO figure out how to get value to not be undefined and use that to determine if the rest of the code should run
+            setTimeout(() => {
+              const userData = getUserInfo();
+              console.log("fetching user data");
+              userData.then((value) => {
+                dispatch({
+                  type: "login",
+                  status: "complete",
+                  user: value,
+                  error: null,
+                });
+              });
+            }, 100);
+          }
           resetForm();
 
           setSubmitting(false);
-        }, 400);
+        });
       }}
     >
       {({
