@@ -7,9 +7,11 @@ import * as formik from "formik";
 import * as yup from "yup";
 import { Login, getUserInfo } from "../../services/loginServices";
 import { useUserDispatch } from "../../context/AuthContext";
+import { useLocalStorage } from "../../../../hooks/useLocalStorage";
 export default function LoginForm() {
   const dispatch = useUserDispatch();
   const { Formik } = formik;
+  const { setItem } = useLocalStorage();
 
   const schema = yup.object().shape({
     email: yup.string().email("Invalid email address").required("Required"),
@@ -40,10 +42,11 @@ export default function LoginForm() {
               userData.then((value) => {
                 dispatch({
                   type: "login",
-                  status: "complete",
+                  status: "success",
                   user: value,
                   error: null,
                 });
+                setItem("user", JSON.stringify(value));
               });
             }, 100);
           }

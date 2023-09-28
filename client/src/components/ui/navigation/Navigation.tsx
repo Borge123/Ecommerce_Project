@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -5,13 +6,10 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { NavLink, Link } from "react-router-dom";
 import { logout } from "../../../features/authentication/services/logoutServices";
 import Logout from "../../../features/authentication/components/logout/logout";
-import {
-  useUserDispatch,
-  useUser,
-} from "../../../features/authentication/context/AuthContext";
+import { useUser } from "../../../features/authentication/context/AuthContext";
 export default function Navigation() {
-  const dispatch = useUserDispatch();
   const authState = useUser();
+
   return (
     <Navbar
       collapseOnSelect
@@ -72,34 +70,22 @@ export default function Navigation() {
             >
               Signup
             </Nav.Link>
-            <Nav.Link
-              as={NavLink}
-              to="/login"
-              style={({ isActive, isPending }) => {
-                return {
-                  fontWeight: isActive ? "bold" : "",
-                  color: isPending ? "red" : "black",
-                };
-              }}
-            >
-              Login
-            </Nav.Link>
-            <Logout click={logout} />
-
-            <button
-              onClick={() => {
-                dispatch({
-                  type: "login",
-                  status: "complete",
-                  user: { name: "test" },
-                  error: null,
-                });
-              }}
-            >
-              testcontext
-            </button>
-
-            <button onClick={() => console.log(authState)}>testcontext2</button>
+            {!authState.user ? (
+              <Nav.Link
+                as={NavLink}
+                to="/login"
+                style={({ isActive, isPending }) => {
+                  return {
+                    fontWeight: isActive ? "bold" : "",
+                    color: isPending ? "red" : "black",
+                  };
+                }}
+              >
+                Login
+              </Nav.Link>
+            ) : (
+              <Logout click={logout} />
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
