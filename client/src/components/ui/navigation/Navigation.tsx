@@ -70,7 +70,9 @@ export default function Navigation() {
             >
               Signup
             </Nav.Link>
-            {!authState.user ? (
+          </Nav>
+          {!authState.user ? (
+            <Nav>
               <Nav.Link
                 as={NavLink}
                 to="/login"
@@ -83,10 +85,24 @@ export default function Navigation() {
               >
                 Login
               </Nav.Link>
-            ) : (
+            </Nav>
+          ) : (
+            <Nav>
               <Logout click={logout} />
-            )}
-          </Nav>
+              <Nav.Link
+                as={NavLink}
+                to="/dashboard"
+                style={({ isActive, isPending }) => {
+                  return {
+                    fontWeight: isActive ? "bold" : "",
+                    color: isPending ? "red" : "black",
+                  };
+                }}
+              >
+                {authState.user.firstName}
+              </Nav.Link>
+            </Nav>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>

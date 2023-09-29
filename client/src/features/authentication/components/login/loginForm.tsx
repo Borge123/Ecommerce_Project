@@ -8,10 +8,12 @@ import * as yup from "yup";
 import { Login, getUserInfo } from "../../services/loginServices";
 import { useUserDispatch } from "../../context/AuthContext";
 import { useLocalStorage } from "../../../../hooks/useLocalStorage";
+import { useNavigate } from "react-router-dom";
 export default function LoginForm() {
   const dispatch = useUserDispatch();
   const { Formik } = formik;
   const { setItem } = useLocalStorage();
+  const navigate = useNavigate();
 
   const schema = yup.object().shape({
     email: yup.string().email("Invalid email address").required("Required"),
@@ -34,8 +36,8 @@ export default function LoginForm() {
         loginRequest.then((value) => {
           if (value === 200) {
             console.log(value);
-            //TODO figure out how to properly check if fetch threw error
-            //TODO figure out how to get value to not be undefined and use that to determine if the rest of the code should run
+            //TODO on login success redirect to home or a dashboard
+
             setTimeout(() => {
               const userData = getUserInfo();
               console.log("fetching user data");
@@ -47,6 +49,7 @@ export default function LoginForm() {
                   error: null,
                 });
                 setItem("user", JSON.stringify(value));
+                navigate("/dashboard");
               });
             }, 100);
           }

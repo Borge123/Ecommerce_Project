@@ -15,7 +15,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const user = getItem("user");
-
+    //check if user already exists in localstorage on render
     if (user) {
       dispatch({
         type: "setuser",
