@@ -74,10 +74,6 @@ module.exports = {
       try {
         decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
 
-        req.userId = decodedToken.id;
-        req.firstName = decodedToken.firstName;
-        req.email = decodedToken.email;
-
         next();
       } catch (error) {
         return res

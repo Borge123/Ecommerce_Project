@@ -10,6 +10,8 @@ const logout = async () => {
       credentials: "include",
     });
     sessionStorage.removeItem("jwtToken");
+    localStorage.removeItem("user");
+    localStorage.removeItem("jwtExpire");
     if (!res.ok) return;
 
     return res.json();

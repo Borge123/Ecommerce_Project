@@ -5,14 +5,15 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import * as formik from "formik";
 import * as yup from "yup";
-import { Login, getUserInfo } from "../../services/loginServices";
+import { Login, GetUserInfo } from "../../services/loginServices";
 import { useUserDispatch } from "../../context/AuthContext";
 import { useLocalStorage } from "../../../../hooks/useLocalStorage";
+
 import { useNavigate } from "react-router-dom";
 export default function LoginForm() {
   const dispatch = useUserDispatch();
   const { Formik } = formik;
-  const { setItem } = useLocalStorage();
+  const { setItem, getItem } = useLocalStorage();
   const navigate = useNavigate();
 
   const schema = yup.object().shape({
@@ -37,17 +38,19 @@ export default function LoginForm() {
           if (value === 200) {
             console.log(value);
             //TODO on login success redirect to home or a dashboard
-
+            const token = sessionStorage.getItem("jwtToken");
             setTimeout(() => {
-              const userData = getUserInfo();
+              const userData = GetUserInfo();
               console.log("fetching user data");
               userData.then((value) => {
                 dispatch({
                   type: "login",
                   status: "success",
                   user: value,
+                  token: token,
                   error: null,
                 });
+
                 setItem("user", JSON.stringify(value));
                 navigate("/dashboard");
               });

@@ -43,18 +43,20 @@ module.exports = class UserController {
       }
 
       payload = {
-        id: id,
+        userId: id,
         email: user[0].email,
         firstName: user[0].firstName,
       };
 
       jwtToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
-        expiresIn: "1h",
+        expiresIn: "15m",
       });
 
       refreshToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
         expiresIn: "7d",
       });
+      const now = new Date();
+      const jwtExpire = now.setTime(now.getTime() + 0.15 * 3600 * 1000);
 
       res.cookie("refreshToken", refreshToken, {
         secure: true, // Set to true if using HTTPS
@@ -67,6 +69,7 @@ module.exports = class UserController {
       res.status(200).json({
         jwtToken,
         refreshToken,
+        jwtExpire,
         message: { "Logged in": "Success" },
       });
     } catch (error) {
@@ -92,6 +95,7 @@ module.exports = class UserController {
       jwt.verify(cookie, process.env.TOKEN_SECRET, (err, decoded) => {
         if (err) {
           // Handle invalid or expired refresh token
+
           res.status(401).json({ error: "Invalid or expired refresh token" });
         } else {
           // Generate a new JWT token
@@ -102,7 +106,7 @@ module.exports = class UserController {
               firstName: decoded.firstName,
             },
             process.env.TOKEN_SECRET,
-            { expiresIn: "1h" }
+            { expiresIn: "15m" }
           );
 
           // Update the JWT token in session storage
@@ -119,9 +123,28 @@ module.exports = class UserController {
   }
 
   static async getAuthorizedUserInfo(req, res, next) {
-    return res.json({
-      user: { id: req.userId, email: req.email, firstName: req.firstName },
-    });
+    if (req.cookies.refreshToken) {
+      const token = req.cookies.refreshToken;
+      try {
+        jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
+          if (err) {
+            // Handle invalid or expired refresh token
+
+            res.status(401).json({ error: "Invalid or expired refresh token" });
+          } else {
+            return res.json({
+              user: {
+                id: decoded.userId,
+                email: decoded.email,
+                firstName: decoded.firstName,
+              },
+            });
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 
   static async getAllUsers(req, res, next) {

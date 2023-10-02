@@ -5,6 +5,7 @@ export default function authReducer(authState, action) {
         status: action.status,
         user: action.user,
         error: action.error,
+        token: action.token,
       };
     }
 
@@ -13,6 +14,7 @@ export default function authReducer(authState, action) {
         status: null,
         user: null,
         error: null,
+        token: null,
       };
     }
     case "setuser": {
@@ -20,6 +22,12 @@ export default function authReducer(authState, action) {
         status: action.status,
         user: action.user,
         error: action.error,
+        token: action.token,
+      };
+    }
+    case "refreshtoken": {
+      return {
+        token: action.token,
       };
     }
     default:

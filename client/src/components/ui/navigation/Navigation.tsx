@@ -9,7 +9,7 @@ import Logout from "../../../features/authentication/components/logout/logout";
 import { useUser } from "../../../features/authentication/context/AuthContext";
 export default function Navigation() {
   const authState = useUser();
-
+  //TODO: Try to avoid users being redirected to homepage after refreshing token
   return (
     <Navbar
       collapseOnSelect

@@ -26,6 +26,10 @@ export async function Login(credentials: credentials) {
     console.log("loggin in");
 
     sessionStorage.setItem("jwtToken", jwtToken);
+    localStorage.setItem("jwtExpire", data.jwtExpire);
+    console.log(data.jwtExpire);
+    const now = new Date();
+    console.log(now.getTime());
     if (data) return res.status;
   } catch (error) {
     //test return error
@@ -33,7 +37,7 @@ export async function Login(credentials: credentials) {
   }
 }
 
-export async function getUserInfo() {
+export async function GetUserInfo() {
   try {
     const authRes = await fetch("http://api.app.localhost:3000/protected", {
       method: "GET",
@@ -41,6 +45,7 @@ export async function getUserInfo() {
         "Accept": "application/json",
         "Content-Type": "application/json",
       },
+
       credentials: "include",
     });
     if (!authRes.ok) return;

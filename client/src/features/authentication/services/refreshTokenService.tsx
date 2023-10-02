@@ -1,4 +1,6 @@
-const refreshToken = async () => {
+import { useSessionStorage } from "../../../hooks/useSessionStorage";
+import { useUserDispatch } from "../context/AuthContext";
+export const refreshToken = async () => {
   try {
     const res = await fetch("http://api.app.localhost:3000/refresh", {
       method: "POST",
@@ -15,13 +17,11 @@ const refreshToken = async () => {
     }
     const data = await res.json();
     const jwtToken = data.jwtToken;
-    sessionStorage.setItem("jwtToken", jwtToken);
+    // setItem("jwtToken", jwtToken);
     if (!res.ok) return;
 
-    return data;
+    return jwtToken;
   } catch (error) {
     console.log(error);
   }
 };
-
-export { refreshToken };
