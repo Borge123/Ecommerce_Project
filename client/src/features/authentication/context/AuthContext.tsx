@@ -19,15 +19,16 @@ export function AuthProvider({ children }) {
   const getUserItem = useLocalStorage();
   const getJwtExpiration = useLocalStorage();
   const authStateUser = useUser();
+  const now = new Date();
   //hook to track route changes
   const location = useLocation();
   useEffect(() => {
-    const now = new Date();
-    now.getTime();
+    //TODO test if this can be moves to its own hook
     const user = getUserItem.getItem("user");
     const token = getItem("jwtToken");
-    const expires = getJwtExpiration.getItem("jwtExpire");
-    console.log("test");
+    let expires = getJwtExpiration.getItem("jwtExpire");
+    console.log(expires);
+    console.log(now.getTime());
 
     //const user = getItem("user");
     if (expires < now.getTime() && user) {
@@ -35,10 +36,13 @@ export function AuthProvider({ children }) {
       refreshToken().then((value) => {
         dispatch({
           type: "refreshtoken",
+          status: "success",
+          user: JSON.parse(user),
           token: value,
+          error: null,
         });
-        console.log(value);
-        getJwtExpiration.setItem("jwtExpire", value);
+
+        expires = getJwtExpiration.getItem("jwtExpire");
         setItem("jwtToken", value);
       });
     } else if (token && authState.user === null) {
@@ -51,7 +55,6 @@ export function AuthProvider({ children }) {
         error: null,
       });
     }
-    //check if user already exists in localstorage on render
   }, [location]);
   return (
     <UserContext.Provider value={authState}>

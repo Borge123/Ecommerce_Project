@@ -1,3 +1,4 @@
+import { decodeJwt } from "../../../helpers/decodeJwt";
 type credentials = {
   email: string;
 
@@ -25,11 +26,12 @@ export async function Login(credentials: credentials) {
     const jwtToken = data.jwtToken;
     console.log("loggin in");
 
+    const expires = data.jwtExpire;
+
     sessionStorage.setItem("jwtToken", jwtToken);
-    localStorage.setItem("jwtExpire", data.jwtExpire);
-    console.log(data.jwtExpire);
-    const now = new Date();
-    console.log(now.getTime());
+
+    localStorage.setItem("jwtExpire", expires);
+
     if (data) return res.status;
   } catch (error) {
     //test return error

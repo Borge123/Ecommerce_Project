@@ -27,6 +27,9 @@ export default function authReducer(authState, action) {
     }
     case "refreshtoken": {
       return {
+        status: action.status,
+        user: action.user,
+        error: action.error,
         token: action.token,
       };
     }

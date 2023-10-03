@@ -9,10 +9,11 @@ const logout = async () => {
 
       credentials: "include",
     });
+
+    if (!res.ok) return;
     sessionStorage.removeItem("jwtToken");
     localStorage.removeItem("user");
     localStorage.removeItem("jwtExpire");
-    if (!res.ok) return;
 
     return res.json();
   } catch (error) {

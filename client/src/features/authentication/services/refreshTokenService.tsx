@@ -1,5 +1,3 @@
-import { useSessionStorage } from "../../../hooks/useSessionStorage";
-import { useUserDispatch } from "../context/AuthContext";
 export const refreshToken = async () => {
   try {
     const res = await fetch("http://api.app.localhost:3000/refresh", {
@@ -15,10 +13,15 @@ export const refreshToken = async () => {
     if (!res.ok) {
       return;
     }
-    const data = await res.json();
-    const jwtToken = data.jwtToken;
+
     // setItem("jwtToken", jwtToken);
     if (!res.ok) return;
+    const data = await res.json();
+    const jwtToken = data.jwtToken;
+    const now = new Date();
+    const jwtExpire = now.setTime(now.getTime() + 0.01 * 3600 * 1000);
+
+    localStorage.setItem("jwtExpire", jwtExpire);
 
     return jwtToken;
   } catch (error) {

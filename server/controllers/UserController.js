@@ -49,14 +49,14 @@ module.exports = class UserController {
       };
 
       jwtToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
-        expiresIn: "15m",
+        expiresIn: "1m",
       });
 
       refreshToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
         expiresIn: "7d",
       });
       const now = new Date();
-      const jwtExpire = now.setTime(now.getTime() + 0.15 * 3600 * 1000);
+      const jwtExpire = now.setTime(now.getTime() + 0.01 * 3600 * 1000);
 
       res.cookie("refreshToken", refreshToken, {
         secure: true, // Set to true if using HTTPS
@@ -106,7 +106,7 @@ module.exports = class UserController {
               firstName: decoded.firstName,
             },
             process.env.TOKEN_SECRET,
-            { expiresIn: "15m" }
+            { expiresIn: "1m" }
           );
 
           // Update the JWT token in session storage
