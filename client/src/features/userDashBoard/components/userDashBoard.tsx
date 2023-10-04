@@ -2,7 +2,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useUser } from "../../authentication/context/AuthContext";
 import Container from "react-bootstrap/Container";
-
+import { logout } from "../../authentication/services/logoutServices";
+import Logout from "../../authentication/components/logout/logout";
 export default function UserDashBoard() {
   const authState = useUser();
   return (
@@ -16,6 +17,7 @@ export default function UserDashBoard() {
       >
         <Col>
           <h1>Dashboard for {authState.user?.firstName}</h1>
+          <Logout click={logout} />
         </Col>
       </Row>
     </Container>

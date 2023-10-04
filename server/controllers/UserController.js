@@ -78,15 +78,19 @@ module.exports = class UserController {
   }
 
   static async logout(req, res, next) {
-    return res
-      .clearCookie("refreshToken", {
-        secure: true, // Set to true if using HTTPS
-        httpOnly: true,
-        domain: ".app.localhost",
-        sameSite: "None", // Adjust to your requirements
-      })
-      .status(200)
-      .json({ "message": "Successfully logged out" });
+    try {
+      return res
+        .clearCookie("refreshToken", {
+          secure: true, // Set to true if using HTTPS
+          httpOnly: true,
+          domain: ".app.localhost",
+          sameSite: "None", // Adjust to your requirements
+        })
+        .status(200)
+        .json({ "message": "Successfully logged out" });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   static async refreshJwt(req, res, next) {

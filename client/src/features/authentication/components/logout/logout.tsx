@@ -8,15 +8,14 @@ export default function Logout({ click }) {
     <>
       <Button
         onClick={() => {
-          click();
           dispatch({
             type: "logout",
           });
-          <Navigate to="/" />;
+
+          click();
         }}
         variant="outline-dangerr"
       >
-        {" "}
         Logout
       </Button>
     </>

@@ -23,14 +23,12 @@ export function AuthProvider({ children }) {
   //hook to track route changes
   const location = useLocation();
   useEffect(() => {
-    //TODO test if this can be moves to its own hook
+    //TODO test if this can be moved to its own hook
     const user = getUserItem.getItem("user");
-    const token = getItem("jwtToken");
     let expires = getJwtExpiration.getItem("jwtExpire");
     console.log(expires);
     console.log(now.getTime());
 
-    //const user = getItem("user");
     if (expires < now.getTime() && user) {
       console.log("need to refresh token");
       refreshToken().then((value) => {
@@ -44,15 +42,6 @@ export function AuthProvider({ children }) {
 
         expires = getJwtExpiration.getItem("jwtExpire");
         setItem("jwtToken", value);
-      });
-    } else if (token && authState.user === null) {
-      //Check if this can be moved somewhere else
-      dispatch({
-        type: "setuser",
-        status: "success",
-        user: JSON.parse(user),
-        token: token,
-        error: null,
       });
     }
   }, [location]);

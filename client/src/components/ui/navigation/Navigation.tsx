@@ -78,7 +78,7 @@ export default function Navigation() {
                 to="/login"
                 style={({ isActive, isPending }) => {
                   return {
-                    fontWeight: isActive ? "bold" : "",
+                    fontWeight: isActive ? "bold" : "normal",
                     color: isPending ? "red" : "black",
                   };
                 }}
@@ -94,7 +94,7 @@ export default function Navigation() {
                 to="/dashboard"
                 style={({ isActive, isPending }) => {
                   return {
-                    fontWeight: isActive ? "bold" : "",
+                    fontWeight: isActive ? "bold" : "normal",
                     color: isPending ? "red" : "black",
                   };
                 }}
