@@ -46,7 +46,7 @@ module.exports = {
       const checkUser = await UserService.checkUserRole(decodedToken.id);
 
       if (checkUser === "admin" || checkUser === "user") {
-        req.user = decodedToken.id;
+        //req.user = decodedToken.id;
         next();
       } else {
         return res.status(403).json({

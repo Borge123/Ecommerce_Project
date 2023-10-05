@@ -12,6 +12,7 @@ export default function Products() {
 
   return (
     <Container>
+      <h1 align="center">Products</h1>
       <Row
         xs={1}
         md={2}

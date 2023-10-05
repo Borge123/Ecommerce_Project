@@ -15,19 +15,17 @@ export const UserContext = createContext(null);
 export const UserDispatchContext = createContext(null);
 export function AuthProvider({ children }) {
   const [authState, dispatch] = useReducer(authReducer, initialState);
-  const { getItem, setItem } = useSessionStorage();
+  const { setItem } = useSessionStorage();
   const getUserItem = useLocalStorage();
   const getJwtExpiration = useLocalStorage();
-  const authStateUser = useUser();
+
   const now = new Date();
   //hook to track route changes
   const location = useLocation();
   useEffect(() => {
-    //TODO test if this can be moved to its own hook
     const user = getUserItem.getItem("user");
     let expires = getJwtExpiration.getItem("jwtExpire");
-    console.log(expires);
-    console.log(now.getTime());
+    //if expired and user exists in authState
 
     if (expires < now.getTime() && user) {
       console.log("need to refresh token");

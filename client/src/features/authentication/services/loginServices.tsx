@@ -34,7 +34,6 @@ export async function Login(credentials: credentials) {
 
     if (data) return res.status;
   } catch (error) {
-    //test return error
     console.error(error);
   }
 }

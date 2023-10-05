@@ -1,6 +1,7 @@
 import fetchProducts from "./fetchProducts";
-export async function getProduct(id) {
-  const products = await fetchProducts();
+let products = await fetchProducts();
+
+export async function GetProduct(id) {
   const product = products.find((product) => product._id === id);
   return product ?? null;
 }

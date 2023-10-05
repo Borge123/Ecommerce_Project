@@ -1,9 +1,17 @@
-import { testData } from "./testProductData";
-
 export default async function fetchProducts() {
-  return testData;
-  //   setTimeout(() => {
-  //     console.log(testData);
+  try {
+    const res = await fetch("http://api.app.localhost:3000/items", {
+      method: "GET",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    if (!res.ok) return;
+    const data = await res.json();
 
-  //   }, 2000);
+    return data.Items;
+  } catch (error) {
+    console.log(error);
+  }
 }
