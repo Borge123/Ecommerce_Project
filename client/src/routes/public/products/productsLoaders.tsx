@@ -1,7 +1,7 @@
 import fetchProducts from "../../../features/products/services/fetchProducts";
 
 export async function ProductsLoader() {
-  const products = await fetchProducts();
+  let products = await fetchProducts();
 
   return { products };
 }
