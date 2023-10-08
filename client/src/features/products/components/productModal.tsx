@@ -4,7 +4,7 @@ import { useLoaderData } from "react-router-dom";
 
 export default function ProductModal(props) {
   const { product } = useLoaderData();
-
+  const path = "src/features/products/assets/images/";
   return (
     <Modal
       {...props}
@@ -17,6 +17,10 @@ export default function ProductModal(props) {
           Modal heading
           {product._id}
         </Modal.Title>
+        <img
+          src={path + product.item.img_url + ".jpg"}
+          alt={product.item.img_url}
+        />
       </Modal.Header>
       <Modal.Body>
         <h4>{product.item.name}</h4>

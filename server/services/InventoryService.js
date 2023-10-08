@@ -19,6 +19,7 @@ module.exports = class InventoryService {
         item: {
           name: data.item.name,
           description: data.item.description,
+          img_url: data.item.img_url,
         },
 
         skus: [
@@ -149,7 +150,11 @@ module.exports = class InventoryService {
         },
         {
           $set: {
-            item: { name: data.item.name, description: data.item.description },
+            item: {
+              name: data.item.name,
+              description: data.item.description,
+              img_url: data.item.img_url,
+            },
           },
         }
       );

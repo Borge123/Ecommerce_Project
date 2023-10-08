@@ -74,7 +74,7 @@ module.exports = class InventoryController {
       const itemExist = await InventoryService.getItemById(req.body.id);
       if (itemExist) {
         const updateItem = await InventoryService.updateItem(
-          req.body.id,
+          itemExist._id,
           req.body
         );
 

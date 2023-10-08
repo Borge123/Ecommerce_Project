@@ -13,6 +13,10 @@ const InventorySchema = new Schema(
         type: String,
         required: true,
       },
+      img_url: {
+        type: String,
+        required: true,
+      },
 
       discount_id: {
         type: Schema.Types.ObjectID,

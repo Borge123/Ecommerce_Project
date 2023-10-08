@@ -1,6 +1,6 @@
 module.exports = {
   validateItem: async (req, res, next) => {
-    const { name, description } = req.body.item;
+    const { name, description, img_url } = req.body.item;
 
     if (name === undefined || name === null) {
       return res.status(400).json({ "name": "name is required." });
@@ -21,6 +21,16 @@ module.exports = {
     if (description === "" || typeof description !== "string") {
       return res.status(400).json({
         "description": "description needs to be a string and is required.",
+      });
+    }
+
+    if (img_url === undefined || img_url === null) {
+      return res.status(400).json({ "img_url": "img_url is required." });
+    }
+
+    if (img_url === "" || typeof img_url !== "string") {
+      return res.status(400).json({
+        "img_url": "img_url needs to be a string and is required.",
       });
     }
 
@@ -181,7 +191,7 @@ module.exports = {
   },
 
   validateUpdateItem: async (req, res, next) => {
-    const { name, description } = req.body.item;
+    const { name, description, img_url } = req.body.item;
     const { id } = req.body;
     if (id === undefined || id === null) {
       return res.status(400).json({ "id": "id is required." });
@@ -212,6 +222,16 @@ module.exports = {
     if (description === "" || typeof description !== "string") {
       return res.status(400).json({
         "description": "description needs to be a string and is required.",
+      });
+    }
+
+    if (img_url === undefined || img_url === null) {
+      return res.status(400).json({ "img_url": "img_url is required." });
+    }
+
+    if (img_url === "" || typeof img_url !== "string") {
+      return res.status(400).json({
+        "img_url": "img_url needs to be a string and is required.",
       });
     }
 
