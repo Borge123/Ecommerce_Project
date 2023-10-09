@@ -11,7 +11,7 @@ export default function Product({ product, onShow }) {
   console.log(result);
 
   console.log(images);
-  const path = "src/features/products/assets/images/";
+  const path = "/src/features/products/assets/images/";
   return (
     <Card onClick={onShow}>
       <Card.Img
