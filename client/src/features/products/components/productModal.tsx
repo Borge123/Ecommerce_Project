@@ -1,10 +1,11 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { createImageSrc } from "../helpers/createImageSrc";
 import { useLoaderData } from "react-router-dom";
 
 export default function ProductModal(props) {
   const { product } = useLoaderData();
-  const path = "/src/features/products/assets/images/";
+
   return (
     <Modal
       {...props}
@@ -21,7 +22,7 @@ export default function ProductModal(props) {
         <p>{product.item.description}</p>
         <img
           className="img-fluid"
-          src={path + product.item.img_url + ".jpg"}
+          src={createImageSrc(product.item.img_url)}
           alt={product.item.img_url}
         />
       </Modal.Body>
