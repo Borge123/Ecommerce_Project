@@ -49,13 +49,6 @@ export default function Navigation() {
             >
               Products
             </Nav.Link>
-            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="">Action</NavDropdown.Item>
-              <NavDropdown.Item href="">Another action</NavDropdown.Item>
-              <NavDropdown.Item href="">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="">Separated link</NavDropdown.Item>
-            </NavDropdown>
           </Nav>
           <Nav>
             <Nav.Link
@@ -89,6 +82,40 @@ export default function Navigation() {
           ) : (
             <Nav>
               <Logout click={logout} />
+              <NavDropdown
+                title={authState?.user.firstName}
+                id="collasible-nav-dropdown"
+              >
+                <NavDropdown.Item
+                  as={NavLink}
+                  to="/dashboard"
+                  style={({ isActive, isPending }) => {
+                    return {
+                      fontWeight: isActive ? "bold" : "normal",
+                      color: isPending ? "red" : "black",
+                      backgroundColor: isActive ? "inherit" : "inherit",
+                    };
+                  }}
+                >
+                  Account
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  as={NavLink}
+                  to="/"
+                  style={({ isActive, isPending }) => {
+                    return {
+                      fontWeight: isActive ? "bold" : "normal",
+                      color: isPending ? "red" : "black",
+                      backgroundColor: isActive ? "inherit" : "inherit",
+                    };
+                  }}
+                >
+                  Orders
+                </NavDropdown.Item>
+                <NavDropdown.Item href="">Something</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="">Separated link</NavDropdown.Item>
+              </NavDropdown>
               <Nav.Link
                 as={NavLink}
                 to="/dashboard"
