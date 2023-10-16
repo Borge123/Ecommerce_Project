@@ -27,7 +27,7 @@ export function AuthProvider({ children }) {
     let expires = getJwtExpiration.getItem("jwtExpire");
     //if expired and user exists in authState
 
-    if (expires < now.getTime() && user) {
+    if (expires < now.getTime() && user != null) {
       console.log("need to refresh token");
       refreshToken().then((value) => {
         dispatch({
@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
         setItem("jwtToken", value);
       });
     }
-  }, [location]);
+  }, [location, authState]);
   return (
     <UserContext.Provider value={authState}>
       <UserDispatchContext.Provider value={dispatch as Dispatch}>

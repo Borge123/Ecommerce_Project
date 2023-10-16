@@ -1,6 +1,6 @@
 export function Sidebar() {
   return (
-    <div className="d-flex flex-column flex-shrink-0 p-3 bg-light">
+    <div className="d-flex flex-column flex-shrink-0 p-3 bg-light m-4">
       <a
         className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
         href="/"
@@ -11,7 +11,7 @@ export function Sidebar() {
         <li className="nav-item">
           <a href="#" className="nav-link active" aria-current="page">
             <svg className="bi me-2" width="16" height="16">
-              <use xlink:href="#home"></use>
+              <use xlinkHref="#home"></use>
             </svg>
             Home
           </a>
@@ -19,7 +19,7 @@ export function Sidebar() {
         <li>
           <a href="#" className="nav-link link-dark">
             <svg className="bi me-2" width="16" height="16">
-              <use xlink:href="#speedometer2"></use>
+              <use xlinkHref="#speedometer2"></use>
             </svg>
             Dashboard
           </a>
@@ -27,7 +27,7 @@ export function Sidebar() {
         <li>
           <a href="#" className="nav-link link-dark">
             <svg className="bi me-2" width="16" height="16">
-              <use xlink:href="#table"></use>
+              <use xlinkHref="#table"></use>
             </svg>
             Orders
           </a>
@@ -35,7 +35,7 @@ export function Sidebar() {
         <li>
           <a href="#" className="nav-link link-dark">
             <svg className="bi me-2" width="16" height="16">
-              <use xlink:href="#grid"></use>
+              <use xlinkHref="#grid"></use>
             </svg>
             Products
           </a>
@@ -43,7 +43,7 @@ export function Sidebar() {
         <li>
           <a href="#" className="nav-link link-dark">
             <svg className="bi me-2" width="16" height="16">
-              <use xlink:href="#people-circle"></use>
+              <use xlinkHref="#people-circle"></use>
             </svg>
             Customers
           </a>

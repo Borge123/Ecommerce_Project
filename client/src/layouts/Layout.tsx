@@ -3,10 +3,10 @@ import Footer from "../components/ui/footer/Footer";
 import { Outlet } from "react-router-dom";
 export default function Layout() {
   return (
-    <>
+    <div>
       <Navigation />
       <Outlet />
       <Footer />
-    </>
+    </div>
   );
 }

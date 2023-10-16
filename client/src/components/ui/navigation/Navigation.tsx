@@ -17,6 +17,7 @@ export default function Navigation() {
       className="bg-body-tertiary pb-4"
       data-bs-theme="auto"
       sticky="top"
+      style={{ marginRight: "300px" }}
     >
       <Container>
         <Navbar.Brand as={Link} to="/">
@@ -114,7 +115,7 @@ export default function Navigation() {
                 </NavDropdown.Item>
                 <NavDropdown.Item href="">Something</NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="">Separated link</NavDropdown.Item>
+                <Logout click={logout} />
               </NavDropdown>
               <Nav.Link
                 as={NavLink}

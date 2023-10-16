@@ -12,10 +12,6 @@ const logout = async () => {
 
     if (!res.ok) return;
 
-    sessionStorage.removeItem("jwtToken");
-    localStorage.removeItem("user");
-    localStorage.removeItem("jwtExpire");
-
     return res.json();
   } catch (error) {
     console.log(error);

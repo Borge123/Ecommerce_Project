@@ -11,7 +11,9 @@ export default function Logout({ click }) {
           dispatch({
             type: "logout",
           });
-
+          sessionStorage.removeItem("jwtToken");
+          localStorage.removeItem("user");
+          localStorage.removeItem("jwtExpire");
           click();
         }}
         variant="outline-dangerr"

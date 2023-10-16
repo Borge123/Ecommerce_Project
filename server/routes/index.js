@@ -99,7 +99,7 @@ router.get("/users", checkIfAdmin, UserController.getAllUsers);
 router.get("/protected", authorize, UserController.getAuthorizedUserInfo);
 router.post("/signup", validateSignup, UserController.signup);
 router.post("/login", validateLogin, UserController.login);
-router.post("/logout", authorize, UserController.logout);
+router.post("/logout", UserController.logout);
 router.post("/refresh", UserController.refreshJwt);
 
 router.put(

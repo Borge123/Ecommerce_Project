@@ -1,24 +1,18 @@
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+
 import { useUser } from "../../authentication/context/AuthContext";
 import Container from "react-bootstrap/Container";
-import { logout } from "../../authentication/services/logoutServices";
-import Logout from "../../authentication/components/logout/logout";
+
+import { Sidebar } from "./sideBar";
 export default function UserDashBoard() {
+  //TODO: Set up dashboard as a component that only renders other child components like account, personal info and so on
   const authState = useUser();
   return (
-    <Container>
-      <Row
-        xs={1}
-        md={2}
-        l={4}
-        xxl={4}
-        className=" vh-100 g-4 justify-content-md-center m-auto"
-      >
-        <Col>
-          <h1>Dashboard for {authState.user?.firstName}</h1>
-          <Logout click={logout} />
-        </Col>
+    <Container fluid="md">
+      <Row xs={1} md={2} l={4} xxl={4} className=" g-4 m-auto  ">
+        <Sidebar />
+        <Sidebar />
+        <Sidebar />
       </Row>
     </Container>
   );

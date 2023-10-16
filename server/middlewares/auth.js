@@ -83,6 +83,5 @@ module.exports = {
     } else {
       return res.status(401).json({ message: "Unauthorized" });
     }
-    //console.log(req.cookies);
   },
 };
