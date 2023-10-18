@@ -1,56 +1,48 @@
-import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import { Col } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
+
 export function Sidebar() {
+  const linkStyles = {
+    borderTop: "1px solid #e9e9e9",
+  };
   return (
-    <Col xxl={4} className="d-flex flex-column flex-shrink-0 p-3 bg-light m-5">
-      <a
-        className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
-        href="/"
-      ></a>
-      <span className="fs-4">Sidebar</span>
-      <hr />
-      <ul className="nav nav-pills flex-column mb-auto">
-        <li className="nav-item">
-          <a href="#" className="nav-link " aria-current="page">
-            <svg className="bi me-2" width="16" height="16">
-              <use xlinkHref="#home"></use>
-            </svg>
-            Home
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link link-dark">
-            <svg className="bi me-2" width="16" height="16">
-              <use xlinkHref="#speedometer2"></use>
-            </svg>
-            Dashboard
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link link-dark">
-            <svg className="bi me-2" width="16" height="16">
-              <use xlinkHref="#table"></use>
-            </svg>
-            Orders
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link link-dark">
-            <svg className="bi me-2" width="16" height="16">
-              <use xlinkHref="#grid"></use>
-            </svg>
-            Products
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link link-dark">
-            <svg className="bi me-2" width="16" height="16">
-              <use xlinkHref="#people-circle"></use>
-            </svg>
-            Customers
-          </a>
-        </li>
-      </ul>
-      <hr />
+    <Col
+      xxl={4}
+      className="flex-column flex-shrink-0 p-3 bg-light"
+      style={{ marginRight: "5em" }}
+    >
+      <Navbar
+        collapseOnSelect
+        expand="lg"
+        className="bg-body-tertiary flex-column mw-100 "
+      >
+        <Container className="flex-column align-items-start w-100 ">
+          <Navbar.Brand as={NavLink} to="/dashboard" className="w-100">
+            Account
+          </Navbar.Brand>
+          <hr />
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <div className="w-100">
+            <Navbar.Collapse id="responsive-navbar-nav ">
+              <Nav className="me-auto flex-column w-100">
+                <Nav.Link
+                  as={NavLink}
+                  to="/dashboard/account/personal"
+                  style={linkStyles}
+                >
+                  Personal info
+                </Nav.Link>
+                <Nav.Link as={NavLink} to="/dashboard" style={linkStyles}>
+                  Orders
+                </Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+          </div>
+        </Container>
+      </Navbar>
     </Col>
   );
 }
