@@ -20,7 +20,7 @@ export function Sidebar() {
         className="bg-body-tertiary flex-column mw-100 "
       >
         <Container className="flex-column align-items-start w-100 ">
-          <Navbar.Brand as={NavLink} to="/dashboard" className="w-100">
+          <Navbar.Brand as={NavLink} to="/account" className="w-100">
             Account
           </Navbar.Brand>
           <hr />
@@ -30,12 +30,12 @@ export function Sidebar() {
               <Nav className="me-auto flex-column w-100">
                 <Nav.Link
                   as={NavLink}
-                  to="/dashboard/account/personal"
+                  to="/account/personal"
                   style={linkStyles}
                 >
                   Personal info
                 </Nav.Link>
-                <Nav.Link as={NavLink} to="/dashboard" style={linkStyles}>
+                <Nav.Link as={NavLink} to="/account" style={linkStyles}>
                   Orders
                 </Nav.Link>
               </Nav>

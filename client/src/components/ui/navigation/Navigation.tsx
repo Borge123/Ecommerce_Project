@@ -9,15 +9,13 @@ import Logout from "../../../features/authentication/components/logout/logout";
 import { useUser } from "../../../features/authentication/context/AuthContext";
 export default function Navigation() {
   const authState = useUser();
-  //TODO: Try to avoid users being redirected to homepage after refreshing token
+
   return (
     <Navbar
       collapseOnSelect
       expand="lg"
       className="bg-body-tertiary pb-4"
       data-bs-theme="auto"
-      sticky="top"
-      style={{ marginRight: "300px" }}
     >
       <Container>
         <Navbar.Brand as={Link} to="/">
@@ -82,14 +80,13 @@ export default function Navigation() {
             </Nav>
           ) : (
             <Nav>
-              <Logout click={logout} />
               <NavDropdown
                 title={authState?.user.firstName}
                 id="collasible-nav-dropdown"
               >
                 <NavDropdown.Item
                   as={NavLink}
-                  to="/dashboard"
+                  to="/account"
                   style={({ isActive, isPending }) => {
                     return {
                       fontWeight: isActive ? "bold" : "normal",
@@ -115,11 +112,11 @@ export default function Navigation() {
                 </NavDropdown.Item>
                 <NavDropdown.Item href="">Something</NavDropdown.Item>
                 <NavDropdown.Divider />
-                <Logout click={logout} />
+                <Logout click={logout} />{" "}
               </NavDropdown>
               <Nav.Link
                 as={NavLink}
-                to="/dashboard"
+                to="/account"
                 style={({ isActive, isPending }) => {
                   return {
                     fontWeight: isActive ? "bold" : "normal",

@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import Jumbotron from "./Jumbotron";
 export default function Main() {
   return (
-    <Container className="mw-100 homeContainer ">
+    <Container className="mw-100  ">
       <Row className="justify-content-md-center vh-100">
         <Col
           xs={12}

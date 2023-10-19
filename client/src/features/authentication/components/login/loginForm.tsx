@@ -52,7 +52,7 @@ export default function LoginForm() {
                 });
 
                 setItem("user", JSON.stringify(value));
-                navigate("/dashboard");
+                navigate("/account");
               });
             }, 100);
           }
