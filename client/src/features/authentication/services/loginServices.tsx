@@ -31,8 +31,12 @@ export async function Login(credentials: credentials) {
     sessionStorage.setItem("jwtToken", jwtToken);
 
     localStorage.setItem("jwtExpire", expires);
+    const returnObj = {
+      status: res.status,
+      user: data.payload,
+    };
 
-    if (data) return res.status;
+    if (data) return returnObj;
   } catch (error) {
     console.error(error);
   }

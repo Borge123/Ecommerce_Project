@@ -44,7 +44,6 @@ module.exports = class UserController {
 
       payload = {
         userId: id,
-        email: user[0].email,
         firstName: user[0].firstName,
       };
 
@@ -69,6 +68,7 @@ module.exports = class UserController {
       res.status(200).json({
         jwtToken,
         refreshToken,
+        payload,
         jwtExpire,
         message: { "Logged in": "Success" },
       });
@@ -106,7 +106,6 @@ module.exports = class UserController {
           const newJwtToken = jwt.sign(
             {
               userId: decoded.userId,
-              email: decoded.email,
               firstName: decoded.firstName,
             },
             process.env.TOKEN_SECRET,
@@ -128,6 +127,7 @@ module.exports = class UserController {
 
   static async getAuthorizedUserInfo(req, res, next) {
     if (req.cookies.refreshToken) {
+      const user = await UserService.getUserById(req.userId);
       const token = req.cookies.refreshToken;
       try {
         jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
@@ -137,11 +137,7 @@ module.exports = class UserController {
             res.status(401).json({ error: "Invalid or expired refresh token" });
           } else {
             return res.json({
-              user: {
-                id: decoded.userId,
-                email: decoded.email,
-                firstName: decoded.firstName,
-              },
+              user,
             });
           }
         });

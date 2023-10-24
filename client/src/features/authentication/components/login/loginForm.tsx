@@ -35,25 +35,24 @@ export default function LoginForm() {
         const loginRequest = Login(values);
 
         loginRequest.then((value) => {
-          if (value === 200) {
+          if (value.status === 200) {
             console.log(value);
+            const user = value?.user;
             //TODO on login success redirect to home or a dashboard
             const token = sessionStorage.getItem("jwtToken");
             setTimeout(() => {
-              const userData = GetUserInfo();
               console.log("fetching user data");
-              userData.then((value) => {
-                dispatch({
-                  type: "login",
-                  status: "success",
-                  user: value,
-                  token: token,
-                  error: null,
-                });
 
-                setItem("user", JSON.stringify(value));
-                navigate("/account");
+              dispatch({
+                type: "login",
+                status: "success",
+                user: user,
+                token: token,
+                error: null,
               });
+
+              setItem("user", JSON.stringify(user));
+              navigate("/account");
             }, 100);
           }
           resetForm();

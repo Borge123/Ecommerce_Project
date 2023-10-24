@@ -6,7 +6,7 @@ import Jumbotron from "./Jumbotron";
 export default function Main() {
   return (
     <Container className="mw-100  ">
-      <Row className="justify-content-md-center vh-100">
+      <Row className="justify-content-md-center mt-4 mb-4 ">
         <Col
           xs={12}
           md={10}

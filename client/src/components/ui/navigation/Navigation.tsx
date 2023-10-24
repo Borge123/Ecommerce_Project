@@ -18,7 +18,7 @@ export default function Navigation() {
         <Container className="">
           <Nav className="">
             <Navbar.Brand as={Link} to="/">
-              Navbar scroll
+              E-Commerce
             </Navbar.Brand>
           </Nav>
 
