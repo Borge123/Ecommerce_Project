@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import * as formik from "formik";
 import * as yup from "yup";
-import { Login, GetUserInfo } from "../../services/loginServices";
+import { Login } from "../../services/loginServices";
 import { useUserDispatch } from "../../context/AuthContext";
 import { useLocalStorage } from "../../../../hooks/useLocalStorage";
 
@@ -38,7 +38,7 @@ export default function LoginForm() {
           if (value.status === 200) {
             console.log(value);
             const user = value?.user;
-            //TODO on login success redirect to home or a dashboard
+
             const token = sessionStorage.getItem("jwtToken");
             setTimeout(() => {
               console.log("fetching user data");

@@ -1,10 +1,11 @@
-import UserDashBoardPage from "../../../pages/AccountPage";
+import AccountPage from "../../../pages/AccountPage";
 import ErrorPage from "../../../pages/ErrorPage";
 import { UserInfo } from "../../../features/userDashBoard/components/userInfo";
 import { AccountLanding } from "../../../features/userDashBoard/components/accountLanding";
-export const dashBoardRoute = {
+import { UserInfoLoader } from "./userInfoLoader";
+export const accountRoute = {
   path: "/account",
-  element: <UserDashBoardPage />,
+  element: <AccountPage />,
   errorElement: <ErrorPage />,
   children: [
     {
@@ -14,6 +15,7 @@ export const dashBoardRoute = {
     {
       path: "personal",
       element: <UserInfo />,
+      loader: UserInfoLoader,
     },
   ],
 };
