@@ -178,6 +178,37 @@ module.exports = class UserController {
     }
   }
 
+  static async changePassword(req, res, next) {
+    try {
+      const user = await UserService.getUserById(req.body.id);
+
+      if (user) {
+        const oldPassword = req.body.password;
+        const newPassword = req.body.newPassword;
+        const hash = user[0].password;
+        const match = await bcrypt.compare(oldPassword, hash);
+
+        if (!match) {
+          return res.status(401).json({ "password": "wrong password" });
+        }
+        const result = await UserService.changePassword(
+          req.body.id,
+          newPassword
+        );
+        if (result) {
+          return res.status(200).json({
+            "Updated user": "Success",
+            "user": user?.firstName,
+          });
+        }
+      } else {
+        return res.status(400).json({ "User": "user not found" });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.name + " " + error.message });
+    }
+  }
+
   static async deleteUser(req, res, next) {
     const { id } = req.body;
 

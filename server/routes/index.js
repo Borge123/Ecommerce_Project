@@ -36,6 +36,7 @@ const {
   checkIfRegistered,
   authorize,
 } = require("../middlewares/auth");
+
 const { sessionChecker } = require("../middlewares/sessionChecker");
 /* GET home page. */
 router.get("/", async function (req, res, next) {
@@ -101,6 +102,13 @@ router.post("/signup", validateSignup, UserController.signup);
 router.post("/login", validateLogin, UserController.login);
 router.post("/logout", UserController.logout);
 router.post("/refresh", UserController.refreshJwt);
+router.post(
+  "/updateuser",
+  authorize,
+  validateUpdateUser,
+  UserController.updateUser
+);
+router.post("/changepassword", authorize, UserController.changePassword);
 
 router.put(
   "/updateUser",

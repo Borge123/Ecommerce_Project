@@ -102,6 +102,24 @@ module.exports = class UserService {
     }
   }
 
+  static async changePassword(id, password) {
+    try {
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+      const result = await User.updateOne(
+        { _id: id },
+        {
+          $set: {
+            password: hashedPassword,
+          },
+        }
+      );
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   static async deleteUser(id) {
     try {
       const result = await User.deleteOne({ _id: id });
