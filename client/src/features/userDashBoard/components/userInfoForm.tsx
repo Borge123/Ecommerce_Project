@@ -6,12 +6,14 @@ import Container from "react-bootstrap/Container";
 import * as formik from "formik";
 import * as yup from "yup";
 
-import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
 import { UpdateUserInfo } from "../services/updateUserInfo";
-
+import { useUserDispatch } from "../../authentication/context/AuthContext";
+import { useLocalStorage } from "../../../hooks/useLocalStorage";
 export default function UserInfoForm({ userInfo }) {
   const { Formik } = formik;
+
+  const dispatch = useUserDispatch();
   const { setItem, getItem } = useLocalStorage();
   const navigate = useNavigate();
 
@@ -42,7 +44,19 @@ export default function UserInfoForm({ userInfo }) {
         setTimeout(() => {
           alert(JSON.stringify(values, null, 2));
           UpdateUserInfo(values);
-          resetForm();
+          const user = {
+            userId: userInfo._id,
+            firstName: values.firstName,
+          };
+          const token = sessionStorage.getItem("jwtToken");
+          dispatch({
+            type: "updateUser",
+            status: "success",
+            user: user,
+            token: token,
+            error: null,
+          });
+          //resetForm();
           setSubmitting(false);
         }, 400);
         //TODO update ui after userdata has been updated

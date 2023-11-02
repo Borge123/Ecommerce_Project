@@ -33,6 +33,14 @@ export default function authReducer(authState, action) {
         token: action.token,
       };
     }
+    case "updateUser": {
+      return {
+        status: action.status,
+        user: action.user,
+        token: action.token,
+        error: action.error,
+      };
+    }
     default:
       return authState;
   }
