@@ -158,16 +158,17 @@ module.exports = class UserController {
       return res.status(500).json({ error: error.name + " " + error.message });
     }
   }
+
   static async updateUser(req, res, next) {
     try {
       const checkIfUser = await UserService.getUserById(req.body.id);
 
       if (checkIfUser) {
-        const result = await UserService.updateUser(req.body.id, req.body);
+        const result = await UserService.updateUser(checkIfUser._id, req.body);
         if (result) {
           return res.status(200).json({
             "Updated user": "Success",
-            "user": checkIfUser?.firstName,
+            "user": req.body.firstName,
           });
         }
       } else {

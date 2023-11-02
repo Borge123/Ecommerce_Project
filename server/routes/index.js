@@ -102,7 +102,7 @@ router.post("/signup", validateSignup, UserController.signup);
 router.post("/login", validateLogin, UserController.login);
 router.post("/logout", UserController.logout);
 router.post("/refresh", UserController.refreshJwt);
-router.post(
+router.put(
   "/updateuser",
   authorize,
   validateUpdateUser,
