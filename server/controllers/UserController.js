@@ -192,10 +192,7 @@ module.exports = class UserController {
         if (!match) {
           return res.status(401).json({ "password": "wrong password" });
         }
-        const result = await UserService.changePassword(
-          req.body.id,
-          newPassword
-        );
+        const result = await UserService.changePassword(user._id, newPassword);
         if (result) {
           return res.status(200).json({
             "Updated user": "Success",

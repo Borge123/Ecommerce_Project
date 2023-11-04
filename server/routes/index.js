@@ -108,7 +108,7 @@ router.put(
   validateUpdateUser,
   UserController.updateUser
 );
-router.post("/changepassword", authorize, UserController.changePassword);
+router.put("/changepassword", authorize, UserController.changePassword);
 
 router.put(
   "/updateUser",

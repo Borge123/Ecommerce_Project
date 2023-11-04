@@ -39,26 +39,26 @@ export default function UserInfoForm({ userInfo }) {
         lastName: userInfo.lastName,
       }}
       validateOnChange={true}
-      onSubmit={(values, { setSubmitting, resetForm }) => {
+      onSubmit={async (values, { setSubmitting, resetForm }) => {
         setSubmitting(true);
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          UpdateUserInfo(values);
-          const user = {
-            userId: userInfo._id,
-            firstName: values.firstName,
-          };
-          const token = sessionStorage.getItem("jwtToken");
-          dispatch({
-            type: "updateUser",
-            status: "success",
-            user: user,
-            token: token,
-            error: null,
-          });
-          //resetForm();
-          setSubmitting(false);
-        }, 400);
+
+        alert(JSON.stringify(values, null, 2));
+        await UpdateUserInfo(values);
+        const user = {
+          userId: userInfo._id,
+          firstName: values.firstName,
+        };
+        const token = sessionStorage.getItem("jwtToken");
+        dispatch({
+          type: "updateUser",
+          status: "success",
+          user: user,
+          token: token,
+          error: null,
+        });
+        //resetForm();
+        setSubmitting(false);
+
         //TODO update ui after userdata has been updated
       }}
     >
