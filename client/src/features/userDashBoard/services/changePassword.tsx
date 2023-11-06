@@ -1,10 +1,11 @@
 type info = {
   oldPassword: string;
-  password: string;
+  newPassword: string;
+  id: string;
 };
 export async function ChangePassword(info: info) {
   try {
-    const res = await fetch("http://api.app.localhost:3000/updatepassword", {
+    const res = await fetch("http://api.app.localhost:3000/changepassword", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

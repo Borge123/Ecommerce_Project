@@ -35,6 +35,14 @@ export function Sidebar() {
                 >
                   Personal info
                 </Nav.Link>
+                <Nav.Link
+                  as={NavLink}
+                  to="/account/changepassword"
+                  style={linkStyles}
+                >
+                  Change password
+                </Nav.Link>
+
                 <Nav.Link as={NavLink} to="/account" style={linkStyles}>
                   Orders
                 </Nav.Link>

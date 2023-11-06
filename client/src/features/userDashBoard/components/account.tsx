@@ -9,8 +9,8 @@ export default function Account() {
   //TODO: Set up dashboard as a component that only renders other child components like account, personal info and so on
   const authState = useUser();
   return (
-    <Container className="min-vh-100 mt-5">
-      <Row className="d-flex h-100 ">
+    <Container className=" mt-5">
+      <Row className="d-flex  ">
         <Sidebar />
         <Outlet />
       </Row>

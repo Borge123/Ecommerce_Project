@@ -6,16 +6,18 @@ import Container from "react-bootstrap/Container";
 import * as formik from "formik";
 import * as yup from "yup";
 import { ChangePassword } from "../services/changePassword";
+import { useUser } from "../../authentication/context/AuthContext";
 export default function ChangePasswordForm() {
   const { Formik } = formik;
+  const authState = useUser();
   const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
-
+  const pw = "1Test123";
   const schema = yup.object().shape({
     oldPassword: yup
       .string()
       .matches(passwordRules, { message: "Please create a stronger password" })
       .required("Required"),
-    password: yup
+    newPassword: yup
       .string()
       .matches(passwordRules, { message: "Please create a stronger password" })
       .required("Required"),
@@ -26,19 +28,21 @@ export default function ChangePasswordForm() {
       validationSchema={schema}
       initialValues={{
         oldPassword: "",
-        password: "",
+        newPassword: "",
+        id: authState.user.userId,
       }}
       validateOnChange={true}
       onSubmit={async (values, { setSubmitting, setStatus, resetForm }) => {
         setSubmitting(true);
+
         const response = await ChangePassword(values);
 
+        setSubmitting(false);
+        resetForm();
         if (response === 200) {
+          console.log("200");
           setStatus("200");
         }
-
-        resetForm();
-        setSubmitting(false);
       }}
     >
       {({
@@ -57,10 +61,10 @@ export default function ChangePasswordForm() {
             md={2}
             l={3}
             xxl={2}
-            className=" vh-100 g-4 justify-content-md-center "
+            className=" g-4 justify-content-md-center "
           >
             <Col className="m-auto">
-              <h1>Personal info</h1>
+              <h1>Change password</h1>
               <Form noValidate onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                   <Form.Label>Old password</Form.Label>
@@ -79,19 +83,19 @@ export default function ChangePasswordForm() {
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>New password</Form.Label>
                   <Form.Control
                     type="password"
-                    name="password"
-                    value={values.password}
+                    name="newPassword"
+                    value={values.newPassword}
                     onChange={handleChange}
-                    onBlur={handleBlur("password")}
-                    isValid={touched.password && !errors.password}
-                    isInvalid={!!errors.password}
-                    placeholder="Password"
+                    onBlur={handleBlur("newPassword")}
+                    isValid={touched.newPassword && !errors.newPassword}
+                    isInvalid={!!errors.newPassword}
+                    placeholder="new password"
                   />
                   <Form.Control.Feedback type="invalid">
-                    {errors.password}
+                    {errors.newPassword}
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Button type="submit" disabled={isSubmitting}>

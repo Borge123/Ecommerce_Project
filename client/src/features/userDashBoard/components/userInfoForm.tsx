@@ -77,7 +77,7 @@ export default function UserInfoForm({ userInfo }) {
             md={2}
             l={3}
             xxl={2}
-            className=" vh-100 g-4 justify-content-md-center "
+            className=" mb-4 g-4 justify-content-md-center "
           >
             <Col className="m-auto">
               <h1>Personal info</h1>

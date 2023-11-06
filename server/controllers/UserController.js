@@ -184,9 +184,9 @@ module.exports = class UserController {
       const user = await UserService.getUserById(req.body.id);
 
       if (user) {
-        const oldPassword = req.body.password;
+        const oldPassword = req.body.oldPassword;
         const newPassword = req.body.newPassword;
-        const hash = user[0].password;
+        const hash = user.password;
         const match = await bcrypt.compare(oldPassword, hash);
 
         if (!match) {
