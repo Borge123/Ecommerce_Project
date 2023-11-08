@@ -1,0 +1,19 @@
+@media (min-width: 1200px) {
+  body.cart-open #cart-sidebar {
+    right: 300px;
+  }
+}
+@media (min-width: 1200px) {
+  body.cart-closed #cart-sidebar {
+    right: 0;
+  }
+}
+
+#cart-sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 300px;
+  margin-right: -300px;
+  overflow-y: auto;
+}

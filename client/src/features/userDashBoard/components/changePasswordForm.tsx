@@ -40,7 +40,6 @@ export default function ChangePasswordForm() {
         setSubmitting(false);
         resetForm();
         if (response === 200) {
-          console.log("200");
           setStatus("200");
         }
       }}
