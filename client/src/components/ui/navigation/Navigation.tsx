@@ -13,8 +13,8 @@ export default function Navigation() {
   const authState = useUser();
 
   return (
-    <header>
-      <Navbar expand="lg" className="bg-body-tertiary">
+    <header style={{ height: "88px" }}>
+      {/* <Navbar expand="lg" className="bg-body-tertiary">
         <Container className="">
           <Nav className="">
             <Navbar.Brand as={Link} to="/">
@@ -36,7 +36,7 @@ export default function Navigation() {
             </Nav>
           </Navbar.Collapse>
         </Container>
-      </Navbar>
+      </Navbar> */}
       <Navbar
         collapseOnSelect
         expand="lg"
@@ -45,7 +45,24 @@ export default function Navigation() {
       >
         <Container>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+
           <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="">
+              <Navbar.Brand as={Link} to="/">
+                E-Commerce
+              </Navbar.Brand>
+            </Nav>
+            <Nav style={{ flex: "1 1 50%" }}>
+              <Form className="d-flex w-50">
+                <Form.Control
+                  type="search"
+                  placeholder="Search"
+                  className="me-2 w-100"
+                  aria-label="Search"
+                />
+              </Form>
+            </Nav>
+
             <Nav className="">
               <Nav.Link
                 as={NavLink}
