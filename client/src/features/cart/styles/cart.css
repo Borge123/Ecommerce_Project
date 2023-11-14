@@ -433,6 +433,9 @@ svg:not(:root) {
   position: relative;
 }
 
+.ws-add-to-cart__button-caption {
+  display: none;
+}
 .ws-cart-intro__close-button {
   color: inherit;
   position: absolute;
@@ -662,11 +665,11 @@ svg:not(:root) {
 }
 .ws-add-to-cart__quantity {
   display: inline-block;
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 700;
   line-height: 1rem;
   line-height: 1.25;
-  margin: 0;
+  margin: 1px 0px 0px 0px;
   position: relative;
   text-align: center;
   top: 0;
@@ -899,4 +902,14 @@ svg:not(:root) {
   padding: 0;
   position: relative;
   transition: width 1s ease-in-out, background-color 0.3s linear;
+}
+
+.topmenu__button {
+  color: #fff;
+  position: relative;
+}
+@media (min-width: 960px) {
+  .hidden-desktop {
+    display: none !important;
+  }
 }

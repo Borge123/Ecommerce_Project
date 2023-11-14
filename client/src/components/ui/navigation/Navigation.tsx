@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { Cart } from "../../../features/cart/components/cart";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -14,7 +15,7 @@ export default function Navigation() {
   const authState = useUser();
 
   return (
-    <header style={{ height: "88px" }}>
+    <header className="open-cart" style={{ height: "88px" }}>
       {/* <Navbar expand="lg" className="bg-body-tertiary">
         <Container className="">
           <Nav className="">
@@ -161,6 +162,7 @@ export default function Navigation() {
               </Nav>
             )}
           </Navbar.Collapse>
+          <Cart />
         </Container>
       </Navbar>
     </header>

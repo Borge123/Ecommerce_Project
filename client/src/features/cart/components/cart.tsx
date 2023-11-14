@@ -1,4 +1,7 @@
 import "../styles/cart.css";
+import { FaXmark } from "react-icons/fa6";
+import { FaMinus } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 export function Cart() {
   return (
     <>
@@ -67,8 +70,9 @@ export function Cart() {
                         role="presentation"
                         aria-hidden="true"
                       >
+                        <FaXmark />
                         <svg viewBox="0 0 13 13" className="ngr-icon__svg">
-                          <use href="/"></use>
+                          <use href="/"> </use>
                         </svg>
                       </span>
                     </button>
@@ -103,7 +107,7 @@ export function Cart() {
                                       height="24px"
                                       width="24px"
                                     >
-                                      <use href="/" xlink:href="/"></use>
+                                      <use href="/"></use>
                                     </svg>
                                   </span>
                                   <div className="ws-image--common-image-service ws-image ws-image--loaded">
@@ -120,7 +124,7 @@ export function Cart() {
                               <div className="ws-product__text-content">
                                 <a
                                   className="ws-product__title ws-hyphens-hack"
-                                  href="/varer/middag/ferdigmaltider/pytt-i-panne/pytt-i-panne-7310500115566"
+                                  href="/"
                                 >
                                   pytt i Panne
                                 </a>
@@ -151,8 +155,8 @@ export function Cart() {
                                           <select
                                             title="Endre mengde Pytt i Panne"
                                             aria-label="1 stk, endre mengde Pytt i Panne"
-                                            id="ws-quantity-picker-XIGXPoe1Ty2rAyMnxfGdp"
-                                            name="ws-quantity-picker-XIGXPoe1Ty2rAyMnxfGdp"
+                                            id="ws-quantity-picker"
+                                            name="ws-quantity-picker"
                                             className="ws-quantity-picker__select"
                                           >
                                             <option value="0">Fjern</option>
@@ -172,7 +176,7 @@ export function Cart() {
                                             className="ws-quantity-picker__value ws-quantity-picker__value--no-unit"
                                             aria-hidden="true"
                                           >
-                                            1{" "}
+                                            1
                                           </span>
                                         </span>
                                       </span>
@@ -187,41 +191,29 @@ export function Cart() {
                                           role="presentation"
                                           aria-hidden="true"
                                         >
-                                          <svg
-                                            viewBox="0 0 12 12"
-                                            className="ngr-icon__svg"
-                                            height="12px"
-                                            width="12px"
-                                          >
-                                            <use href="/" xlink:href="/"></use>
-                                          </svg>
+                                          <FaMinus className="ngr-icon__svg" />
                                         </span>
                                         <span className="ws-add-to-cart__button-caption">
-                                          Fjern fra handlevognen
+                                          {" "}
+                                          Remove from cart
                                         </span>
                                       </button>
                                       <button
                                         className="ws-add-to-cart__button ws-add-to-cart__button--increase"
                                         type="button"
-                                        title="Legg til 1 stk i handlevognen"
-                                        aria-label="Legg til 1 stk Pytt i Panne i handlevognen"
+                                        title="Add to cart"
+                                        aria-label="add"
                                       >
                                         <span
                                           className="ngr-icon ngr-icon--plus ws-add-to-cart__button__inner"
                                           role="presentation"
                                           aria-hidden="true"
                                         >
-                                          <svg
-                                            viewBox="0 0 12 12"
-                                            className="ngr-icon__svg"
-                                            height="12px"
-                                            width="12px"
-                                          >
-                                            <use href="/" xlink:href="/"></use>
-                                          </svg>
+                                          <FaPlus className="ngr-icon__svg" />
                                         </span>
                                         <span className="ws-add-to-cart__button-caption">
-                                          Legg til 1 stk i handlevognen
+                                          {" "}
+                                          add to cart
                                         </span>
                                       </button>
                                     </div>
@@ -295,7 +287,7 @@ export function Cart() {
                           height="24px"
                           width="24px"
                         >
-                          <use href="/" xlink:href="/"></use>
+                          <use href="/" xlinkHref="/"></use>
                         </svg>
                       </span>
                     </span>
