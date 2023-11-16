@@ -913,3 +913,27 @@ svg:not(:root) {
     display: none !important;
   }
 }
+
+.topmenu .ws-cart-button__count {
+  font-size: 0.65rem;
+}
+.ws-cart-button__count--bottom-left {
+  left: 20%;
+  top: 64%;
+}
+.ws-cart-button__count {
+  background-color: #171412;
+  border-radius: 0.775em;
+  box-sizing: border-box;
+  color: #fff;
+  font-size: max(0.75rem, min(0.6em, 1.5rem));
+  font-weight: 700;
+  line-height: 1.3333333333;
+  min-height: 1.55em;
+  min-width: 1.55em;
+  padding: 0.1em 0.2em;
+  position: absolute;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  transition: background-color 0.3s linear;
+}

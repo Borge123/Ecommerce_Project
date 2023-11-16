@@ -15,7 +15,7 @@ export default function Navigation() {
   const authState = useUser();
 
   return (
-    <header className="open-cart" style={{ height: "88px" }}>
+    <header style={{ height: "88px" }}>
       {/* <Navbar expand="lg" className="bg-body-tertiary">
         <Container className="">
           <Nav className="">

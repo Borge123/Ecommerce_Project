@@ -2,7 +2,12 @@ import "../styles/cart.css";
 import { FaXmark } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
+import { useState } from "react";
+import { FaCartArrowDown } from "react-icons/fa";
 export function Cart() {
+  const [cart, setCart] = useState("closed");
+  //TODO count from localstorage number of items in cart
+  const itemsInCart = 0;
   return (
     <>
       <div className="cw-cart-area">
@@ -12,10 +17,19 @@ export function Cart() {
             type="button"
             title="cart"
             style={{ fontSize: "1rem" }}
+            onClick={() => {
+              if (cart === "closed") {
+                setCart("open");
+                document.querySelector("header")?.classList.add("open-cart");
+              } else {
+                setCart("closed");
+                document.querySelector("header")?.classList.remove("open-cart");
+              }
+            }}
           >
             <div className="ws-cart-button__cart-icon-wrapper">
               <span className="ws-cart-button__cart">
-                <span
+                {/* <span
                   className="ngr-icon ngr-icon--cart-empty ws-cart-button__cart-icon"
                   role="presentation"
                   aria-hidden="true"
@@ -23,8 +37,13 @@ export function Cart() {
                   <svg viewBox="0 0 24 24" className="ngr-icon__svg">
                     <use href="/"></use>
                   </svg>
-                </span>
-                <span
+                </span> */}
+                <FaCartArrowDown
+                  className="ngr-icon ngr-icon--cart-empty ws-cart-button__cart-icon"
+                  color="black"
+                  size={"1.8em"}
+                />
+                {/* <span
                   className="ngr-icon ngr-icon--milk ws-cart-button__milk-icon ws-cart-button__milk-icon--has-items"
                   role="presentation"
                   aria-hidden="true"
@@ -32,8 +51,8 @@ export function Cart() {
                   <svg viewBox="0 0 24 24" className="ngr-icon__svg">
                     <use href="/"></use>
                   </svg>
-                </span>
-                <span
+                </span> */}
+                {/* <span
                   className="ngr-icon ngr-icon--carrot ws-cart-button__carrot-icon ws-cart-button__carrot-icon--has-items"
                   role="presentation"
                   aria-hidden="true"
@@ -41,12 +60,18 @@ export function Cart() {
                   <svg viewBox="0 0 24 24" className="ngr-icon__svg">
                     <use href="/"></use>
                   </svg>
+                </span> */}
+              </span>
+              {itemsInCart > 0 ? (
+                <span className="ws-cart-button__count ws-cart-button__count--bottom-left">
+                  <span className="ws-cart-button__count__text">
+                    {itemsInCart}
+                  </span>
+                  <span className="ws-visually-hidden"> items in cart</span>
                 </span>
-              </span>
-              <span className="ws-cart-button__count ws-cart-button__count--bottom-left">
-                <span className="ws-cart-button__count__text"></span>
-                <span className="ws-visually-hidden"> items in cart</span>
-              </span>
+              ) : (
+                ""
+              )}
             </div>
             <div className="ws-cart-button__total ws-cart-button__total--has-total">
               50 nok
@@ -64,6 +89,11 @@ export function Cart() {
                       className="ngr-close-button ws-cart-intro__close-button"
                       type="button"
                       aria-label="Lukk"
+                      onClick={() => {
+                        document
+                          .querySelector(".open-cart")
+                          .classList.remove("open-cart");
+                      }}
                     >
                       <span
                         className="ngr-icon ngr-icon--ngr-close"

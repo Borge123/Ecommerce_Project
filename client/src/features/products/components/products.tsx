@@ -4,7 +4,7 @@ import { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Product from "./product";
 import { Outlet } from "react-router-dom";
-import { Link } from "react-router-dom";
+
 import { useLoaderData } from "react-router-dom";
 export default function Products() {
   const { products } = useLoaderData();
@@ -23,11 +23,7 @@ export default function Products() {
         {products.map((product) => {
           return (
             <Col key={product._id}>
-              <Link to={`/products/${product._id}`}>
-                <Product product={product} onShow={() => setModalShow(true)} />
-              </Link>
-
-              {/* <ProductModal show={modalShow} onHide={() => setModalShow(false)} />  */}
+              <Product product={product} onShow={() => setModalShow(true)} />
             </Col>
           );
         })}
