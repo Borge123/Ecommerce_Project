@@ -16,8 +16,8 @@ export default function Product({ product, onShow }) {
 
   // console.log(images);
   const { setItem, getItem } = useLocalStorage();
-  //TODO set up context to update cart state
-  const cart = getItem("cart");
+  // //TODO set up context to update cart state
+  // const cart = getItem("cart");
 
   return (
     <Card>
