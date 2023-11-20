@@ -6,7 +6,7 @@ import { useState } from "react";
 import { FaCartArrowDown } from "react-icons/fa";
 export function Cart() {
   const [cart, setCart] = useState("closed");
-  //TODO count from localstorage number of items in cart
+  //TODO count from localstorage number of items in cart and set cart to closed if 0 items
   const itemsInCart = 0;
   return (
     <>
