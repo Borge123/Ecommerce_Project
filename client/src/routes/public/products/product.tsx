@@ -1,4 +1,5 @@
 import ProductDetails from "../../../features/products/components/productDetails";
+
 import { ProductLoader } from "./productLoader";
 
 export const product = {

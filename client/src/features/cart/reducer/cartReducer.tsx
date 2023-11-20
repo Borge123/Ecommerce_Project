@@ -2,9 +2,12 @@ export default function cartReducer(cart, action) {
   switch (action.type) {
     case "add": {
       //expects a product object
-      const isItemInCart = cart.find(
-        (cartItem) => cartItem._id === action.item._id
-      );
+      let isItemInCart;
+      if (cart.length) {
+        isItemInCart = cart.find(
+          (cartItem) => cartItem._id === action.item._id
+        );
+      }
 
       if (isItemInCart) {
         return cart.map((cartItem) =>
@@ -38,6 +41,11 @@ export default function cartReducer(cart, action) {
         (total, item) => total + item.price * item.quantity,
         0
       );
+    }
+
+    case "load": {
+      console.log(action.cart);
+      return [...action.cart];
     }
 
     case "clear": {

@@ -11,11 +11,42 @@ export const CartContext = createContext(null);
 export const CartDispatchContext = createContext(null);
 export function CartProvider({ children }) {
   const { getItem, setItem } = useLocalStorage();
-  const [cart, dispatch] = useReducer(cartReducer, initialState);
+  const [cart, dispatch] = useReducer(cartReducer, initialState.cart);
+
   useEffect(() => {
-    //dispatch update every time cart changes
+    setItem("cart", JSON.stringify(cart));
+    const data = getItem("cart");
+    const parsedData = JSON.parse(data);
+    if (parsedData.length > 0) {
+      console.log("data");
+      //setItem("cart", JSON.parse(data));
+      //console.log(JSON.parse(data));
+      dispatch({
+        type: "load",
+        cart: parsedData,
+      });
+    } else {
+      console.log("no data");
+    }
+  }, []);
+  useEffect(() => {
+    //TODO update with the data from localstorage
+
+    //TODO find out how to update cart
 
     setItem("cart", JSON.stringify(cart));
+    const data = getItem("cart");
+    const parsedData = JSON.parse(data);
+    console.log(parsedData);
+    console.log(parsedData.length);
+    if (parsedData.length > 0) {
+      // dispatch({
+      //   type: "load",
+      //   cart: data,
+      // });
+      console.log("test");
+    }
+    //dispatch update every time cart changes
   }, [cart]);
 
   return (
@@ -34,7 +65,9 @@ export function useCart() {
 export function useCartDispatch() {
   return useContext(CartDispatchContext);
 }
+const data = localStorage.getItem("cart");
+const parsedData = JSON.parse(data);
 
 const initialState = {
-  cart: null,
+  cart: parsedData ? parsedData : [],
 };
