@@ -36,12 +36,12 @@ export default function cartReducer(cart, action) {
       }
     }
 
-    case "update": {
-      return cart.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      );
-    }
+    // case "update": {
+    //   return cart.reduce(
+    //     (total, item) => total + item.price * item.quantity,
+    //     0
+    //   );
+    // }
 
     case "load": {
       console.log(action.cart);

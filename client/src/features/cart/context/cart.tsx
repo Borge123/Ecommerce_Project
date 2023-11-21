@@ -41,8 +41,8 @@ export function CartProvider({ children }) {
     console.log(parsedData.length);
     if (parsedData.length > 0) {
       // dispatch({
-      //   type: "load",
-      //   cart: data,
+      //   type: "update",
+      //   cart: cart,
       // });
       console.log("test");
     }

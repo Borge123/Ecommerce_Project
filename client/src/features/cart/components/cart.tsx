@@ -4,10 +4,17 @@ import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
 import { FaCartArrowDown } from "react-icons/fa";
+import { useCartDispatch, useCart } from "../context/cart";
 export function Cart() {
-  const [cart, setCart] = useState("closed");
+  const cart = useCart();
+  const dispatch = useCartDispatch();
+  const [cartState, setCartState] = useState("closed");
   //TODO count from localstorage number of items in cart and set cart to closed if 0 items
-  const itemsInCart = 0;
+  const itemsInCart = cart?.length;
+  const total = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
   return (
     <>
       <div className="cw-cart-area">
@@ -18,40 +25,23 @@ export function Cart() {
             title="cart"
             style={{ fontSize: "1rem" }}
             onClick={() => {
-              if (cart === "closed") {
-                setCart("open");
+              if (cartState === "closed") {
+                setCartState("open");
                 document.querySelector("header")?.classList.add("open-cart");
               } else {
-                setCart("closed");
+                setCartState("closed");
                 document.querySelector("header")?.classList.remove("open-cart");
               }
             }}
           >
             <div className="ws-cart-button__cart-icon-wrapper">
               <span className="ws-cart-button__cart">
-                {/* <span
-                  className="ngr-icon ngr-icon--cart-empty ws-cart-button__cart-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <svg viewBox="0 0 24 24" className="ngr-icon__svg">
-                    <use href="/"></use>
-                  </svg>
-                </span> */}
                 <FaCartArrowDown
                   className="ngr-icon ngr-icon--cart-empty ws-cart-button__cart-icon"
                   color="black"
                   size={"1.8em"}
                 />
-                {/* <span
-                  className="ngr-icon ngr-icon--milk ws-cart-button__milk-icon ws-cart-button__milk-icon--has-items"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <svg viewBox="0 0 24 24" className="ngr-icon__svg">
-                    <use href="/"></use>
-                  </svg>
-                </span> */}
+                {}
                 {/* <span
                   className="ngr-icon ngr-icon--carrot ws-cart-button__carrot-icon ws-cart-button__carrot-icon--has-items"
                   role="presentation"
@@ -84,7 +74,10 @@ export function Cart() {
               <div className="ws-cart__header">
                 <div className="ws-cart-intro">
                   <h2 className="ws-cart-intro__header">
-                    Cart <span className="ws-cart-intro__quantity">1 vare</span>
+                    Cart{" "}
+                    <span className="ws-cart-intro__quantity">
+                      {itemsInCart} products
+                    </span>
                     <button
                       className="ngr-close-button ws-cart-intro__close-button"
                       type="button"
@@ -116,147 +109,202 @@ export function Cart() {
                       <span className="ws-cart-group-header__title"> </span>
                     </h3>
                     <ul className="ws-cart-items__list">
-                      <li className="ws-cart-items__item">
-                        <div className="ws-product">
-                          <div className="ws-product__wrapper">
-                            <div className="ws-product__wrapper-inner">
-                              <div className="ws-product__sidebar">
-                                <a
-                                  className="ws-product__image"
-                                  aria-hidden="true"
-                                  href="/"
-                                >
-                                  <span
-                                    className="ngr-icon ngr-icon--rebate"
-                                    role="presentation"
-                                    aria-hidden="true"
-                                  >
-                                    <svg
-                                      viewBox="0 0 54 54"
-                                      className="ngr-icon__svg"
-                                      height="24px"
-                                      width="24px"
-                                    >
-                                      <use href="/"></use>
-                                    </svg>
-                                  </span>
-                                  <div className="ws-image--common-image-service ws-image ws-image--loaded">
-                                    <img
-                                      width="84"
-                                      height="84"
-                                      src="/"
-                                      alt="Pytt i Panne Original 540g Findus"
-                                      loading="lazy"
-                                    />
-                                  </div>
-                                </a>
-                              </div>
-                              <div className="ws-product__text-content">
-                                <a
-                                  className="ws-product__title ws-hyphens-hack"
-                                  href="/"
-                                >
-                                  pytt i Panne
-                                </a>
-                                <div className="ws-product__subtitle">
-                                  Original 540g Findus
-                                </div>
-                                <div className="ws-product__price">
-                                  <div className="ws-price">
-                                    {" "}
-                                    <span className="">
-                                      <span
-                                        className="ws-price__original"
-                                        aria-label="Før 62,90 kroner. "
-                                      >
-                                        Før 62,90&nbsp;kr
-                                      </span>{" "}
-                                    </span>
-                                  </div>
-                                </div>
-                                <div className="ws-product__additional-info"></div>
-                              </div>
-                              <div className="ws-product__quantity-content">
-                                <div className="ws-product__quantity-picker">
-                                  <div className="ws-add-to-cart ws-add-to-cart--small">
-                                    <div className="ws-add-to-cart__quantity-stepper">
-                                      <span className="ws-add-to-cart__quantity ws-add-to-cart__quantity--withselect">
-                                        <span className="ws-quantity-picker">
-                                          <select
-                                            title="Endre mengde Pytt i Panne"
-                                            aria-label="1 stk, endre mengde Pytt i Panne"
-                                            id="ws-quantity-picker"
-                                            name="ws-quantity-picker"
-                                            className="ws-quantity-picker__select"
-                                          >
-                                            <option value="0">Fjern</option>
-                                            <option value="1">1 stk</option>
-                                            <option value="10">10 stk</option>
-                                            <option value="20">20 stk</option>
-                                            <option value="30">30 stk</option>
-                                            <option value="40">40 stk</option>
-                                            <option value="50">50 stk</option>
-                                            <option value="60">60 stk</option>
-                                            <option value="70">70 stk</option>
-                                            <option value="80">80 stk</option>
-                                            <option value="90">90 stk</option>
-                                            <option value="100">100 stk</option>
-                                          </select>
+                      {cart.length > 0
+                        ? cart?.map((cartItem) => {
+                            return (
+                              <li
+                                key={cartItem._id}
+                                className="ws-cart-items__item"
+                              >
+                                <div className="ws-product">
+                                  <div className="ws-product__wrapper">
+                                    <div className="ws-product__wrapper-inner">
+                                      <div className="ws-product__sidebar">
+                                        <a
+                                          className="ws-product__image"
+                                          aria-hidden="true"
+                                          href="/"
+                                        >
                                           <span
-                                            className="ws-quantity-picker__value ws-quantity-picker__value--no-unit"
+                                            className="ngr-icon ngr-icon--rebate"
+                                            role="presentation"
                                             aria-hidden="true"
                                           >
-                                            1
+                                            <svg
+                                              viewBox="0 0 54 54"
+                                              className="ngr-icon__svg"
+                                              height="24px"
+                                              width="24px"
+                                            >
+                                              <use href="/"></use>
+                                            </svg>
                                           </span>
-                                        </span>
-                                      </span>
-                                      <button
-                                        className="ws-add-to-cart__button ws-add-to-cart__button--remove"
-                                        type="button"
-                                        title="Fjern fra handlevognen"
-                                        aria-label="Fjern Pytt i Panne fra handlevognen"
-                                      >
-                                        <span
-                                          className="ngr-icon ngr-icon--minus ws-add-to-cart__button__inner"
-                                          role="presentation"
-                                          aria-hidden="true"
+                                          <div className="ws-image--common-image-service ws-image ws-image--loaded">
+                                            <img
+                                              width="84"
+                                              height="84"
+                                              src="/"
+                                              alt="Pytt i Panne Original 540g Findus"
+                                              loading="lazy"
+                                            />
+                                          </div>
+                                        </a>
+                                      </div>
+                                      <div className="ws-product__text-content">
+                                        <a
+                                          className="ws-product__title ws-hyphens-hack"
+                                          href="/"
                                         >
-                                          <FaMinus className="ngr-icon__svg" />
-                                        </span>
-                                        <span className="ws-add-to-cart__button-caption">
-                                          {" "}
-                                          Remove from cart
-                                        </span>
-                                      </button>
-                                      <button
-                                        className="ws-add-to-cart__button ws-add-to-cart__button--increase"
-                                        type="button"
-                                        title="Add to cart"
-                                        aria-label="add"
-                                      >
-                                        <span
-                                          className="ngr-icon ngr-icon--plus ws-add-to-cart__button__inner"
-                                          role="presentation"
-                                          aria-hidden="true"
-                                        >
-                                          <FaPlus className="ngr-icon__svg" />
-                                        </span>
-                                        <span className="ws-add-to-cart__button-caption">
-                                          {" "}
-                                          add to cart
-                                        </span>
-                                      </button>
+                                          {cartItem.name}
+                                        </a>
+                                        <div className="ws-product__subtitle">
+                                          {cartItem.description}
+                                        </div>
+                                        <div className="ws-product__price">
+                                          <div className="ws-price">
+                                            {" "}
+                                            <span className="">
+                                              {/* <span
+                                            className="ws-price__original"
+                                            aria-label="Før 62,90 kroner. "
+                                          >
+                                            Før 62,90&nbsp;kr
+                                          </span>{" "} */}
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <div className="ws-product__additional-info"></div>
+                                      </div>
+                                      <div className="ws-product__quantity-content">
+                                        <div className="ws-product__quantity-picker">
+                                          <div className="ws-add-to-cart ws-add-to-cart--small">
+                                            <div className="ws-add-to-cart__quantity-stepper">
+                                              <span className="ws-add-to-cart__quantity ws-add-to-cart__quantity--withselect">
+                                                <span className="ws-quantity-picker">
+                                                  <select
+                                                    title="Endre mengde Pytt i Panne"
+                                                    aria-label="1 stk, endre mengde Pytt i Panne"
+                                                    id="ws-quantity-picker"
+                                                    name="ws-quantity-picker"
+                                                    className="ws-quantity-picker__select"
+                                                  >
+                                                    <option value="0">
+                                                      Fjern
+                                                    </option>
+                                                    <option value="1">
+                                                      1 stk
+                                                    </option>
+                                                    <option value="10">
+                                                      10 stk
+                                                    </option>
+                                                    <option value="20">
+                                                      20 stk
+                                                    </option>
+                                                    <option value="30">
+                                                      30 stk
+                                                    </option>
+                                                    <option value="40">
+                                                      40 stk
+                                                    </option>
+                                                    <option value="50">
+                                                      50 stk
+                                                    </option>
+                                                    <option value="60">
+                                                      60 stk
+                                                    </option>
+                                                    <option value="70">
+                                                      70 stk
+                                                    </option>
+                                                    <option value="80">
+                                                      80 stk
+                                                    </option>
+                                                    <option value="90">
+                                                      90 stk
+                                                    </option>
+                                                    <option value="100">
+                                                      100 stk
+                                                    </option>
+                                                  </select>
+                                                  <span
+                                                    className="ws-quantity-picker__value ws-quantity-picker__value--no-unit"
+                                                    aria-hidden="true"
+                                                  >
+                                                    {cartItem.quantity}
+                                                  </span>
+                                                </span>
+                                              </span>
+                                              <button
+                                                className="ws-add-to-cart__button ws-add-to-cart__button--remove"
+                                                type="button"
+                                                title="Fjern fra handlevognen"
+                                                aria-label="Fjern Pytt i Panne fra handlevognen"
+                                                onClick={() => {
+                                                  dispatch({
+                                                    type: "remove",
+                                                    item: {
+                                                      _id: cartItem._id,
+                                                    },
+                                                  });
+                                                }}
+                                              >
+                                                <span
+                                                  className="ngr-icon ngr-icon--minus ws-add-to-cart__button__inner"
+                                                  role="presentation"
+                                                  aria-hidden="true"
+                                                >
+                                                  <FaMinus className="ngr-icon__svg" />
+                                                </span>
+                                                <span className="ws-add-to-cart__button-caption">
+                                                  {" "}
+                                                  Remove from cart
+                                                </span>
+                                              </button>
+                                              <button
+                                                className="ws-add-to-cart__button ws-add-to-cart__button--increase"
+                                                type="button"
+                                                title="Add to cart"
+                                                aria-label="add"
+                                                onClick={() => {
+                                                  dispatch({
+                                                    type: "add",
+                                                    item: {
+                                                      quantity: 0,
+                                                      _id: cartItem._id,
+                                                      name: cartItem.name,
+                                                      src: cartItem.src,
+                                                      description:
+                                                        cartItem.description,
+                                                      price: cartItem.price,
+                                                    },
+                                                  });
+                                                }}
+                                              >
+                                                <span
+                                                  className="ngr-icon ngr-icon--plus ws-add-to-cart__button__inner"
+                                                  role="presentation"
+                                                  aria-hidden="true"
+                                                >
+                                                  <FaPlus className="ngr-icon__svg" />
+                                                </span>
+                                                <span className="ws-add-to-cart__button-caption">
+                                                  {" "}
+                                                  add to cart
+                                                </span>
+                                              </button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <strong className="ws-product__line-price ws-product__line-price--discounted">
+                                          {cartItem.price * cartItem.quantity}
+                                        </strong>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                                <strong className="ws-product__line-price ws-product__line-price--discounted">
-                                  44,90 kr
-                                </strong>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
+                              </li>
+                            );
+                          })
+                        : ""}
                     </ul>
                   </div>
                 </div>
@@ -289,7 +337,7 @@ export function Cart() {
                         </span>
                       </div>{" "}
                       <span className="ws-summary-line__price ws-summary-line__price--is-bold">
-                        93,90
+                        {total};
                       </span>
                     </div>{" "}
                   </div>
@@ -298,13 +346,13 @@ export function Cart() {
               <div className="ws-cart-footer ws-cart__footer">
                 <div className="ws-cart-footer__buttons">
                   <strong className="ws-cart-footer__total">
-                    Totalsum 93,90&nbsp;kr
+                    Totalsum {total}&nbsp;kr
                   </strong>
                   <button
                     className="ngr-button ws-cart-footer__checkout-button"
                     type="button"
                   >
-                    <span className="ngr-button__text">Til kassen</span>
+                    <span className="ngr-button__text">To checkout</span>
                     <span className="ngr-button__icon ngr-button__icon--right">
                       <span
                         className="ngr-icon ngr-icon--ngr-chevron-right"
