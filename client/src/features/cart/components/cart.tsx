@@ -1,10 +1,12 @@
 import "../styles/cart.css";
+import { useEffect } from "react";
 import { FaXmark } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
 import { FaCartArrowDown } from "react-icons/fa";
 import { useCartDispatch, useCart } from "../context/cart";
+import { createImageSrc } from "../../products/helpers/createImageSrc";
 export function Cart() {
   const cart = useCart();
   const dispatch = useCartDispatch();
@@ -15,6 +17,14 @@ export function Cart() {
     (total, item) => total + item.price * item.quantity,
     0
   );
+
+  //useEffect(() => {
+  const cartImg = document.querySelectorAll(".ws-image img");
+
+  cartImg.forEach((item) => {
+    item.complete ? item.parentElement.classList.add("ws-image--loaded") : "";
+  });
+  //}, [cart]);
   return (
     <>
       <div className="cw-cart-area">
@@ -63,9 +73,7 @@ export function Cart() {
                 ""
               )}
             </div>
-            <div className="ws-cart-button__total ws-cart-button__total--has-total">
-              50 nok
-            </div>
+            <div className="ws-cart-button__total ws-cart-button__total--has-total"></div>
           </button>
         </div>
         <div className="cw-cart-pane">
@@ -139,12 +147,12 @@ export function Cart() {
                                               <use href="/"></use>
                                             </svg>
                                           </span>
-                                          <div className="ws-image--common-image-service ws-image ws-image--loaded">
+                                          <div className="ws-image--common-image-service ws-image">
                                             <img
                                               width="84"
                                               height="84"
-                                              src="/"
-                                              alt="Pytt i Panne Original 540g Findus"
+                                              src={createImageSrc(cartItem.src)}
+                                              alt={cartItem.src}
                                               loading="lazy"
                                             />
                                           </div>
@@ -322,18 +330,18 @@ export function Cart() {
                     </div>{" "}
                   </div>
                   <div className="ws-summary-line ws-summary-line--handover-product">
-                    <div className="ws-summary-line__main">
-                      <div className="ws-summary-line__header">
+                    {/* <div className="ws-summary-line__main"> */}
+                    {/* <div className="ws-summary-line__header">
                         <span className="ws-summary-line__title">Plukk </span>
-                      </div>{" "}
-                      <span className="ws-summary-line__price">49,00</span>
-                    </div>{" "}
+                      </div>{" "} */}
+                    {/* <span className="ws-summary-line__price">49,00</span> */}
+                    {/* </div>{" "} */}
                   </div>
                   <div className="ws-summary-line ws-summary-line--sum">
                     <div className="ws-summary-line__main">
                       <div className="ws-summary-line__header">
                         <span className="ws-summary-line__title ws-summary-line__title--is-bold">
-                          Totalsum{" "}
+                          Total sum{" "}
                         </span>
                       </div>{" "}
                       <span className="ws-summary-line__price ws-summary-line__price--is-bold">

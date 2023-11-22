@@ -525,7 +525,7 @@ svg:not(:root) {
 }
 
 .ws-image--loaded {
-  opacity: 1;
+  opacity: 1 !important;
 }
 
 .ws-image {
