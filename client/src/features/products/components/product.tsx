@@ -23,8 +23,6 @@ export default function Product({ product, onShow }) {
   const { setItem, getItem } = useLocalStorage();
   const dispatch = useCartDispatch();
   const cart = useCart();
-  // //TODO set up context to update cart state
-  // const cart = getItem("cart");
 
   return (
     <Card>
@@ -38,7 +36,7 @@ export default function Product({ product, onShow }) {
       </Link>
       <Card.Body>
         <Card.Title>{product.item.name}</Card.Title>
-
+        {/* Todo: add a select list of different variants of a product if it has more then 1 */}
         <Card.Text>{product.item.description}</Card.Text>
 
         <>

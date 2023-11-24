@@ -325,7 +325,7 @@ export function Cart() {
                         </span>
                       </div>{" "}
                       <span className="ws-summary-line__price ws-summary-line__price--is-bold">
-                        44,90
+                        {total}&nbsp;kr
                       </span>
                     </div>{" "}
                   </div>
@@ -345,7 +345,7 @@ export function Cart() {
                         </span>
                       </div>{" "}
                       <span className="ws-summary-line__price ws-summary-line__price--is-bold">
-                        {total};
+                        {total}&nbsp;kr
                       </span>
                     </div>{" "}
                   </div>

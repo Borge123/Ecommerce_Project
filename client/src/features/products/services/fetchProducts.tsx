@@ -9,6 +9,7 @@ export default async function fetchProducts() {
     });
     if (!res.ok) return;
     const data = await res.json();
+    console.log(data);
 
     return data.Items;
   } catch (error) {

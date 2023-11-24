@@ -3,7 +3,7 @@ const { calcTotal } = require("../helpers/calcTotal");
 module.exports = class OrderController {
   static async createOrder(req, res, next) {
     try {
-      const newOrder = await OrderService.createOrder(req.user, req.body);
+      const newOrder = await OrderService.createOrder(req.userId, req.body);
 
       if (newOrder) {
         return res
