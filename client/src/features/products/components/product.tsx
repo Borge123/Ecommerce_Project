@@ -1,5 +1,7 @@
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import { useState } from "react";
 import { createImageSrc } from "../helpers/createImageSrc";
 import { Link } from "react-router-dom";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
@@ -15,11 +17,9 @@ function findImage(images, imageName) {
   return image;
 }
 export default function Product({ product, onShow }) {
-  //const images = Object.keys(productImages);
-  // let result = findImage(images, "laptop1.jpg");
-  // console.log(result);
-
-  // console.log(images);
+  //TODO: access sku data based on what sku is at
+  const [sku, setSku] = useState(product.skus[0].options.color);
+  const currentSku = product.skus.find((el) => el.options.color === sku);
   const { setItem, getItem } = useLocalStorage();
   const dispatch = useCartDispatch();
   const cart = useCart();
@@ -38,6 +38,24 @@ export default function Product({ product, onShow }) {
         <Card.Title>{product.item.name}</Card.Title>
         {/* Todo: add a select list of different variants of a product if it has more then 1 */}
         <Card.Text>{product.item.description}</Card.Text>
+        <Card.Text>{currentSku.price}</Card.Text>
+        <>
+          {product.skus.length > 1 ? (
+            <Form.Select
+              onChange={(e) => {
+                setSku(e.target.value);
+                console.log(currentSku);
+              }}
+              aria-label="Select type"
+            >
+              {product.skus.map((type) => (
+                <option key={type._id}>{type.options.color}</option>
+              ))}
+            </Form.Select>
+          ) : (
+            ""
+          )}
+        </>
 
         <>
           {!cart?.find((item) => item._id === product._id) ? (
@@ -52,7 +70,7 @@ export default function Product({ product, onShow }) {
                     name: product.item.name,
                     src: product.item.img_url,
                     description: product.item.description,
-                    price: product.skus[0].price, //hardcoded in a specific sku for now
+                    price: currentSku.price, //hardcoded in a specific sku for now
                   },
                 });
               }}
@@ -66,26 +84,6 @@ export default function Product({ product, onShow }) {
                 <div className="ws-add-to-cart__quantity-stepper">
                   <span className="ws-add-to-cart__quantity ws-add-to-cart__quantity--withselect">
                     <span className="ws-quantity-picker">
-                      <select
-                        title="Endre mengde Pytt i Panne"
-                        aria-label="1 stk, endre mengde Pytt i Panne"
-                        id="ws-quantity-picker"
-                        name="ws-quantity-picker"
-                        className="ws-quantity-picker__select"
-                      >
-                        <option value="0">Fjern</option>
-                        <option value="1">1 stk</option>
-                        <option value="10">10 stk</option>
-                        <option value="20">20 stk</option>
-                        <option value="30">30 stk</option>
-                        <option value="40">40 stk</option>
-                        <option value="50">50 stk</option>
-                        <option value="60">60 stk</option>
-                        <option value="70">70 stk</option>
-                        <option value="80">80 stk</option>
-                        <option value="90">90 stk</option>
-                        <option value="100">100 stk</option>
-                      </select>
                       <span
                         className="ws-quantity-picker__value ws-quantity-picker__value--no-unit"
                         aria-hidden="true"
