@@ -121,7 +121,7 @@ export function Cart() {
                         ? cart?.map((cartItem) => {
                             return (
                               <li
-                                key={cartItem._id}
+                                key={cartItem.sku}
                                 className="ws-cart-items__item"
                               >
                                 <div className="ws-product">
@@ -251,6 +251,7 @@ export function Cart() {
                                                     type: "remove",
                                                     item: {
                                                       _id: cartItem._id,
+                                                      sku: cartItem.sku,
                                                     },
                                                   });
                                                 }}
@@ -283,6 +284,7 @@ export function Cart() {
                                                       description:
                                                         cartItem.description,
                                                       price: cartItem.price,
+                                                      sku: cartItem.sku,
                                                     },
                                                   });
                                                 }}
@@ -303,7 +305,8 @@ export function Cart() {
                                           </div>
                                         </div>
                                         <strong className="ws-product__line-price ws-product__line-price--discounted">
-                                          {cartItem.price * cartItem.quantity}
+                                          {cartItem.price * cartItem.quantity}{" "}
+                                          kr
                                         </strong>
                                       </div>
                                     </div>
@@ -354,7 +357,7 @@ export function Cart() {
               <div className="ws-cart-footer ws-cart__footer">
                 <div className="ws-cart-footer__buttons">
                   <strong className="ws-cart-footer__total">
-                    Totalsum {total}&nbsp;kr
+                    Total sum {total}&nbsp;kr
                   </strong>
                   <button
                     className="ngr-button ws-cart-footer__checkout-button"

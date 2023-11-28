@@ -639,6 +639,23 @@ svg:not(:root) {
   width: 44.8px;
   z-index: 1;
 }
+.ws-product-vertical__add {
+  align-items: flex-end;
+  border-bottom: 1px solid #e2e0e1;
+  display: flex;
+  justify-content: space-between;
+  margin-top: -4px;
+  min-height: 38px;
+  padding-bottom: 4px;
+  position: relative;
+}
+.ws-product-vertical__price {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.375rem;
+  overflow: hidden;
+  white-space: nowrap;
+}
 
 .ws-product__quantity-picker {
   margin-bottom: 0.5rem;

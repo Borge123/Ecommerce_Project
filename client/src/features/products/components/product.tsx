@@ -42,9 +42,9 @@ export default function Product({ product, onShow }) {
         <>
           {product.skus.length > 1 ? (
             <Form.Select
+              className="mb-4"
               onChange={(e) => {
                 setSku(e.target.value);
-                console.log(currentSku);
               }}
               aria-label="Select type"
             >
@@ -58,10 +58,11 @@ export default function Product({ product, onShow }) {
         </>
 
         <>
-          {!cart?.find((item) => item._id === product._id) ? (
+          {!cart?.find(
+            (item) => item._id === product._id && item.sku === currentSku.sku
+          ) ? (
             <Button
               onClick={() => {
-                //TODO feature for the future add options to choose different versions of a product like color etc
                 dispatch({
                   type: "add",
                   item: {
@@ -70,7 +71,8 @@ export default function Product({ product, onShow }) {
                     name: product.item.name,
                     src: product.item.img_url,
                     description: product.item.description,
-                    price: currentSku.price, //hardcoded in a specific sku for now
+                    price: currentSku.price,
+                    sku: currentSku.sku,
                   },
                 });
               }}
@@ -79,88 +81,101 @@ export default function Product({ product, onShow }) {
               Add to cart
             </Button>
           ) : (
-            <div className="ws-product__quantity-picker">
-              <div className="ws-add-to-cart ws-add-to-cart--small">
-                <div className="ws-add-to-cart__quantity-stepper">
-                  <span className="ws-add-to-cart__quantity ws-add-to-cart__quantity--withselect">
-                    <span className="ws-quantity-picker">
-                      <span
-                        className="ws-quantity-picker__value ws-quantity-picker__value--no-unit"
-                        aria-hidden="true"
-                      >
-                        {cart.find((item) => item._id === product._id).quantity}
+            <>
+              <div className="ws-product-vertical__add">
+                <div className="ws-product-vertical__price ws-product-vertical__price--discounted">
+                  {currentSku.price} kr
+                </div>
+                <div className="ws-product__quantity-picker">
+                  <div className="ws-add-to-cart ws-add-to-cart--small">
+                    <div className="ws-add-to-cart__quantity-stepper">
+                      <span className="ws-add-to-cart__quantity ws-add-to-cart__quantity--withselect">
+                        <span className="ws-quantity-picker">
+                          <span
+                            className="ws-quantity-picker__value ws-quantity-picker__value--no-unit"
+                            aria-hidden="true"
+                          >
+                            {
+                              cart.find((item) => item.sku === currentSku.sku)
+                                .quantity
+                            }
+                          </span>
+                        </span>
                       </span>
-                    </span>
-                  </span>
 
-                  <button
-                    className="ws-add-to-cart__button ws-add-to-cart__button--remove"
-                    type="button"
-                    title="Fjern fra handlevognen"
-                    aria-label="Fjern Pytt i Panne fra handlevognen"
-                    onClick={() => {
-                      const cartItem = cart.find(
-                        (item) => item._id === product._id
-                      );
-                      // if(cartItem.quantity === 1){
+                      <button
+                        className="ws-add-to-cart__button ws-add-to-cart__button--remove"
+                        type="button"
+                        title="Fjern fra handlevognen"
+                        aria-label="Fjern Pytt i Panne fra handlevognen"
+                        onClick={() => {
+                          const cartItem = cart.find(
+                            (item) => item._id === product._id
+                          );
+                          // if(cartItem.quantity === 1){
 
-                      // }
-                      dispatch({
-                        type: "remove",
-                        item: {
-                          quantity: 0,
-                          _id: product._id,
-                          name: product.item.name,
-                          src: product.item.img_url,
-                          description: product.item.description,
-                        },
-                      });
-                    }}
-                  >
-                    <span
-                      className="ngr-icon ngr-icon--minus ws-add-to-cart__button__inner"
-                      role="presentation"
-                      aria-hidden="true"
-                    >
-                      <FaMinus className="ngr-icon__svg" />
-                    </span>
-                    <span className="ws-add-to-cart__button-caption">
-                      {" "}
-                      Remove from cart
-                    </span>
-                  </button>
-                  <button
-                    className="ws-add-to-cart__button ws-add-to-cart__button--increase"
-                    type="button"
-                    title="Add to cart"
-                    aria-label="add"
-                    onClick={() => {
-                      dispatch({
-                        type: "add",
-                        item: {
-                          _id: product._id,
-                          name: product.item.name,
-                          src: product.item.img_url,
-                          description: product.item.description,
-                        },
-                      });
-                    }}
-                  >
-                    <span
-                      className="ngr-icon ngr-icon--plus ws-add-to-cart__button__inner"
-                      role="presentation"
-                      aria-hidden="true"
-                    >
-                      <FaPlus className="ngr-icon__svg" />
-                    </span>
-                    <span className="ws-add-to-cart__button-caption">
-                      {" "}
-                      add to cart
-                    </span>
-                  </button>
+                          // }
+                          dispatch({
+                            type: "remove",
+                            item: {
+                              quantity: 0,
+                              _id: product._id,
+                              name: product.item.name,
+                              src: product.item.img_url,
+                              description: product.item.description,
+                              sku: currentSku.sku,
+                            },
+                          });
+                        }}
+                      >
+                        <span
+                          className="ngr-icon ngr-icon--minus ws-add-to-cart__button__inner"
+                          role="presentation"
+                          aria-hidden="true"
+                        >
+                          <FaMinus className="ngr-icon__svg" />
+                        </span>
+                        <span className="ws-add-to-cart__button-caption">
+                          {" "}
+                          Remove from cart
+                        </span>
+                      </button>
+                      <button
+                        className="ws-add-to-cart__button ws-add-to-cart__button--increase"
+                        type="button"
+                        title="Add to cart"
+                        aria-label="add"
+                        onClick={() => {
+                          dispatch({
+                            type: "add",
+                            item: {
+                              _id: product._id,
+                              name: product.item.name,
+                              src: product.item.img_url,
+                              description: product.item.description,
+                              sku: currentSku.sku,
+                              price: currentSku.price,
+                            },
+                          });
+                        }}
+                      >
+                        <span
+                          className="ngr-icon ngr-icon--plus ws-add-to-cart__button__inner"
+                          role="presentation"
+                          aria-hidden="true"
+                        >
+                          <FaPlus className="ngr-icon__svg" />
+                        </span>
+                        <span className="ws-add-to-cart__button-caption">
+                          {" "}
+                          add to cart
+                        </span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </>
           )}
         </>
       </Card.Body>
