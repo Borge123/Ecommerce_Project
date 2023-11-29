@@ -1,5 +1,6 @@
 import "../styles/cart.css";
 import { useEffect } from "react";
+
 import { FaXmark } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
@@ -12,19 +13,20 @@ export function Cart() {
   const dispatch = useCartDispatch();
   const [cartState, setCartState] = useState("closed");
   //TODO count from localstorage number of items in cart and set cart to closed if 0 items
+
   const itemsInCart = cart?.length;
   const total = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
 
-  //useEffect(() => {
-  const cartImg = document.querySelectorAll(".ws-image img");
+  // useEffect(() => {
+  //   const cartImg = document.querySelectorAll(".ws-image img");
 
-  cartImg.forEach((item) => {
-    item.complete ? item.parentElement.classList.add("ws-image--loaded") : "";
-  });
-  //}, [cart]);
+  //   cartImg.forEach((item) => {
+  //     item.complete ? item.parentElement.classList.add("ws-image--loaded") : "";
+  //   });
+  // }, [cart]);
   return (
     <>
       <div className="cw-cart-area">
@@ -128,10 +130,9 @@ export function Cart() {
                                   <div className="ws-product__wrapper">
                                     <div className="ws-product__wrapper-inner">
                                       <div className="ws-product__sidebar">
-                                        <a
+                                        <div
                                           className="ws-product__image"
                                           aria-hidden="true"
-                                          href="/"
                                         >
                                           <span
                                             className="ngr-icon ngr-icon--rebate"
@@ -147,7 +148,7 @@ export function Cart() {
                                               <use href="/"></use>
                                             </svg>
                                           </span>
-                                          <div className="ws-image--common-image-service ws-image">
+                                          <div className="ws-image--common-image-service ws-image ws-image--loaded">
                                             <img
                                               width="84"
                                               height="84"
@@ -156,7 +157,7 @@ export function Cart() {
                                               loading="lazy"
                                             />
                                           </div>
-                                        </a>
+                                        </div>
                                       </div>
                                       <div className="ws-product__text-content">
                                         <a
@@ -190,8 +191,8 @@ export function Cart() {
                                               <span className="ws-add-to-cart__quantity ws-add-to-cart__quantity--withselect">
                                                 <span className="ws-quantity-picker">
                                                   <select
-                                                    title="Endre mengde Pytt i Panne"
-                                                    aria-label="1 stk, endre mengde Pytt i Panne"
+                                                    title="Endre mengde"
+                                                    aria-label="1 stk, endre mengde"
                                                     id="ws-quantity-picker"
                                                     name="ws-quantity-picker"
                                                     className="ws-quantity-picker__select"
