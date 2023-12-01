@@ -49,6 +49,7 @@ module.exports = class UserService {
   static async checkUserRole(id) {
     try {
       const user = await User.findById(id);
+
       if (user) {
         return user.role;
       }

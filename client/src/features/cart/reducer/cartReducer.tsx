@@ -1,4 +1,4 @@
-export default function cartReducer(cart, action) {
+export default function CartReducer(cart, action) {
   switch (action.type) {
     case "add": {
       //expects a product object

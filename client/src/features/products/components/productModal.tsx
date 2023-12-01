@@ -11,6 +11,7 @@ import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 export default function ProductModal(props) {
   const { product } = useLoaderData();
+
   const dispatch = useCartDispatch();
   const cart = useCart();
   const [sku, setSku] = useState(product.skus[0].options.color);

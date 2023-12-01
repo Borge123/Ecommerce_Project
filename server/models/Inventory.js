@@ -60,14 +60,15 @@ const InventorySchema = new Schema(
       },
     ],
 
-    categories: [
-      {
-        category: {
-          type: String,
-          required: true,
-        },
-      },
-    ],
+    category: {
+      type: String,
+      required: true,
+    },
+
+    subcategory: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

@@ -12,7 +12,7 @@ module.exports = {
     try {
       decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
 
-      const checkUser = await UserService.checkUserRole(decodedToken.id);
+      const checkUser = await UserService.checkUserRole(decodedToken.userId);
 
       if (checkUser === "admin") {
         next();

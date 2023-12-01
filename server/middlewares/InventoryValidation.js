@@ -98,18 +98,28 @@ module.exports = {
       }
     }
 
-    for (const el of req.body.categories) {
-      const { category } = el;
+    const { category, subcategory } = req.body;
 
-      if (category === undefined || category === null) {
-        return res.status(400).json({ "category": "category is required." });
-      }
+    if (category === undefined || category === null) {
+      return res.status(400).json({ "category": "category is required." });
+    }
 
-      if (category === "" || typeof category !== "string") {
-        return res.status(400).json({
-          "category": "category needs to be a string and is required.",
-        });
-      }
+    if (category === "" || typeof category !== "string") {
+      return res.status(400).json({
+        "category": "category needs to be a string and is required.",
+      });
+    }
+
+    if (subcategory === undefined || subcategory === null) {
+      return res
+        .status(400)
+        .json({ "subcategory": "subcategory is required." });
+    }
+
+    if (subcategory === "" || typeof subcategory !== "string") {
+      return res.status(400).json({
+        "subcategory": "subcategory needs to be a string and is required.",
+      });
     }
 
     next();

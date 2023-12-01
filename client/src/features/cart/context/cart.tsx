@@ -5,13 +5,13 @@ import {
   type Dispatch,
   useContext,
 } from "react";
-import cartReducer from "../reducer/cartReducer";
+import CartReducer from "../reducer/cartReducer";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 export const CartContext = createContext(null);
 export const CartDispatchContext = createContext(null);
 export function CartProvider({ children }) {
   const { getItem, setItem } = useLocalStorage();
-  const [cart, dispatch] = useReducer(cartReducer, initialState.cart);
+  const [cart, dispatch] = useReducer(CartReducer, initialState.cart);
 
   useEffect(() => {
     setItem("cart", JSON.stringify(cart));
@@ -37,8 +37,7 @@ export function CartProvider({ children }) {
     setItem("cart", JSON.stringify(cart));
     const data = getItem("cart");
     const parsedData = JSON.parse(data);
-    console.log(parsedData);
-    console.log(parsedData.length);
+
     if (parsedData.length > 0) {
       // dispatch({
       //   type: "update",

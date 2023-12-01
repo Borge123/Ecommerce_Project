@@ -3,18 +3,13 @@ module.exports = class InventoryService {
   static async createItem(data) {
     try {
       let skuLength;
-      let categoryLength;
+
       if (data.skus.length != 0) {
         skuLength = data.skus.length - 1;
       } else {
         skuLength = 0;
       }
 
-      if (data.categories.length != 0) {
-        categoryLength = data.categories.length - 1;
-      } else {
-        categoryLength = 0;
-      }
       const newItem = {
         item: {
           name: data.item.name,
@@ -35,11 +30,9 @@ module.exports = class InventoryService {
             },
           },
         ],
-        categories: [
-          {
-            category: data.categories[categoryLength].category,
-          },
-        ],
+
+        category: data.category,
+        subcategory: data.subcategory,
       };
 
       // last object of data will be added first so have to end loop at last index - 1
@@ -56,23 +49,10 @@ module.exports = class InventoryService {
         }
       }
 
-      if (data.categories.length > 1) {
-        for (let i = 0; i < data.categories.length - 1; i++) {
-          // prevent duplicate category inside the same document
-          const result = newItem.categories.find(
-            ({ category }) => category === data.categories[i].category
-          );
-
-          if (!result) {
-            newItem.categories.push(data.categories[i]);
-          }
-        }
-      }
-
       const response = await new Inventory(newItem).save();
       return response;
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 
