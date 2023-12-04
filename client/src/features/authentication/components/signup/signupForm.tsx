@@ -57,6 +57,7 @@ export default function SignupForm() {
         touched,
         errors,
         isValid,
+        isSubmitting,
       }) => (
         <Container>
           <Row
@@ -140,7 +141,10 @@ export default function SignupForm() {
                   <Form.Check type="checkbox" label="Check me out" />
                 </Form.Group>
 
-                <Button type="submit">Signup</Button>
+                <Button type="submit">
+                  {" "}
+                  {isSubmitting ? "Creating user..." : "Create user"}{" "}
+                </Button>
               </Form>
             </Col>
           </Row>

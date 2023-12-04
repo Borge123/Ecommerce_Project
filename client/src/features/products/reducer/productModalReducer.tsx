@@ -1,13 +1,14 @@
 export default function ProductModalReducer(modal, action) {
   switch (action.type) {
-    case "open": {
+    case "open":
       return {
-        modal: action.modal,
+        status: true,
+        product: action.product,
       };
-    }
     case "close": {
       return {
-        modal: action.modal,
+        status: false,
+        product: action.product,
       };
     }
     default:

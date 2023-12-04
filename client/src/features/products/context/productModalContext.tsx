@@ -24,5 +24,6 @@ export function useModalDispatch() {
 }
 
 const initialState = {
-  status: "closed",
+  status: false,
+  product: {},
 };

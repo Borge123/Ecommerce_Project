@@ -10,5 +10,5 @@ export const productsRoute = {
   element: <ProductsPage />,
   errorElement: <ErrorPage />,
   loader: ProductsLoader,
-  children: [product],
+  //children: [product],
 };

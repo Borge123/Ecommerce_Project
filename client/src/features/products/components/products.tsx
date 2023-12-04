@@ -4,12 +4,12 @@ import { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Product from "./product";
 import { Outlet } from "react-router-dom";
-
+import { useModalDispatch } from "../context/productModalContext";
 import { useLoaderData } from "react-router-dom";
 export default function Products() {
   const { products } = useLoaderData();
-  const [modalShow, setModalShow] = useState(false);
 
+  const dispatch = useModalDispatch();
   return (
     <Container>
       <h1 align="center">Products</h1>
@@ -23,11 +23,18 @@ export default function Products() {
         {products.map((product) => {
           return (
             <Col key={product._id}>
-              <Product product={product} onShow={() => setModalShow(true)} />
+              <Product
+                product={product}
+                onShow={() =>
+                  dispatch({
+                    type: "open",
+                    product: product,
+                  })
+                }
+              />
             </Col>
           );
         })}
-        <Outlet context={[modalShow, setModalShow]} />
       </Row>
     </Container>
   );

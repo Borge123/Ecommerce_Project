@@ -4,18 +4,21 @@ import Form from "react-bootstrap/Form";
 import { createImageSrc } from "../helpers/createImageSrc";
 import { useLoaderData } from "react-router-dom";
 import { useCartDispatch, useCart } from "../../cart/context/cart";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../../cart/styles/cart.css";
 
 import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 export default function ProductModal(props) {
-  const { product } = useLoaderData();
+  const product = props.product;
+  //console.log(props);
 
   const dispatch = useCartDispatch();
   const cart = useCart();
   const [sku, setSku] = useState(product.skus[0].options.color);
   const currentSku = product.skus.find((el) => el.options.color === sku);
+  console.log(currentSku);
+
   return (
     <Modal
       {...props}

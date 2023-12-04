@@ -2,6 +2,7 @@ import Navigation from "../components/ui/navigation/Navigation";
 import Footer from "../components/ui/footer/Footer";
 import "./Layoutstyles.css";
 import { Outlet } from "react-router-dom";
+import ProductDetails from "../features/products/components/productDetails";
 import { useState } from "react";
 export default function Layout() {
   //TODO test if its possible to open the modal from multiple different routes
@@ -13,6 +14,7 @@ export default function Layout() {
       <div className="content-wrapper">
         <Outlet />
       </div>
+      {/* <ProductDetails /> */}
 
       <Footer />
     </div>

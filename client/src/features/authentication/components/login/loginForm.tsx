@@ -118,7 +118,7 @@ export default function LoginForm() {
                 </Form.Group>
 
                 <Button type="submit" disabled={isSubmitting}>
-                  Login
+                  {isSubmitting ? "Logging in" : "Login"}
                 </Button>
               </Form>
             </Col>
