@@ -12,10 +12,13 @@ export const CartDispatchContext = createContext(null);
 export function CartProvider({ children }) {
   const { getItem, setItem } = useLocalStorage();
   const [cart, dispatch] = useReducer(CartReducer, initialState.cart);
-
+  //TODO figure out why cart defaults back to load state after crash
   useEffect(() => {
+    console.log("effect 1");
+
     setItem("cart", JSON.stringify(cart));
     const data = getItem("cart");
+
     const parsedData = JSON.parse(data);
     if (parsedData.length > 0) {
       console.log("data");
@@ -30,20 +33,24 @@ export function CartProvider({ children }) {
     }
   }, []);
   useEffect(() => {
+    console.log("effect 2");
     //TODO update with the data from localstorage
 
-    //TODO find out how to update cart
+    //TODO find out how to update cart without endless reloads
 
     setItem("cart", JSON.stringify(cart));
     const data = getItem("cart");
     const parsedData = JSON.parse(data);
+    //console.log(parsedData);
 
+    console.log(cart);
+    console.log(parsedData);
     if (parsedData.length > 0) {
       // dispatch({
-      //   type: "update",
+      //   type: "load",
       //   cart: cart,
       // });
-      console.log("test");
+      //console.log("test");
     }
     //dispatch update every time cart changes
   }, [cart]);

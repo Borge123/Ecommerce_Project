@@ -5,7 +5,7 @@ export const ProductModalContext = createContext(null);
 export const ProductModalDispatchContext = createContext(null);
 export function ProductModalProvider({ children }) {
   const [modal, dispatch] = useReducer(ProductModalReducer, initialState);
-
+  //TODO modal seems desynced
   return (
     <ProductModalContext.Provider value={modal}>
       <ProductModalDispatchContext.Provider value={dispatch as Dispatch}>

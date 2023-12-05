@@ -20,6 +20,7 @@ export default function Product({ product, onShow }) {
   //TODO: access sku data based on what sku is at
   const [sku, setSku] = useState(product.skus[0].options.color);
   const currentSku = product.skus.find((el) => el.options.color === sku);
+  console.log(sku);
 
   const { setItem, getItem } = useLocalStorage();
   const dispatch = useCartDispatch();
@@ -27,15 +28,15 @@ export default function Product({ product, onShow }) {
 
   return (
     <Card>
-      {/* <Link to={`/products/${product._id}`}> */}
-      <Card.Img
-        onClick={onShow}
-        variant="top"
-        src={createImageSrc(product.item.img_url)}
-        alt={product.item.img_url}
-        loading="lazy"
-      />
-      {/* </Link> */}
+      <Link to={`/products/${product._id}`}>
+        <Card.Img
+          onClick={onShow}
+          variant="top"
+          src={createImageSrc(product.item.img_url)}
+          alt={product.item.img_url}
+          loading="lazy"
+        />
+      </Link>
       <Card.Body>
         <Card.Title>{product.item.name}</Card.Title>
         {/* Todo: add a select list of different variants of a product if it has more then 1 */}
@@ -120,7 +121,6 @@ export default function Product({ product, onShow }) {
                           dispatch({
                             type: "remove",
                             item: {
-                              quantity: 0,
                               _id: product._id,
                               name: product.item.name,
                               src: product.item.img_url,
