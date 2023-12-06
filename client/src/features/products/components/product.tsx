@@ -20,7 +20,6 @@ export default function Product({ product, onShow }) {
   //TODO: access sku data based on what sku is at
   const [sku, setSku] = useState(product.skus[0].options.color);
   const currentSku = product.skus.find((el) => el.options.color === sku);
-  console.log(sku);
 
   const { setItem, getItem } = useLocalStorage();
   const dispatch = useCartDispatch();

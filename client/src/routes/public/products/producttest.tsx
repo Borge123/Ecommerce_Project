@@ -1,10 +1,9 @@
-import ProductDetails from "../../../features/products/components/modalContainer";
+import ProductDetailsPage from "../../../pages/ProductDetailsPage";
 
 import { ProductLoader } from "./productLoader";
 //TODO change routes to be more dynamic and make product route its own route instead of being a child route
-
-export const product = {
+export const producttest = {
   path: "/products/:_id",
-  element: <ProductDetails />,
-  loader: ProductLoader,
+  element: <p>Hello.....</p>,
+  //loader: ProductLoader,
 };
