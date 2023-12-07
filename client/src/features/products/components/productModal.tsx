@@ -9,12 +9,13 @@ import "../../cart/styles/cart.css";
 import { ProductLoader } from "../../../routes/public/products/productLoader";
 import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
+import { useModal } from "../context/productModalContext";
 export default function ProductModal(props) {
   const url = new URL(window.location.href);
   //TODO find out how to only use productloader if url changes
   const lastSlash = url.pathname.lastIndexOf("/");
   const id = url.pathname.slice(lastSlash + 1, url.pathname.length);
-
+  const modal = useModal();
   const params = {
     _id: id,
   };
@@ -25,7 +26,7 @@ export default function ProductModal(props) {
   // });
 
   //const product = props.product;
-  const { product } = useLoaderData();
+  const product = modal.product;
 
   //console.log(props);
   //console.log(props);
@@ -33,9 +34,10 @@ export default function ProductModal(props) {
   const dispatch = useCartDispatch();
   const cart = useCart();
   const [sku, setSku] = useState(product.skus[0].options.color);
-  //TODO find out why app only crashes after clicking item before pressing add/remove button
-  //TODO find a way to update skus in both product and modal and keep them in sync
 
+  //TODO find a way to update skus in both product and modal and keep them in sync
+  //TODO currentsku will be undefined if trying to add it to cart before updating currentsku
+  //need to update context when pressing add button
   const currentSku = product.skus.find((el) => el.options.color === sku);
 
   return (

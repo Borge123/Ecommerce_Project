@@ -1,8 +1,8 @@
-import ProductDetailsTest from "../features/products/components/modalContainer";
+import { ProductDetails } from "../features/products/components/productDetails";
 export default function ProductDetailsPage() {
   return (
     <>
-      <ProductDetailsTest />
+      <ProductDetails />
     </>
   );
 }

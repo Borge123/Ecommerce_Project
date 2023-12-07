@@ -1,4 +1,16 @@
+import { useLoaderData } from "react-router-dom";
+import { useCartDispatch, useCart } from "../../cart/context/cart";
+import { createImageSrc } from "../helpers/createImageSrc";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { FaMinus } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 export function ProductDetails() {
+  const { product } = useLoaderData();
+  const dispatch = useCartDispatch();
+  const cart = useCart();
+  const [sku, setSku] = useState(product.skus[0].options.color);
+  const currentSku = product.skus.find((el) => el.options.color === sku);
   return (
     <div>
       <section className="py-5">
@@ -6,15 +18,18 @@ export function ProductDetails() {
           <div className="row gx-5">
             <aside className="col-lg-6">
               <div className="border rounded-4 mb-3 d-flex justify-content-center">
-                <a
-                  data-fslightbox="mygalley"
-                  className="rounded-4"
-                  target="_blank"
-                  data-type="image"
-                  href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big.webp"
-                >
-                  {/* <img style="max-width: 100%; max-height: 100vh; margin: auto;" className="rounded-4 fit" src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big.webp" /> */}
-                </a>
+                <Link to={`/products/${product._id}`} className="rounded-4">
+                  <img
+                    style={{
+                      maxWidth: "100%",
+                      maxHeight: "100vh",
+                      margin: "auto",
+                    }}
+                    className="rounded-4 fit"
+                    src={createImageSrc(product.item.img_url)}
+                    alt={product.item.img_url}
+                  />
+                </Link>
               </div>
               <div className="d-flex justify-content-center mb-3">
                 {/* <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big1.webp">
@@ -37,8 +52,8 @@ export function ProductDetails() {
             <main className="col-lg-6">
               <div className="ps-lg-3">
                 <h4 className="title text-dark">
-                  Quality Men's Hoodie for Winter, Men's Fashion <br />
-                  Casual Hoodie
+                  {product.item.name} <br />
+                  Placeholder...
                 </h4>
                 <div className="d-flex flex-row my-3">
                   <div className="text-warning mb-1 me-2">
@@ -86,22 +101,28 @@ export function ProductDetails() {
 
                 <div className="row mb-4">
                   <div className="col-md-4 col-6">
-                    <label className="mb-2">Size</label>
-                    <select
-                      className="form-select border border-secondary"
-                      style={{ height: "35px;" }}
-                    >
-                      <option>Small</option>
-                      <option>Medium</option>
-                      <option>Large</option>
-                    </select>
+                    <label className="mb-2">Color</label>
+                    <>
+                      {product.skus.length >= 1 ? (
+                        <select
+                          className="form-select border border-secondary"
+                          style={{ height: "35px" }}
+                        >
+                          {product.skus.map((type) => (
+                            <option key={type._id}>{type.options.color}</option>
+                          ))}
+                        </select>
+                      ) : (
+                        ""
+                      )}
+                    </>
                   </div>
 
                   <div className="col-md-4 col-6 mb-3">
                     <label className="mb-2 d-block">Quantity</label>
                     <div
                       className="input-group mb-3"
-                      style={{ width: "170px;" }}
+                      style={{ width: "170px" }}
                     >
                       <button
                         className="btn btn-white border border-secondary px-3"
@@ -109,7 +130,7 @@ export function ProductDetails() {
                         id="button-addon1"
                         data-mdb-ripple-color="dark"
                       >
-                        <i className="fas fa-minus"></i>
+                        <FaMinus className="ngr-icon__svg" />
                       </button>
                       <input
                         type="text"
@@ -124,7 +145,7 @@ export function ProductDetails() {
                         id="button-addon2"
                         data-mdb-ripple-color="dark"
                       >
-                        <i className="fas fa-plus"></i>
+                        <FaPlus className="ngr-icon__svg" />
                       </button>
                     </div>
                   </div>
