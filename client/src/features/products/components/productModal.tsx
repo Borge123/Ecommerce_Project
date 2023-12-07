@@ -35,9 +35,12 @@ export default function ProductModal(props) {
   const cart = useCart();
   const [sku, setSku] = useState(product.skus[0].options.color);
 
+  useEffect(() => {
+    setSku(product.skus[0].options.color);
+  }, [product]);
   //TODO find a way to update skus in both product and modal and keep them in sync
   //TODO currentsku will be undefined if trying to add it to cart before updating currentsku
-  //need to update context when pressing add button
+  //need to update context when pressing add button and selecting between colors
   const currentSku = product.skus.find((el) => el.options.color === sku);
 
   return (
