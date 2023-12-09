@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
+import { Button } from "react-bootstrap";
+import "../../cart/styles/cart.css";
 export function ProductDetails() {
   const { product } = useLoaderData();
   const dispatch = useCartDispatch();
@@ -72,8 +74,8 @@ export function ProductDetails() {
                 </div>
 
                 <div className="mb-3">
-                  <span className="h5">$75.00</span>
-                  <span className="text-muted">/per box</span>
+                  <span className="h5">${currentSku.price} </span>
+                  <span className="text-muted">/per item</span>
                 </div>
 
                 <p>
@@ -107,6 +109,9 @@ export function ProductDetails() {
                         <select
                           className="form-select border border-secondary"
                           style={{ height: "35px" }}
+                          onChange={(e) => {
+                            setSku(e.target.value);
+                          }}
                         >
                           {product.skus.map((type) => (
                             <option key={type._id}>{type.options.color}</option>
@@ -118,39 +123,137 @@ export function ProductDetails() {
                     </>
                   </div>
 
-                  <div className="col-md-4 col-6 mb-3">
-                    <label className="mb-2 d-block">Quantity</label>
+                  <div className="col-md-4 col-6 mt-2">
                     <div
-                      className="input-group mb-3"
-                      style={{ width: "170px" }}
+                      className="input-group mt-4 "
+                      style={{ width: "250px", height: "35px" }}
                     >
-                      <button
-                        className="btn btn-white border border-secondary px-3"
-                        type="button"
-                        id="button-addon1"
-                        data-mdb-ripple-color="dark"
-                      >
-                        <FaMinus className="ngr-icon__svg" />
-                      </button>
-                      <input
-                        type="text"
-                        className="form-control text-center border border-secondary"
-                        placeholder="14"
-                        aria-label="Example text with button addon"
-                        aria-describedby="button-addon1"
-                      />
-                      <button
-                        className="btn btn-white border border-secondary px-3"
-                        type="button"
-                        id="button-addon2"
-                        data-mdb-ripple-color="dark"
-                      >
-                        <FaPlus className="ngr-icon__svg" />
-                      </button>
+                      {!cart?.find(
+                        (item) =>
+                          item._id === product._id &&
+                          item.sku === currentSku.sku
+                      ) ? (
+                        <Button
+                          onClick={() => {
+                            dispatch({
+                              type: "add",
+                              item: {
+                                quantity: 0,
+                                _id: product._id,
+                                name: product.item.name,
+                                src: product.item.img_url,
+                                description: product.item.description,
+                                price: currentSku.price,
+                                sku: currentSku.sku,
+                              },
+                            });
+                          }}
+                        >
+                          {" "}
+                          Add to cart{" "}
+                        </Button>
+                      ) : (
+                        <>
+                          <div
+                            className="ws-product-vertical__add"
+                            style={{ borderBottom: "0px" }}
+                          >
+                            <div className="ws-product__quantity-picker">
+                              <div className="ws-add-to-cart ws-add-to-cart--biggest">
+                                <div className="ws-add-to-cart__quantity-stepper">
+                                  <span className="ws-add-to-cart__quantity ws-add-to-cart__quantity--withselect">
+                                    <span className="ws-quantity-picker">
+                                      <span
+                                        className="ws-quantity-picker__value ws-quantity-picker__value--no-unit"
+                                        aria-hidden="true"
+                                      >
+                                        {
+                                          cart.find(
+                                            (item) =>
+                                              item.sku === currentSku.sku
+                                          ).quantity
+                                        }
+                                      </span>
+                                    </span>
+                                  </span>
+
+                                  <button
+                                    className="ws-add-to-cart__button ws-add-to-cart__button--remove"
+                                    type="button"
+                                    title="Fjern fra handlevognen"
+                                    aria-label="Fjern Pytt i Panne fra handlevognen"
+                                    onClick={() => {
+                                      const cartItem = cart.find(
+                                        (item) => item._id === product._id
+                                      );
+                                      // if(cartItem.quantity === 1){
+
+                                      // }
+                                      dispatch({
+                                        type: "remove",
+                                        item: {
+                                          _id: product._id,
+                                          name: product.item.name,
+                                          src: product.item.img_url,
+                                          description: product.item.description,
+                                          sku: currentSku.sku,
+                                        },
+                                      });
+                                    }}
+                                  >
+                                    <span
+                                      className="ngr-icon ngr-icon--minus ws-add-to-cart__button__inner"
+                                      role="presentation"
+                                      aria-hidden="true"
+                                    >
+                                      <FaMinus className="ngr-icon__svg" />
+                                    </span>
+                                    <span className="ws-add-to-cart__button-caption">
+                                      {" "}
+                                      Remove from cart
+                                    </span>
+                                  </button>
+                                  <button
+                                    className="ws-add-to-cart__button ws-add-to-cart__button--increase"
+                                    type="button"
+                                    title="Add to cart"
+                                    aria-label="add"
+                                    onClick={() => {
+                                      dispatch({
+                                        type: "add",
+                                        item: {
+                                          _id: product._id,
+                                          name: product.item.name,
+                                          src: product.item.img_url,
+                                          description: product.item.description,
+                                          sku: currentSku.sku,
+                                          price: currentSku.price,
+                                        },
+                                      });
+                                    }}
+                                  >
+                                    <span
+                                      className="ngr-icon ngr-icon--plus ws-add-to-cart__button__inner"
+                                      role="presentation"
+                                      aria-hidden="true"
+                                    >
+                                      <FaPlus className="ngr-icon__svg" />
+                                    </span>
+                                    <span className="ws-add-to-cart__button-caption">
+                                      {" "}
+                                      add to cart
+                                    </span>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
-                <a href="#" className="btn btn-warning shadow-0">
+                {/* <a href="#" className="btn btn-warning shadow-0">
                   {" "}
                   Buy now{" "}
                 </a>
@@ -164,7 +267,7 @@ export function ProductDetails() {
                 >
                   {" "}
                   <i className="me-1 fa fa-heart fa-lg"></i> Save{" "}
-                </a>
+                </a> */}
               </div>
             </main>
           </div>
