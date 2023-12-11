@@ -20,18 +20,18 @@ export function ProductDetails() {
           <div className="row gx-5">
             <aside className="col-lg-6">
               <div className="border rounded-4 mb-3 d-flex justify-content-center">
-                <Link to={`/products/${product._id}`} className="rounded-4">
-                  <img
-                    style={{
-                      maxWidth: "100%",
-                      maxHeight: "100vh",
-                      margin: "auto",
-                    }}
-                    className="rounded-4 fit"
-                    src={createImageSrc(product.item.img_url)}
-                    alt={product.item.img_url}
-                  />
-                </Link>
+                {/* <Link to={`/products/${product._id}`} className="rounded-4"> */}
+                <img
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "100vh",
+                    margin: "auto",
+                  }}
+                  className="rounded-4 fit"
+                  src={createImageSrc(product.item.img_url)}
+                  alt={product.item.img_url}
+                />
+                {/* </Link> */}
               </div>
               <div className="d-flex justify-content-center mb-3">
                 {/* <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big1.webp">
@@ -67,8 +67,8 @@ export function ProductDetails() {
                     <span className="ms-1">4.5</span>
                   </div>
                   <span className="text-muted">
-                    <i className="fas fa-shopping-basket fa-sm mx-1"></i>154
-                    orders
+                    <i className="fas fa-shopping-basket fa-sm mx-1"></i>
+                    {currentSku.stock_quantity} items
                   </span>
                   <span className="text-success ms-2">In stock</span>
                 </div>
