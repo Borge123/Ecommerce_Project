@@ -127,7 +127,7 @@ router.delete(
 //orders
 
 router.post(
-  "/order",
+  "/createorder",
   validateNewOrder,
   checkIfRegistered,
   OrderController.createOrder

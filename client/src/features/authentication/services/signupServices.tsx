@@ -6,7 +6,7 @@ type user = {
 };
 const createUser = async (user: user) => {
   try {
-    const res = await fetch("http://localhost:3000/signup", {
+    const res = await fetch("http://api.app.localhost:3000/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

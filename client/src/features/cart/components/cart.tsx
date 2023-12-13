@@ -12,7 +12,10 @@ import {
   useModal,
   useModalDispatch,
 } from "../../products/context/productModalContext";
+import { useLocalStorage } from "../../../hooks/useLocalStorage";
+import { useLocation } from "react-router-dom";
 export function Cart() {
+  const { getItem, setItem } = useLocalStorage();
   const cart = useCart();
   const dispatch = useCartDispatch();
   const [cartState, setCartState] = useState("closed");
@@ -23,10 +26,17 @@ export function Cart() {
     (total, item) => total + item.price * item.quantity,
     0
   );
-
+  const location = useLocation();
   const modalDispatch = useModalDispatch();
   const modal = useModal();
 
+  useEffect(() => {
+    const updatedCart = getItem("cart");
+    dispatch({
+      type: "load",
+      cart: JSON.parse(updatedCart),
+    });
+  }, [location]);
   // useEffect(() => {
   //   const cartImg = document.querySelectorAll(".ws-image img");
 

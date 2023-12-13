@@ -6,9 +6,11 @@ import Product from "./product";
 import { Outlet } from "react-router-dom";
 import { useModalDispatch } from "../context/productModalContext";
 import { useLoaderData } from "react-router-dom";
+import { useQuery } from "react-query";
+import { productsQuery } from "../../../routes/public/products/productsLoaders";
 export default function Products() {
-  const { products } = useLoaderData();
-
+  //const { products } = useLoaderData();
+  const { data: products } = useQuery(productsQuery());
   const dispatch = useModalDispatch();
   return (
     <Container>
