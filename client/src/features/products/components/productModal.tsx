@@ -11,38 +11,18 @@ import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 import { useModal } from "../context/productModalContext";
 export default function ProductModal(props) {
-  const url = new URL(window.location.href);
-  //TODO find out how to only use productloader if url changes
-  const lastSlash = url.pathname.lastIndexOf("/");
-  const id = url.pathname.slice(lastSlash + 1, url.pathname.length);
-  const modal = useModal();
-  const params = {
-    _id: id,
-  };
-  //const testProduct = ProductLoader({ params });
-
-  // testProduct.then((value) => {
-  //   console.log({ value });
-  // });
-
-  //const product = props.product;
   const product = props.product;
-
-  //console.log(props);
-  //console.log(props);
 
   const dispatch = useCartDispatch();
   const cart = useCart();
-  const [sku, setSku] = useState(product.skus[0].options.color);
-  // console.log(product);
+  const [sku, setSku] = useState(product?.skus[0].options.color);
 
-  console.log(sku);
-  //TODO figure out a better way to keep currentsku synced up as sku is not updated properly at the moment
-  let currentSku = product.skus.find((el) => el.options.color === sku);
+  const currentSku = product.skus.find((el) => el.options.color === sku);
 
   // useEffect(() => {
   //   setSku(product.skus[0].options.color);
-  // }, [modal, cart]);
+  //   console.log(product.skus[0].options.color);
+  // }, [cart]);
 
   return (
     <Modal

@@ -6,7 +6,7 @@ import { FaXmark } from "react-icons/fa6";
 import { useState } from "react";
 import { FaCartArrowDown } from "react-icons/fa";
 import { useCartDispatch, useCart } from "../context/cart";
-import { ProductLoader } from "../../../routes/public/products/productLoader";
+
 import { CartItems } from "./cartItems";
 import {
   useModal,
@@ -138,15 +138,8 @@ export function Cart() {
                     {/* render cart items here */}
                     <CartItems
                       cart={cart}
-                      onShow={() => {
-                        console.log(modal);
-
-                        modalDispatch({
-                          type: "open",
-                          product: modal.product,
-                        });
-                      }}
                       dispatch={dispatch}
+                      modalDispatch={modalDispatch}
                     ></CartItems>
                   </div>
                 </div>

@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { useCartDispatch, useCart } from "../../cart/context/cart";
 import "../../cart/styles/cart.css";
-import { useQueryClient } from "react-query";
 
 import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
@@ -17,12 +16,7 @@ import { FaPlus } from "react-icons/fa";
 //   const image = images.find((el) => el === imageName);
 //   return image;
 // }
-const useGetFetchQuery = (name) => {
-  //custom hook that can be used to access querydata
-  const queryClient = useQueryClient();
 
-  return queryClient.getQueryData(name);
-};
 export default function Product({ product, onShow }) {
   //TODO: access sku data based on what sku is at
   const [sku, setSku] = useState(product.skus[0].options.color);
