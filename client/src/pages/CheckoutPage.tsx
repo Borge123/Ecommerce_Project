@@ -1,4 +1,4 @@
-import { Checkout } from "../features/checkout/components/checkout";
+import Checkout from "../features/checkout/components/checkout";
 export default function CheckoutPage() {
   return <Checkout />;
 }

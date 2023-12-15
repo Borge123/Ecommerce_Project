@@ -1,13 +1,11 @@
 import "../styles/cart.css";
 import { useEffect } from "react";
-
 import { FaXmark } from "react-icons/fa6";
-
 import { useState } from "react";
 import { FaCartArrowDown } from "react-icons/fa";
 import { useCartDispatch, useCart } from "../context/cart";
-
 import { CartItems } from "./cartItems";
+import { Link } from "react-router-dom";
 import {
   useModal,
   useModalDispatch,
@@ -183,28 +181,30 @@ export function Cart() {
                   <strong className="ws-cart-footer__total">
                     Total sum {total}&nbsp;kr
                   </strong>
-                  <button
-                    className="ngr-button ws-cart-footer__checkout-button"
-                    type="button"
-                  >
-                    <span className="ngr-button__text">To checkout</span>
-                    <span className="ngr-button__icon ngr-button__icon--right">
-                      <span
-                        className="ngr-icon ngr-icon--ngr-chevron-right"
-                        role="presentation"
-                        aria-hidden="true"
-                      >
-                        <svg
-                          viewBox="0 0 24 24"
-                          className="ngr-icon__svg"
-                          height="24px"
-                          width="24px"
+                  <Link to={`/checkout`}>
+                    <button
+                      className="ngr-button ws-cart-footer__checkout-button"
+                      type="button"
+                    >
+                      <span className="ngr-button__text">To checkout</span>
+                      <span className="ngr-button__icon ngr-button__icon--right">
+                        <span
+                          className="ngr-icon ngr-icon--ngr-chevron-right"
+                          role="presentation"
+                          aria-hidden="true"
                         >
-                          <use href="/" xlinkHref="/"></use>
-                        </svg>
+                          <svg
+                            viewBox="0 0 24 24"
+                            className="ngr-icon__svg"
+                            height="24px"
+                            width="24px"
+                          >
+                            <use href="/" xlinkHref="/"></use>
+                          </svg>
+                        </span>
                       </span>
-                    </span>
-                  </button>
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
