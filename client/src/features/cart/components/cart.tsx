@@ -5,18 +5,22 @@ import { useState } from "react";
 import { FaCartArrowDown } from "react-icons/fa";
 import { useCartDispatch, useCart } from "../context/cart";
 import { CartItems } from "./cartItems";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   useModal,
   useModalDispatch,
 } from "../../products/context/productModalContext";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { useLocation } from "react-router-dom";
+import { useUser } from "../../authentication/context/AuthContext";
 export function Cart() {
   const { getItem, setItem } = useLocalStorage();
   const cart = useCart();
   const dispatch = useCartDispatch();
   const [cartState, setCartState] = useState("closed");
+  let navigate = useNavigate();
+  const authState = useUser();
+
   //TODO count from localstorage number of items in cart and set cart to closed if 0 items
   //TODO Get products data and find product based on id or sku in cart and use the data to be able to always know quantity per sku of an item
   const itemsInCart = cart?.length;
@@ -35,13 +39,7 @@ export function Cart() {
       cart: JSON.parse(updatedCart),
     });
   }, [location]);
-  // useEffect(() => {
-  //   const cartImg = document.querySelectorAll(".ws-image img");
 
-  //   cartImg.forEach((item) => {
-  //     item.complete ? item.parentElement.classList.add("ws-image--loaded") : "";
-  //   });
-  // }, [cart]);
   return (
     <>
       <div className="cw-cart-area">
@@ -181,30 +179,36 @@ export function Cart() {
                   <strong className="ws-cart-footer__total">
                     Total sum {total}&nbsp;kr
                   </strong>
-                  <Link to={`/checkout`}>
-                    <button
-                      className="ngr-button ws-cart-footer__checkout-button"
-                      type="button"
-                    >
-                      <span className="ngr-button__text">To checkout</span>
-                      <span className="ngr-button__icon ngr-button__icon--right">
-                        <span
-                          className="ngr-icon ngr-icon--ngr-chevron-right"
-                          role="presentation"
-                          aria-hidden="true"
+
+                  <button
+                    className="ngr-button ws-cart-footer__checkout-button"
+                    type="button"
+                    onClick={() => {
+                      console.log(authState.user);
+
+                      authState.user != null
+                        ? navigate("/checkout")
+                        : navigate("/signup");
+                    }}
+                  >
+                    <span className="ngr-button__text">To checkout</span>
+                    <span className="ngr-button__icon ngr-button__icon--right">
+                      <span
+                        className="ngr-icon ngr-icon--ngr-chevron-right"
+                        role="presentation"
+                        aria-hidden="true"
+                      >
+                        <svg
+                          viewBox="0 0 24 24"
+                          className="ngr-icon__svg"
+                          height="24px"
+                          width="24px"
                         >
-                          <svg
-                            viewBox="0 0 24 24"
-                            className="ngr-icon__svg"
-                            height="24px"
-                            width="24px"
-                          >
-                            <use href="/" xlinkHref="/"></use>
-                          </svg>
-                        </span>
+                          <use href="/" xlinkHref="/"></use>
+                        </svg>
                       </span>
-                    </button>
-                  </Link>
+                    </span>
+                  </button>
                 </div>
               </div>
             </div>

@@ -1,6 +1,7 @@
 import { CheckoutLoader } from "./checkoutLoader";
 import { CheckoutForm } from "../../../features/checkout/components/checkoutform";
 import CheckoutPage from "../../../pages/CheckoutPage";
+import { CartSummary } from "../../../features/checkout/components/cartsummary";
 export const checkout = {
   path: "checkout",
   element: <CheckoutPage />,
@@ -8,8 +9,8 @@ export const checkout = {
 
   children: [
     {
-      path: "/checkout/summary",
-      element: <h1>Cart summary</h1>,
+      path: "",
+      element: <CartSummary />,
     },
 
     {

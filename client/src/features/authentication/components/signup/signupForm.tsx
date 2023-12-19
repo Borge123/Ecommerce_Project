@@ -6,6 +6,7 @@ import Container from "react-bootstrap/Container";
 import * as formik from "formik";
 import * as yup from "yup";
 import { createUser } from "../../services/signupServices";
+import { Link } from "react-router-dom";
 
 export default function SignupForm() {
   // min 5 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit.
@@ -68,6 +69,9 @@ export default function SignupForm() {
             className=" vh-100 g-4 justify-content-md-center "
           >
             <Col className="m-auto">
+              <small>
+                Already have a user? <Link to="/login">Login</Link>
+              </small>
               <h1>Create user</h1>
               <Form noValidate onSubmit={handleSubmit}>
                 <Form.Group controlId="validationFormik01">

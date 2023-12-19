@@ -14,6 +14,7 @@ export function CartItems({ cart, dispatch, modalDispatch }) {
                   cartItem={cartItem}
                   dispatch={dispatch}
                   onShow={() =>
+                    //TODO figure out why cart modal state is not correcly updated
                     modalDispatch({
                       type: "open",
                       product: products.find((el) => el._id === cartItem._id),

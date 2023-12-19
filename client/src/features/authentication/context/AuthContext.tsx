@@ -14,8 +14,9 @@ import { useLocation } from "react-router-dom";
 export const UserContext = createContext(null);
 export const UserDispatchContext = createContext(null);
 export function AuthProvider({ children }) {
+  //TODO figure out why auth state seems to just randomly dissapear on reload
   const [authState, dispatch] = useReducer(authReducer, initialState);
-  const { setItem } = useSessionStorage();
+  const { setItem, getItem } = useSessionStorage();
   const getUserItem = useLocalStorage();
   const getJwtExpiration = useLocalStorage();
 
@@ -37,10 +38,21 @@ export function AuthProvider({ children }) {
           token: value,
           error: null,
         });
+        console.log(value);
 
         expires = getJwtExpiration.getItem("jwtExpire");
         setItem("jwtToken", value);
       });
+      //Possibly temporary fix, still need to figure out why reload causes authstate to be lost
+    } else if (user != null && authState.user === null) {
+      dispatch({
+        type: "setuser",
+        status: "success",
+        user: JSON.parse(user),
+        token: getItem("jwtToken"),
+        error: null,
+      });
+      console.log(getItem("jwtToken"));
     }
   }, [location, authState]);
   return (

@@ -16,13 +16,15 @@ export default function ProductModal(props) {
   const dispatch = useCartDispatch();
   const cart = useCart();
   const [sku, setSku] = useState(product?.skus[0].options.color);
+  console.log("sku is " + "" + sku);
 
   const currentSku = product.skus.find((el) => el.options.color === sku);
-
-  // useEffect(() => {
-  //   setSku(product.skus[0].options.color);
-  //   console.log(product.skus[0].options.color);
-  // }, [cart]);
+  //TODO figure out a proper way to keep current sku updated
+  //meybe set sku in context ?
+  useEffect(() => {
+    setSku(product.skus[0].options.color);
+    console.log(product.skus[0].options.color);
+  }, [cart, product]);
 
   return (
     <Modal
