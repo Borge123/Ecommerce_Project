@@ -1,4 +1,4 @@
-import {
+import React, {
   createContext,
   useEffect,
   useReducer,
@@ -12,41 +12,38 @@ export const CartDispatchContext = createContext(null);
 export function CartProvider({ children }) {
   const { getItem, setItem } = useLocalStorage();
   const [cart, dispatch] = useReducer(CartReducer, initialState.cart);
-  //TODO figure out why cart defaults back to load state after crash
+
   useEffect(() => {
-    setItem("cart", JSON.stringify(cart));
     const data = getItem("cart");
 
-    const parsedData = JSON.parse(data);
-    if (parsedData.length > 0) {
-      //setItem("cart", JSON.parse(data));
-      //console.log(JSON.parse(data));
+    if (data) {
       dispatch({
         type: "load",
-        cart: parsedData,
+        cart: JSON.parse(data),
       });
     } else {
-      console.log("no data");
+      //setItem("cart", JSON.stringify(cart));
     }
   }, []);
   useEffect(() => {
-    //TODO update with the data from localstorage
-
-    //TODO find out how to update cart without endless reloads
-
-    setItem("cart", JSON.stringify(cart));
     const data = getItem("cart");
-    const parsedData = JSON.parse(data);
-    //console.log(parsedData);
+    if (data) {
+      // if (cart.length === parsedData.length) {
+      //   console.log("test first");
 
-    if (parsedData.length > 0) {
-      // dispatch({
-      //   type: "load",
-      //   cart: cart,
-      // });
-      //console.log("test");
+      //   if (parsedData.length === 0 && cart.length === 0) {
+      //     setItem("cart", JSON.stringify(cart));
+      //   }
+      //   if (parsedData.length > 0 && cart.length > 0) {
+      //     setItem("cart", JSON.stringify(cart));
+      //   }
+      // } else if (cart.length >= 1) {
+      //   setItem("cart", JSON.stringify(cart));
+      // }
+      setItem("cart", JSON.stringify(cart));
+      const parsedData = JSON.parse(localStorage.getItem("cart"));
+      setItem("cart", JSON.stringify(cart));
     }
-    //dispatch update every time cart changes
   }, [cart]);
 
   return (
@@ -65,9 +62,11 @@ export function useCart() {
 export function useCartDispatch() {
   return useContext(CartDispatchContext);
 }
-const data = localStorage.getItem("cart");
-const parsedData = JSON.parse(data);
+// const data = localStorage.getItem("cart");
+// const parsedData = JSON.parse(data);
 
 const initialState = {
-  cart: parsedData ? parsedData : [],
+  cart: localStorage.getItem("cart")
+    ? JSON.parse(localStorage.getItem("cart"))
+    : [],
 };

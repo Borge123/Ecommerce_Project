@@ -15,16 +15,25 @@ export default function ProductModal(props) {
 
   const dispatch = useCartDispatch();
   const cart = useCart();
-  const [sku, setSku] = useState(product?.skus[0].options.color);
-  console.log("sku is " + "" + sku);
-
+  const [sku, setSku] = useState("");
   const currentSku = product.skus.find((el) => el.options.color === sku);
-  //TODO figure out a proper way to keep current sku updated
+  console.log("sku is " + "" + sku);
+  //console.log(product?.skus[0].options.color);
+  //console.log(sku === product?.skus[0].options.color); // seems to be equal only with the sku rendered at the beginning
+
+  //console.log(currentSku.sku);
+  console.log(props.product);
+  //console.log(product);
+
+  //TODO fix problem that occurs because sku does not get updated after clicking on a new item
+  //figure out how to set sku without having it fixed at first pos in array
+
   //meybe set sku in context ?
   useEffect(() => {
+    console.log("effect called");
+
     setSku(product.skus[0].options.color);
-    console.log(product.skus[0].options.color);
-  }, [cart, product]);
+  }, [product]);
 
   return (
     <Modal
@@ -97,8 +106,8 @@ export default function ProductModal(props) {
                     <span className="ws-add-to-cart__quantity ws-add-to-cart__quantity--withselect">
                       <span className="ws-quantity-picker">
                         <select
-                          title="Endre mengde Pytt i Panne"
-                          aria-label="1 stk, endre mengde Pytt i Panne"
+                          title="change amount"
+                          aria-label=""
                           id="ws-quantity-picker"
                           name="ws-quantity-picker"
                           className="ws-quantity-picker__select"

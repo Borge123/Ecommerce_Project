@@ -48,9 +48,7 @@ export default function CartReducer(cart, action) {
     // }
 
     case "load": {
-      //console.log(action.cart);
-
-      return [...action.cart];
+      return action.cart;
     }
 
     case "clear": {
