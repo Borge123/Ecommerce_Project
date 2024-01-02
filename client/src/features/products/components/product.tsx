@@ -23,7 +23,6 @@ export default function Product({ product, onShow }) {
   const currentSku = product.skus.find((el) => el.options.color === sku);
   //console.log(useGetFetchQuery("products"));
 
-  const { setItem, getItem } = useLocalStorage();
   const dispatch = useCartDispatch();
   const cart = useCart();
 

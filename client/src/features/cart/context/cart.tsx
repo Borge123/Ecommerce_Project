@@ -14,7 +14,9 @@ export function CartProvider({ children }) {
   const [cart, dispatch] = useReducer(CartReducer, initialState.cart);
 
   useEffect(() => {
+    //Looks like error causes localstorage to go revert to previous state
     const data = getItem("cart");
+    console.log("test if error triggers reload");
 
     if (data) {
       dispatch({
