@@ -22,17 +22,28 @@ export function CartSummary() {
             <span className="badge badge-secondary badge-pill">3</span>
           </h4>
           <ul className="list-group mb-3 sticky-top">
-            <li className="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 className="my-0">Product name</h6>
-                <small className="text-muted">Brief description</small>
-              </div>
-              <span className="text-muted">$12</span>
-            </li>
+            {cart.length > 0
+              ? cart?.map((cartItem) => {
+                  return (
+                    <li
+                      key={cartItem.sku}
+                      className="list-group-item d-flex justify-content-between lh-condensed"
+                    >
+                      <div>
+                        <h6 className="my-0">{cartItem.name}</h6>
+                        <small className="text-muted">
+                          {cartItem.description}
+                        </small>
+                      </div>
+                      <span className="text-muted">${cartItem.price}</span>
+                    </li>
+                  );
+                })
+              : ""}
 
             <li className="list-group-item d-flex justify-content-between">
               <span>Total (USD)</span>
-              <strong>$20</strong>
+              <strong>${total}</strong>
             </li>
           </ul>
           <button className="btn btn-primary btn-lg btn-block">
