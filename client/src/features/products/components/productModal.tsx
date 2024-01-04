@@ -37,9 +37,10 @@ export default function ProductModal(props) {
   return (
     <Modal
       {...props}
-      size="lg"
+      size="xl"
       aria-labelledby="contained-modal-title-center"
       centered
+      fullscreen="md-down"
     >
       <Modal.Header closeButton>
         <Modal.Title as={"h2"} id="contained-modal-title-vcenter">
