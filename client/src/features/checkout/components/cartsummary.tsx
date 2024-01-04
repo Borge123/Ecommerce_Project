@@ -1,5 +1,12 @@
 import { Row } from "react-bootstrap";
+import { useCart } from "../../cart/context/cart";
 export function CartSummary() {
+  const cart = useCart();
+  const total = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+  //TODO display cart items and total
   return (
     <div className="container">
       <Row
@@ -22,27 +29,7 @@ export function CartSummary() {
               </div>
               <span className="text-muted">$12</span>
             </li>
-            <li className="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 className="my-0">Second product</h6>
-                <small className="text-muted">Brief description</small>
-              </div>
-              <span className="text-muted">$8</span>
-            </li>
-            <li className="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 className="my-0">Third item</h6>
-                <small className="text-muted">Brief description</small>
-              </div>
-              <span className="text-muted">$5</span>
-            </li>
-            <li className="list-group-item d-flex justify-content-between bg-light">
-              <div className="text-success">
-                <h6 className="my-0">Promo code</h6>
-                <small>EXAMPLECODE</small>
-              </div>
-              <span className="text-success">-$5</span>
-            </li>
+
             <li className="list-group-item d-flex justify-content-between">
               <span>Total (USD)</span>
               <strong>$20</strong>

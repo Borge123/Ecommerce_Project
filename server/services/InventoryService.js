@@ -21,7 +21,7 @@ module.exports = class InventoryService {
           {
             sku: data.skus[skuLength].sku,
             price: data.skus[skuLength].price,
-            discount_id: data.skus[skuLength].discount_id,
+
             stock_quantity: data.skus[skuLength].stock_quantity,
             options: {
               size: data.skus[skuLength].options.size,

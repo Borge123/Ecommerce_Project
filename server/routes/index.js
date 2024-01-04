@@ -129,20 +129,20 @@ router.delete(
 router.post(
   "/createorder",
   validateNewOrder,
-  checkIfRegistered,
+  authorize,
   OrderController.createOrder
 );
 router.put(
   "/updateOrderItems",
   validateUpdateOrderItem,
-  checkIfRegistered,
+  authorize,
   OrderController.updateOrderItems
 );
 
 router.put(
   "/updateOrderStatus",
   validateUpdateOrderStatus,
-  checkIfRegistered,
+  authorize,
   OrderController.updateOrderStatus
 );
 

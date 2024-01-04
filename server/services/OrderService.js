@@ -18,6 +18,7 @@ module.exports = class OrderService {
       const order = {
         user_id: user_id,
         status: "in process",
+
         items: [
           {
             sku: data.items[itemsLength].sku,
@@ -32,6 +33,9 @@ module.exports = class OrderService {
         ],
         total: total,
       };
+      if (data.discount_id) {
+        order = { ...order, discount_id: data.discount_id };
+      }
 
       if (data.items.length > 1) {
         for (let i = 0; i < data.items.length - 1; i++) {

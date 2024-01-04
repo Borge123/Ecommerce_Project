@@ -31,7 +31,7 @@ export default function ProductModal(props) {
     console.log("effect called");
 
     setSku(product.skus[0].options.color);
-    currentSku = product.skus.find((el) => el.options.color === sku);
+    //currentSku = product.skus.find((el) => el.options.color === sku);
   }, [product]);
 
   return (
