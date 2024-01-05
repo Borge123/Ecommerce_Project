@@ -114,6 +114,53 @@ module.exports = {
     next();
   },
 
+  validateAddBillingInfo: async (req, res, next) => {
+    const { address, city, zip, house_number } = req.body;
+    if (address === undefined || address === null) {
+      return res.status(400).json({ "address": "address is required." });
+    }
+
+    if (address === "" || typeof address !== "string") {
+      return res.status(400).json({
+        "address": "address needs to be a string and is required.",
+      });
+    }
+
+    if (city === undefined || city === null) {
+      return res.status(400).json({ "city": "city is required." });
+    }
+
+    if (city === "" || typeof city !== "string") {
+      return res.status(400).json({
+        "city": "city needs to be a string and is required.",
+      });
+    }
+
+    if (zip === undefined || zip === null) {
+      return res.status(400).json({ "zip": "zip is required." });
+    }
+
+    if (zip === "" || typeof zip !== "string") {
+      return res
+        .status(400)
+        .json({ "zip": "zip is required and needs to be a string" });
+    }
+
+    if (house_number === undefined || house_number === null) {
+      return res
+        .status(400)
+        .json({ "house_number": "house_number is required." });
+    }
+
+    if (house_number === "" || typeof house_number !== "string") {
+      return res.status(400).json({
+        "house_number": "house_number is required and needs to be a string",
+      });
+    }
+
+    next();
+  },
+
   validateLogin: async (req, res, next) => {
     const { email, password } = req.body;
     if (email === undefined || email === null) {

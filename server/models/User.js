@@ -46,19 +46,15 @@ const UserSchema = new Schema(
     billinginfo: {
       address: {
         type: String,
-        required: true,
       },
       city: {
         type: String,
-        required: true,
       },
       zip: {
         type: String,
-        required: true,
       },
       house_number: {
         type: String,
-        required: true,
       },
     },
   },

@@ -103,6 +103,28 @@ module.exports = class UserService {
     }
   }
 
+  static async addBillingInfo(id, data) {
+    try {
+      const result = await User.updateOne(
+        { _id: id },
+        {
+          $set: {
+            billinginfo: {
+              address: data.address,
+              city: data.city,
+              zip: data.zip,
+              house_number: data.house_number,
+            },
+          },
+        }
+      );
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
   static async changePassword(id, password) {
     try {
       const saltRounds = 10;
@@ -123,11 +145,16 @@ module.exports = class UserService {
 
   static async deleteUser(id) {
     try {
-      const result = await User.deleteOne({ _id: id });
-      return result;
+      const user = await User.findOne({ _id: id });
+      if (user) {
+        if (user.role === "admin") {
+          throw new Error("Not permitted");
+        }
+        const result = await User.deleteOne({ _id: id });
+        return result;
+      }
     } catch (error) {
       console.log(error);
-      throw error;
     }
   }
 };

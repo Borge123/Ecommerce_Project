@@ -16,6 +16,7 @@ const {
   validateUpdateUser,
   validateLogin,
   validateDeleteUser,
+  validateAddBillingInfo,
 } = require("../middlewares/userValidation");
 
 const {
@@ -112,14 +113,21 @@ router.put("/changepassword", authorize, UserController.changePassword);
 
 router.put(
   "/updateUser",
-  checkIfAdmin,
+  authorize,
   validateUpdateUser,
   UserController.updateUser
 );
 
+router.put(
+  "/addBillingInfo",
+  authorize,
+  validateAddBillingInfo,
+  UserController.addBillingInfo
+);
+
 router.delete(
   "/deleteUser",
-  checkIfAdmin,
+  authorize,
   validateDeleteUser,
   UserController.deleteUser
 );
@@ -128,8 +136,8 @@ router.delete(
 
 router.post(
   "/createorder",
-  validateNewOrder,
   authorize,
+  validateNewOrder,
   OrderController.createOrder
 );
 router.put(

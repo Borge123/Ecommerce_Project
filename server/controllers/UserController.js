@@ -179,6 +179,30 @@ module.exports = class UserController {
     }
   }
 
+  static async addBillingInfo(req, res, next) {
+    try {
+      console.log(req.body);
+      const checkIfUser = await UserService.getUserById(req.body.id);
+
+      if (checkIfUser) {
+        const result = await UserService.addBillingInfo(
+          checkIfUser._id,
+          req.body
+        );
+        if (result) {
+          return res.status(200).json({
+            "Updated user": "Success",
+            "user": checkIfUser.firstName,
+          });
+        }
+      } else {
+        return res.status(400).json({ "User": "user not found" });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.name + " " + error.message });
+    }
+  }
+
   static async changePassword(req, res, next) {
     try {
       const user = await UserService.getUserById(req.body.id);
