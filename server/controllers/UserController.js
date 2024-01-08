@@ -181,8 +181,8 @@ module.exports = class UserController {
 
   static async addBillingInfo(req, res, next) {
     try {
-      console.log(req.body);
-      const checkIfUser = await UserService.getUserById(req.body.id);
+      console.log(req.userId);
+      const checkIfUser = await UserService.getUserById(req.userId);
 
       if (checkIfUser) {
         const result = await UserService.addBillingInfo(

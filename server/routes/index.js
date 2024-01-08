@@ -112,13 +112,6 @@ router.put(
 router.put("/changepassword", authorize, UserController.changePassword);
 
 router.put(
-  "/updateUser",
-  authorize,
-  validateUpdateUser,
-  UserController.updateUser
-);
-
-router.put(
   "/addBillingInfo",
   authorize,
   validateAddBillingInfo,

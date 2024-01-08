@@ -5,27 +5,34 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import * as formik from "formik";
 import * as yup from "yup";
-import { createUser } from "../../authentication/services/signupServices";
-
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../../cart/context/cart";
+import { updateBillingInfo } from "../services/updateBillingInfo";
 export function CheckoutForm() {
-  // min 5 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit.
-  const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
-
   const { Formik } = formik;
-
+  const navigate = useNavigate();
+  const cart = useCart();
+  const total = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
   const schema = yup.object().shape({
-    email: yup.string().email("Invalid email address").required("Required"),
-    password: yup
-      .string()
-      .matches(passwordRules, { message: "Please create a stronger password" })
-      .required("Required"),
-    firstName: yup
-      .string()
-      .max(15, "Must be 15 characters or less")
-      .required("Required"),
-    lastName: yup
+    address: yup
       .string()
       .max(20, "Must be 20 characters or less")
+      .required("Required"),
+    city: yup
+      .string()
+      .max(20, "Must be 20 characters or less")
+      .required("Required"),
+    zip: yup
+      .string()
+      .max(20, "Must be 20 characters or less")
+      .required("Required"),
+
+    house_number: yup
+      .string()
+      .max(20, "Must be 10 characters or less")
       .required("Required"),
   });
 
@@ -33,20 +40,24 @@ export function CheckoutForm() {
     <Formik
       validationSchema={schema}
       initialValues={{
-        email: "react@test.com",
-        password: "1Test123",
-        firstName: "reacttester",
-        lastName: "react",
+        address: "testaddrr",
+        city: "react city",
+        zip: "12424",
+        house_number: "10",
       }}
       validateOnChange={true}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setSubmitting(true);
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          createUser(values);
-          resetForm();
-          setSubmitting(false);
-        }, 400);
+        const updateBilling = updateBillingInfo(values);
+        updateBilling.then((status) => {
+          if (status === 200) {
+            navigate("/checkout/payment");
+          }
+          return;
+        });
+
+        resetForm();
+        setSubmitting(false);
       }}
     >
       {({
@@ -89,122 +100,111 @@ export function CheckoutForm() {
                 <span className="badge badge-secondary badge-pill">3</span>
               </h4>
               <ul className="list-group mb-3 sticky-top">
-                <li className="list-group-item d-flex justify-content-between lh-condensed">
-                  <div>
-                    <h6 className="my-0">Product name</h6>
-                    <small className="text-muted">Brief description</small>
-                  </div>
-                  <span className="text-muted">$12</span>
-                </li>
-                <li className="list-group-item d-flex justify-content-between lh-condensed">
-                  <div>
-                    <h6 className="my-0">Second product</h6>
-                    <small className="text-muted">Brief description</small>
-                  </div>
-                  <span className="text-muted">$8</span>
-                </li>
-                <li className="list-group-item d-flex justify-content-between lh-condensed">
-                  <div>
-                    <h6 className="my-0">Third item</h6>
-                    <small className="text-muted">Brief description</small>
-                  </div>
-                  <span className="text-muted">$5</span>
-                </li>
-                <li className="list-group-item d-flex justify-content-between bg-light">
-                  <div className="text-success">
-                    <h6 className="my-0">Promo code</h6>
-                    <small>EXAMPLECODE</small>
-                  </div>
-                  <span className="text-success">-$5</span>
-                </li>
+                {cart.length > 0
+                  ? cart?.map((cartItem) => {
+                      return (
+                        <li
+                          key={cartItem.sku}
+                          className="list-group-item d-flex justify-content-between lh-condensed"
+                        >
+                          <div>
+                            <h6 className="my-0">{cartItem.name}</h6>
+
+                            <div>
+                              <small className="text-muted">
+                                x{cartItem.quantity}
+                              </small>
+                            </div>
+                          </div>
+                          <span className="text-muted">${cartItem.price}</span>
+                        </li>
+                      );
+                    })
+                  : ""}
+
                 <li className="list-group-item d-flex justify-content-between">
                   <span>Total (USD)</span>
-                  <strong>$20</strong>
+                  <strong>${total}</strong>
                 </li>
               </ul>
             </div>
             <Col className="col-md-8 order-md-1">
               <Form noValidate onSubmit={handleSubmit}>
                 <Form.Group controlId="validationFormik01">
-                  <Form.Label>First name</Form.Label>
+                  <Form.Label>address</Form.Label>
                   <Form.Control
                     type="text"
-                    name="firstName"
-                    value={values.firstName}
+                    name="address"
+                    value={values.address}
                     onChange={handleChange}
-                    onBlur={handleBlur("firstName")}
-                    isValid={touched.firstName && !errors.firstName}
-                    isInvalid={!!errors.firstName}
+                    onBlur={handleBlur("address")}
+                    isValid={touched.address && !errors.address}
+                    isInvalid={!!errors.address}
                   />
                   <Form.Control.Feedback type="invalid">
-                    {errors.firstName}
+                    {errors.address}
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="validationFormik02">
-                  <Form.Label>Last name</Form.Label>
+                  <Form.Label>city</Form.Label>
                   <Form.Control
                     type="text"
-                    name="lastName"
-                    value={values.lastName}
+                    name="city"
+                    value={values.city}
                     onChange={handleChange}
-                    onBlur={handleBlur("lastName")}
-                    isValid={touched.lastName && !errors.lastName}
-                    isInvalid={!!errors.lastName}
+                    onBlur={handleBlur("city")}
+                    isValid={touched.city && !errors.city}
+                    isInvalid={!!errors.city}
                   />
 
                   <Form.Control.Feedback type="invalid">
-                    {errors.lastName}
+                    {errors.city}
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
+                <Form.Group controlId="validationFormik03">
+                  <Form.Label>zip</Form.Label>
                   <Form.Control
-                    type="email"
-                    name="email"
-                    value={values.email}
+                    type="text"
+                    name="zip"
+                    value={values.zip}
                     onChange={handleChange}
-                    onBlur={handleBlur("email")}
-                    isValid={touched.email && !errors.email}
-                    isInvalid={!!errors.email}
-                    placeholder="Enter email"
+                    onBlur={handleBlur("zip")}
+                    isValid={touched.zip && !errors.zip}
+                    isInvalid={!!errors.zip}
                   />
+
                   <Form.Control.Feedback type="invalid">
-                    {errors.email}
-                  </Form.Control.Feedback>
-                  <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                  </Form.Text>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    name="password"
-                    value={values.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur("password")}
-                    isValid={touched.password && !errors.password}
-                    isInvalid={!!errors.password}
-                    placeholder="Password"
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.password}
+                    {errors.zip}
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                  <Form.Check type="checkbox" label="Check me out" />
+
+                <Form.Group className="pb-3" controlId="validationFormik04">
+                  <Form.Label>house number</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="house_number"
+                    value={values.house_number}
+                    onChange={handleChange}
+                    onBlur={handleBlur("house_number")}
+                    isValid={touched.house_number && !errors.house_number}
+                    isInvalid={!!errors.house_number}
+                  />
+
+                  <Form.Control.Feedback type="invalid">
+                    {errors.house_number}
+                  </Form.Control.Feedback>
                 </Form.Group>
 
                 <Button type="submit">
                   {" "}
-                  {isSubmitting ? "Creating user..." : "Create user"}{" "}
+                  {isSubmitting ? "Continuing to payment..." : "Continue"}{" "}
                 </Button>
               </Form>
             </Col>
           </Row>
           <hr className="mb-4" />
-          <h4 className="mb-3">Payment</h4>
+          {/* <h4 className="mb-3">Payment</h4>
           <div className="d-block my-3">
             <div className="custom-control custom-radio">
               <input
@@ -293,7 +293,7 @@ export function CheckoutForm() {
           <hr className="mb-4" />
           <button className="btn btn-primary btn-lg btn-block" type="submit">
             Continue to checkout
-          </button>
+          </button> */}
         </Container>
       )}
     </Formik>

@@ -1,11 +1,13 @@
 import { Row } from "react-bootstrap";
 import { useCart } from "../../cart/context/cart";
+import { useNavigate } from "react-router-dom";
 export function CartSummary() {
   const cart = useCart();
   const total = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
+  const navigate = useNavigate();
   //TODO display cart items and total
   return (
     <div className="container">
@@ -34,6 +36,11 @@ export function CartSummary() {
                         <small className="text-muted">
                           {cartItem.description}
                         </small>
+                        <div>
+                          <small className="text-muted">
+                            x{cartItem.quantity}
+                          </small>
+                        </div>
                       </div>
                       <span className="text-muted">${cartItem.price}</span>
                     </li>
@@ -46,8 +53,11 @@ export function CartSummary() {
               <strong>${total}</strong>
             </li>
           </ul>
-          <button className="btn btn-primary btn-lg btn-block">
-            Continue to payment
+          <button
+            onClick={() => navigate("/checkout/billinginfo")}
+            className="btn btn-primary btn-lg btn-block"
+          >
+            Continue
           </button>
         </div>
       </Row>

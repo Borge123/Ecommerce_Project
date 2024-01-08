@@ -14,8 +14,12 @@ export const checkout = {
     },
 
     {
-      path: "/checkout/form",
+      path: "/checkout/billinginfo",
       element: <CheckoutForm />,
+    },
+    {
+      path: "/checkout/payment",
+      element: <p>Payment</p>,
     },
   ],
 };
