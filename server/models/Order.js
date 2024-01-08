@@ -53,7 +53,7 @@ const OrderSchema = new Schema(
             required: true,
           },
 
-          img_url: {
+          src: {
             type: String,
             required: true,
           },

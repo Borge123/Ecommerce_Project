@@ -3,15 +3,15 @@ const Order = require("../models/Order");
 module.exports = class OrderService {
   static async createOrder(user_id, data) {
     try {
-      const total = data.items.reduce(
+      const total = data.reduce(
         (acc, currentVal) => acc + currentVal.price * currentVal.quantity,
         0
       );
 
       let itemsLength;
 
-      if (data.items.length != 0) {
-        itemsLength = data.items.length - 1;
+      if (data.length != 0) {
+        itemsLength = data.length - 1;
       } else {
         itemsLength = 0;
       }
@@ -21,13 +21,13 @@ module.exports = class OrderService {
 
         items: [
           {
-            sku: data.items[itemsLength].sku,
-            quantity: data.items[itemsLength].quantity,
-            price: data.items[itemsLength].price,
+            sku: data[itemsLength].sku,
+            quantity: data[itemsLength].quantity,
+            price: data[itemsLength].price,
             options: {
-              size: data.items[itemsLength].options.size,
-              color: data.items[itemsLength].options.color,
-              img_url: data.items[itemsLength].options.img_url,
+              size: data[itemsLength].options.size,
+              color: data[itemsLength].options.color,
+              src: data[itemsLength].options.src,
             },
           },
         ],
@@ -37,15 +37,13 @@ module.exports = class OrderService {
         order = { ...order, discount_id: data.discount_id };
       }
 
-      if (data.items.length > 1) {
-        for (let i = 0; i < data.items.length - 1; i++) {
+      if (data.length > 1) {
+        for (let i = 0; i < data.length - 1; i++) {
           //prevent duplicate item objects being added
-          const result = order.items.find(
-            ({ sku }) => sku === data.items[i].sku
-          );
+          const result = order.items.find(({ sku }) => sku === data[i].sku);
 
           if (!result) {
-            order.items.push(data.items[i]);
+            order.items.push(data[i]);
           }
         }
       }

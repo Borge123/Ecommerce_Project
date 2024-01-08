@@ -145,6 +145,11 @@ export function ProductDetails() {
                                 description: product.item.description,
                                 price: currentSku.price,
                                 sku: currentSku.sku,
+                                options: {
+                                  size: currentSku.options.size,
+                                  color: currentSku.options.color,
+                                  img: currentSku.options.img_url,
+                                },
                               },
                             });
                           }}
@@ -197,6 +202,11 @@ export function ProductDetails() {
                                           src: product.item.img_url,
                                           description: product.item.description,
                                           sku: currentSku.sku,
+                                          options: {
+                                            size: currentSku.options.size,
+                                            color: currentSku.options.color,
+                                            img: currentSku.options.img_url,
+                                          },
                                         },
                                       });
                                     }}
@@ -228,6 +238,11 @@ export function ProductDetails() {
                                           description: product.item.description,
                                           sku: currentSku.sku,
                                           price: currentSku.price,
+                                          options: {
+                                            size: currentSku.options.size,
+                                            color: currentSku.options.color,
+                                            img: currentSku.options.img_url,
+                                          },
                                         },
                                       });
                                     }}

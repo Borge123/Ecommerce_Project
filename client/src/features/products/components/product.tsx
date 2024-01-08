@@ -76,6 +76,11 @@ export default function Product({ product, onShow }) {
                     description: product.item.description,
                     price: currentSku.price,
                     sku: currentSku.sku,
+                    options: {
+                      size: currentSku.options.size,
+                      color: currentSku.options.color,
+                      src: currentSku.options.img_url,
+                    },
                   },
                 });
               }}
@@ -126,6 +131,11 @@ export default function Product({ product, onShow }) {
                               src: product.item.img_url,
                               description: product.item.description,
                               sku: currentSku.sku,
+                              options: {
+                                size: currentSku.options.size,
+                                color: currentSku.options.color,
+                                src: currentSku.options.img_url,
+                              },
                             },
                           });
                         }}
@@ -157,6 +167,11 @@ export default function Product({ product, onShow }) {
                               description: product.item.description,
                               sku: currentSku.sku,
                               price: currentSku.price,
+                              options: {
+                                size: currentSku.options.size,
+                                color: currentSku.options.color,
+                                src: currentSku.options.img_url,
+                              },
                             },
                           });
                         }}

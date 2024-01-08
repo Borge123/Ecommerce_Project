@@ -1,7 +1,7 @@
 module.exports = {
   validateNewOrder: async (req, res, next) => {
     //Possibly pick a discount based on order total
-    for (const el of req.body.items) {
+    for (const el of req.body) {
       const { sku, quantity, price } = el;
 
       if (sku === undefined || sku === null) {
@@ -33,7 +33,7 @@ module.exports = {
         });
       }
 
-      const { size, color, img_url } = el.options;
+      const { size, color, src } = el.options;
       if (size === undefined || size === null) {
         return res.status(400).json({ "size": "size is required." });
       }
@@ -53,11 +53,11 @@ module.exports = {
         });
       }
 
-      if (img_url === undefined || img_url === null) {
+      if (src === undefined || src === null) {
         return res.status(400).json({ "img_url": "img_url is required." });
       }
 
-      if (img_url === "" || typeof img_url !== "string") {
+      if (src === "" || typeof src !== "string") {
         return res.status(400).json({
           "img_url": "img_url needs to be a string and is required.",
         });

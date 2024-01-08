@@ -135,6 +135,11 @@ export function CartItem({ cartItem, onShow, dispatch }) {
                             description: cartItem.description,
                             price: cartItem.price,
                             sku: cartItem.sku,
+                            options: {
+                              size: cartItem.options.size,
+                              color: cartItem.options.color,
+                              src: cartItem.options.src,
+                            },
                           },
                         });
                       }}
