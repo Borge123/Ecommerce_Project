@@ -126,7 +126,7 @@ router.delete(
 );
 
 //orders
-
+router.get("/alluserorders", authorize, OrderController.getAllUserOrders);
 router.post(
   "/createorder",
   authorize,

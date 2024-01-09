@@ -141,7 +141,7 @@ export default function Navigation() {
                   </NavDropdown.Item>
                   <NavDropdown.Item
                     as={NavLink}
-                    to="/"
+                    to="/account/orders"
                     style={({ isActive, isPending }) => {
                       return {
                         fontWeight: isActive ? "bold" : "normal",

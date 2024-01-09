@@ -21,6 +21,7 @@ module.exports = class OrderService {
 
         items: [
           {
+            name: data[itemsLength].name,
             sku: data[itemsLength].sku,
             quantity: data[itemsLength].quantity,
             price: data[itemsLength].price,
@@ -159,8 +160,8 @@ module.exports = class OrderService {
 
   static async getAllUserOrders(user_id) {
     try {
-      const orders = Order.find({ user_id: user_id });
-
+      const orders = await Order.find({ user_id: user_id });
+      console.log(orders);
       if (orders.length > 0) {
         return orders;
       } else {
@@ -168,7 +169,6 @@ module.exports = class OrderService {
       }
     } catch (error) {
       console.log(error);
-      throw error;
     }
   }
 

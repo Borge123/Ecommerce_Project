@@ -43,7 +43,7 @@ export function Sidebar() {
                   Change password
                 </Nav.Link>
 
-                <Nav.Link as={NavLink} to="/account" style={linkStyles}>
+                <Nav.Link as={NavLink} to="/orders" style={linkStyles}>
                   Orders
                 </Nav.Link>
               </Nav>

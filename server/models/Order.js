@@ -27,6 +27,10 @@ const OrderSchema = new Schema(
     },
     items: [
       {
+        name: {
+          type: String,
+          required: true,
+        },
         sku: {
           type: String,
           required: true,

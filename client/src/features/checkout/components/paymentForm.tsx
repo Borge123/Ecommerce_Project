@@ -6,11 +6,12 @@ import Container from "react-bootstrap/Container";
 import * as formik from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { useCart } from "../../cart/context/cart";
+import { useCart, useCartDispatch } from "../../cart/context/cart";
 import { createOrder } from "../services/createOrder";
 export function PaymentForm() {
   const { Formik } = formik;
   const cart = useCart();
+  const dispatch = useCartDispatch();
   const navigate = useNavigate();
   const schema = yup.object().shape({
     name: yup
@@ -50,16 +51,11 @@ export function PaymentForm() {
           //TODO dispatch to cart to empty it
           //change ui on success
           if (status === 200) {
-            return <p>Order created</p>;
+            localStorage.setItem("cart", JSON.stringify([]));
+            navigate("/checkout/ordercreated");
           }
           return <p>error</p>;
         });
-        //const updateBilling = updateBillingInfo(values);
-        // updateBilling.then((status) => {
-        //   if (status === 200) {
-        //   }
-        //   return;
-        // });
 
         resetForm();
         setSubmitting(false);

@@ -2,8 +2,16 @@ module.exports = {
   validateNewOrder: async (req, res, next) => {
     //Possibly pick a discount based on order total
     for (const el of req.body) {
-      const { sku, quantity, price } = el;
+      const { name, sku, quantity, price } = el;
+      if (name === undefined || name === null) {
+        return res.status(400).json({ "name": "name is required." });
+      }
 
+      if (name === "" || typeof name !== "string") {
+        return res.status(400).json({
+          "name": "name needs to be a string and is required.",
+        });
+      }
       if (sku === undefined || sku === null) {
         return res.status(400).json({ "sku": "sku is required." });
       }

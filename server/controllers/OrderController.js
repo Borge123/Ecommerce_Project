@@ -1,5 +1,6 @@
 const OrderService = require("../services/OrderService");
 const { calcTotal } = require("../helpers/calcTotal");
+const ObjectId = require("mongoose").Types.ObjectId;
 module.exports = class OrderController {
   static async createOrder(req, res, next) {
     try {
@@ -56,6 +57,21 @@ module.exports = class OrderController {
       }
     } catch (error) {
       return res.status(500).json({ error: error.name + " " + error.message });
+    }
+  }
+
+  static async getAllUserOrders(req, res, next) {
+    try {
+      // const userId = new ObjectId(req.userId);
+      // console.log(userId);
+      const orders = await OrderService.getAllUserOrders(req.userId);
+      if (orders) {
+        return res.status(200).json({ "Orders": orders });
+      } else {
+        return res.status(400).json({ "Order": "order not found" });
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 };
