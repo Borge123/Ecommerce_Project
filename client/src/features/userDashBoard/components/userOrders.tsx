@@ -15,26 +15,39 @@ export function UserOrders() {
               return (
                 <li
                   key={order._id}
-                  className="list-group-item d-flex justify-content-between lh-condensed"
+                  className="list-group-item d-flex justify-content-between lh-condensed mb-2"
                 >
                   <div>
-                    <h6 className="my-0">{order.user_id}</h6>
-                    <small className="text-muted">{order.status}</small>
+                    <p className="">Order {order._id}</p>
+                    <p>Created: {order.createdAt.slice(0, 10)}</p>
+                    <p>
+                      Status:{" "}
+                      <small className="text-muted">{order.status}</small>{" "}
+                    </p>
 
                     <div>
-                      {order.items.map((item) => {
-                        return (
-                          <li
-                            key={item.sku}
-                            className="list-group-item d-flex justify-content-between lh-condensed"
-                          >
-                            <h4>{item.name}</h4>
-                            <small className="text-muted">
-                              {item.options.color}
-                            </small>
-                          </li>
-                        );
-                      })}
+                      <ul className="list-group mb-3 sticky-top">
+                        {order.items.map((item) => {
+                          return (
+                            <li
+                              key={item.sku}
+                              className="list-group-item d-flex justify-content-between lh-condensed"
+                            >
+                              <div>
+                                <h4>{item.name}</h4>
+                                <small className="text-muted">
+                                  {item.options.color}
+                                </small>
+                              </div>
+                              <div>
+                                <small className="text-muted">
+                                  x{item.quantity}
+                                </small>
+                              </div>
+                            </li>
+                          );
+                        })}
+                      </ul>
                     </div>
                   </div>
                   {/* <span className="text-muted">${cartItem.price}</span> */}
