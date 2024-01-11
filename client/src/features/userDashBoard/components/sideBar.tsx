@@ -11,7 +11,7 @@ export function Sidebar() {
   return (
     <Col
       xxl={4}
-      className="flex-column flex-shrink-0 p-3 bg-light"
+      className="flex-column flex-shrink-0 p-3"
       style={{ marginRight: "5em" }}
     >
       <Navbar
@@ -43,7 +43,7 @@ export function Sidebar() {
                   Change password
                 </Nav.Link>
 
-                <Nav.Link as={NavLink} to="/orders" style={linkStyles}>
+                <Nav.Link as={NavLink} to="/account/orders" style={linkStyles}>
                   Orders
                 </Nav.Link>
               </Nav>

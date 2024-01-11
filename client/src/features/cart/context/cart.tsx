@@ -23,8 +23,6 @@ export function CartProvider({ children }) {
         type: "load",
         cart: JSON.parse(data),
       });
-    } else {
-      //setItem("cart", JSON.stringify(cart));
     }
   }, []);
   useEffect(() => {

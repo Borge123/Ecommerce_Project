@@ -1,7 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 export function UserOrders() {
   const { orders } = useLoaderData();
-  console.log(orders);
 
   return (
     <div className="col-md-4 order-md-2 mb-4">
@@ -34,7 +33,7 @@ export function UserOrders() {
                               className="list-group-item d-flex justify-content-between lh-condensed"
                             >
                               <div>
-                                <h4>{item.name}</h4>
+                                <p>{item.name}</p>
                                 <small className="text-muted">
                                   {item.options.color}
                                 </small>

@@ -1,9 +1,10 @@
 import Button from "react-bootstrap/Button";
 import { useUserDispatch } from "../../context/AuthContext";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export default function Logout({ click }) {
   const dispatch = useUserDispatch();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -16,6 +17,7 @@ export default function Logout({ click }) {
           localStorage.removeItem("user");
           localStorage.removeItem("jwtExpire");
           click();
+          navigate("/");
         }}
       >
         Logout

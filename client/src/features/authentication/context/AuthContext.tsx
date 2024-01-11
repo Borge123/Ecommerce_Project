@@ -23,6 +23,27 @@ export function AuthProvider({ children }) {
   const now = new Date();
   //hook to track route changes
   const location = useLocation();
+  // useEffect(() => {
+  //   const user = getUserItem.getItem("user");
+
+  //   if (user) {
+  //     const parsedUser = JSON.parse(user);
+  //     if (
+  //       Object.keys(parsedUser).length === 0 &&
+  //       parsedUser.constructor === Object
+  //     ) {
+  //       console.log(parsedUser);
+  //       throw new Error("Localstorage user object empty");
+  //     }
+  //     dispatch({
+  //       type: "setuser",
+  //       status: "success",
+  //       user: parsedUser,
+  //       token: getItem("jwtToken"),
+  //       error: null,
+  //     });
+  //   }
+  // }, []);
   useEffect(() => {
     const user = getUserItem.getItem("user");
     let expires = getJwtExpiration.getItem("jwtExpire");
