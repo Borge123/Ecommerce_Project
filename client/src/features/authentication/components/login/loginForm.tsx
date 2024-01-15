@@ -8,7 +8,7 @@ import * as yup from "yup";
 import { Login } from "../../services/loginServices";
 import { useUserDispatch } from "../../context/AuthContext";
 import { useLocalStorage } from "../../../../hooks/useLocalStorage";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function LoginForm() {
   const dispatch = useUserDispatch();
@@ -120,6 +120,13 @@ export default function LoginForm() {
                 <Button type="submit" disabled={isSubmitting}>
                   {isSubmitting ? "Logging in" : "Login"}
                 </Button>
+                <p>
+                  Need an account?
+                  <Link style={{ textDecoration: "none" }} to={"/signup"}>
+                    {" "}
+                    Sign up
+                  </Link>
+                </p>
               </Form>
             </Col>
           </Row>

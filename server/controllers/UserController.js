@@ -44,6 +44,7 @@ module.exports = class UserController {
 
       payload = {
         userId: id,
+        role: user[0].role,
         firstName: user[0].firstName,
       };
 

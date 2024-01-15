@@ -4,11 +4,10 @@ export function UserOrders() {
 
   return (
     <div className="col-md-4 order-md-2 mb-4">
-      <h4 className="d-flex justify-content-between align-items-center mb-3">
-        <span className="text-muted">Orders </span>
-        <span className="badge badge-secondary badge-pill">3</span>
-      </h4>
       <ul className="list-group mb-3 sticky-top">
+        <h4 className="d-flex justify-content-between align-items-center mb-3">
+          <span className="text-muted">Orders </span>
+        </h4>
         {orders.length > 0
           ? orders?.map((order) => {
               return (

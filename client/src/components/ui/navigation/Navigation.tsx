@@ -91,20 +91,7 @@ export default function Navigation() {
                 Products
               </Nav.Link>
             </Nav>
-            <Nav>
-              <Nav.Link
-                as={NavLink}
-                to="/signup"
-                style={({ isActive, isPending }) => {
-                  return {
-                    fontWeight: isActive ? "bold" : "",
-                    color: isPending ? "red" : "black",
-                  };
-                }}
-              >
-                Signup
-              </Nav.Link>
-            </Nav>
+
             {!authState.user ? (
               <Nav>
                 <Nav.Link
