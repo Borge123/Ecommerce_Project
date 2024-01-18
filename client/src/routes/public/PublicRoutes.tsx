@@ -4,6 +4,7 @@ import { checkout } from "./checkout/checkout";
 import { loginRoute } from "./login/loginRoot";
 import { signupRoute } from "./signup/signupRoot";
 import { accountRoute } from "./userDashBoard/accountRoot";
+import { adminDashboardRoute } from "../admin/adminDashboard/adminDashboardroot";
 export const publicRoutes = [
   productsRoute,
   product,

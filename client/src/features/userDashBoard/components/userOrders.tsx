@@ -49,7 +49,7 @@ export function UserOrders() {
                     </div>
                   </div>
                   {/* <span className="text-muted">${cartItem.price}</span> */}
-                  <h2>${order.total}</h2>
+                  <p>${order.total}</p>
                 </li>
               );
             })

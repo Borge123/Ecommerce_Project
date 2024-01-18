@@ -148,6 +148,16 @@ export default function Navigation() {
                 </Navbar.Text>
               </Nav>
             )}
+
+            {authState.user?.role === "admin" ? (
+              <Nav>
+                <Nav.Link as={NavLink} to="/admindashboard">
+                  Admin
+                </Nav.Link>
+              </Nav>
+            ) : (
+              ""
+            )}
           </Navbar.Collapse>
           <Cart />
         </Container>

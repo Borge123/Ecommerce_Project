@@ -9,7 +9,6 @@ const queryClient = new QueryClient({
   },
 });
 export function ProductsProvider({ children }) {
-  //TODO modal seems desynced
   return (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );

@@ -1,1 +1,2 @@
-export const adminRoutes = [];
+import { adminDashboardRoute } from "./adminDashboard/adminDashboardroot";
+export const adminRoutes = [adminDashboardRoute];

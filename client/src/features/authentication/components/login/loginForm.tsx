@@ -25,8 +25,9 @@ export default function LoginForm() {
     <Formik
       validationSchema={schema}
       initialValues={{
-        email: "react@test.com",
-        password: "1Test123",
+        email: "admin@test.com",
+
+        password: "123456",
       }}
       validateOnChange={true}
       onSubmit={(values, { setSubmitting, resetForm }) => {

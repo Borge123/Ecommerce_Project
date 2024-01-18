@@ -8,9 +8,11 @@ import { useModalDispatch } from "../context/productModalContext";
 import { useLoaderData } from "react-router-dom";
 import { useQuery } from "react-query";
 import { productsQuery } from "../../../routes/public/products/productsLoaders";
+import { UseGetFetchQuery } from "../hooks/useGetFetchQuery";
 export default function Products() {
   //const { products } = useLoaderData();
-  const { data: products } = useQuery(productsQuery());
+  //const { data: products } = useQuery(productsQuery());
+  const products = UseGetFetchQuery("products");
   const dispatch = useModalDispatch();
   return (
     <Container>

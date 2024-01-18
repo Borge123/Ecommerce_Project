@@ -22,7 +22,7 @@ export const productQuery = (id) => ({
   },
 });
 
-// ⬇️ needs access to queryClient
+// needs access to queryClient
 
 export const ProductLoader =
   (queryClient) =>
