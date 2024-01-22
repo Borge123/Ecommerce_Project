@@ -1,4 +1,5 @@
 import { GetProduct } from "../../../features/products/services/getProduct";
+import { queryClient } from "../../../features/products/context/productsProvider";
 // export async function ProductLoader({ params }) {
 //   const product = await GetProduct(params._id);
 
@@ -11,14 +12,18 @@ export const productQuery = (id) => ({
   queryKey: ["products", id],
 
   queryFn: async () => {
-    const product = await GetProduct(id);
-    if (!product) {
-      throw new Response("", {
-        status: 404,
-        statusText: "Not Found",
-      });
+    const products = queryClient.getQueryData("products");
+    //const product = await GetProduct(id);
+    if (products) {
+      const product = products.find((product) => product._id === id);
+      if (!product) {
+        throw new Response("", {
+          status: 404,
+          statusText: "Not Found",
+        });
+      }
+      return { product };
     }
-    return { product };
   },
 });
 

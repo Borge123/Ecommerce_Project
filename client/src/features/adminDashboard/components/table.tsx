@@ -25,10 +25,18 @@ export function AdminTable({ headers, data }) {
               {datum.billinginfo ? (
                 //TODO figure out a better way to deal with nested objects
                 <>
-                  <td>{datum.billinginfo?.address}</td>
-                  <td>{datum.billinginfo?.city}</td>
-                  <td>{datum.billinginfo?.house_number}</td>
-                  <td>{datum.billinginfo?.zip}</td>
+                  <td>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td>{datum.billinginfo?.address}</td>
+                          <td>{datum.billinginfo?.city}</td>
+                          <td>{datum.billinginfo?.house_number}</td>
+                          <td>{datum.billinginfo?.zip}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
                 </>
               ) : (
                 <td>Empty</td>
