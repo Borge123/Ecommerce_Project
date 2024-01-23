@@ -8,7 +8,7 @@ const queryClient = new QueryClient({
     },
   },
 });
-export function ProductsProvider({ children }) {
+export function QueryProvider({ children }) {
   return (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );

@@ -4,10 +4,12 @@ import { AdminTable } from "./table";
 import { Button } from "react-bootstrap";
 import "@fontsource/anek-telugu";
 import { styled } from "@stitches/react";
+import { useNavigate } from "react-router-dom";
 
 import { Table, IColumnType } from "./Table/table";
 export function Users() {
-  const { users } = useLoaderData();
+  const users = useLoaderData();
+  const navigate = useNavigate();
   //const headers = Object.keys(users[0]);
   //console.log(users);
 
@@ -71,6 +73,7 @@ export function Users() {
             onClick={(e) => {
               //TODO navigate to admindashboard/users/id
               console.log(_id);
+              navigate(`/admindashboard/users/${_id}`);
             }}
           >
             Edit

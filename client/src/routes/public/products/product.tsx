@@ -1,7 +1,7 @@
 import ProductDetailsPage from "../../../pages/ProductDetailsPage";
 
 import { ProductLoader } from "./productLoader";
-import { queryClient } from "../../../features/products/context/productsProvider";
+import { queryClient } from "../../../context/queryProvider";
 //TODO change routes to be more dynamic and make product route its own route instead of being a child route
 
 export const product = {

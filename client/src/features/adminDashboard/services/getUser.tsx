@@ -1,8 +1,9 @@
-// const users = await fetchProducts();
+import { GetAllUsers } from "./getAllUsers";
+const users = await GetAllUsers();
 
-// export async function GetProduct(id) {
-//   //only call once on first render
+export async function GetUser(id) {
+  //only call once on first render
 
-//   const product = users.find((product) => product._id === id);
-//   return product ?? null;
-// }
+  const user = users.find((user) => user._id === id);
+  return user ?? null;
+}

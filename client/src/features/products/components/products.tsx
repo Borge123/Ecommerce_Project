@@ -13,6 +13,7 @@ export default function Products() {
   //const { products } = useLoaderData();
   //const { data: products } = useQuery(productsQuery());
   const products = UseGetFetchQuery("products");
+  //const products = useLoaderData();
   const dispatch = useModalDispatch();
   return (
     <Container>

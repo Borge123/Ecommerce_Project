@@ -2,9 +2,9 @@ import { combineComponents } from "./combinedComponents";
 import { AuthProvider } from "../features/authentication/context/AuthContext";
 import { CartProvider } from "../features/cart/context/cart";
 import { ProductModalProvider } from "../features/products/context/productModalContext";
-import { ProductsProvider } from "../features/products/context/productsProvider";
+import { QueryProvider } from "../context/queryProvider";
 const providers = [
-  ProductsProvider,
+  QueryProvider,
   AuthProvider,
   CartProvider,
   ProductModalProvider,
