@@ -8,7 +8,7 @@ export function UserOrders() {
         <h4 className="d-flex justify-content-between align-items-center mb-3">
           <span className="text-muted">Orders </span>
         </h4>
-        {orders.length > 0
+        {orders != undefined && orders.length > 0
           ? orders?.map((order) => {
               return (
                 <li

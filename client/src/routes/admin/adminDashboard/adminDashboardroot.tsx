@@ -1,10 +1,11 @@
 import AdminDashboardPage from "../../../pages/admin/AdminDashboardPage";
 import ErrorPage from "../../../pages/ErrorPage";
 import { AdminLanding } from "../../../features/adminDashboard/components/adminLanding";
-import { Users } from "../../../features/adminDashboard/components/users";
+import { Users } from "../../../features/adminDashboard/components/users/users";
 import { AllUsersLoader } from "./allUsersLoader";
 import { queryClient } from "../../../context/queryProvider";
 import { UserLoader } from "./userLoader";
+import { User } from "../../../features/adminDashboard/components/users/user";
 export const adminDashboardRoute = {
   path: "/admindashboard",
   element: <AdminDashboardPage />,
@@ -29,7 +30,7 @@ export const adminDashboardRoute = {
     },
     {
       path: "/admindashboard/users/:_id",
-      element: <p>USER</p>,
+      element: <User />,
       loader: UserLoader(queryClient),
     },
   ],

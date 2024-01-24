@@ -1,12 +1,12 @@
 import { useLoaderData } from "react-router-dom";
 import { Col } from "react-bootstrap";
-import { AdminTable } from "./table";
+
 import { Button } from "react-bootstrap";
 import "@fontsource/anek-telugu";
 import { styled } from "@stitches/react";
 import { useNavigate } from "react-router-dom";
 
-import { Table, IColumnType } from "./Table/table";
+import { Table, IColumnType } from "../Table/table";
 export function Users() {
   const users = useLoaderData();
   const navigate = useNavigate();
@@ -115,19 +115,6 @@ export function Users() {
     //     ),
     //   },
   ];
-
-  // const data: IData[] = [
-  //   {
-  //     fullName: "Francisco Mendes",
-  //     role: "Full Stack",
-  //     tags: ["dev", "blogger"],
-  //   },
-  //   {
-  //     fullName: "Ricardo Malva",
-  //     role: "Social Media Manager",
-  //     tags: ["designer", "photographer"],
-  //   },
-  // ];
 
   return (
     <Col>
