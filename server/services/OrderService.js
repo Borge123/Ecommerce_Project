@@ -56,6 +56,16 @@ module.exports = class OrderService {
       throw error;
     }
   }
+  static async getAllOrders() {
+    try {
+      const result = await Order.find();
+      if (result.length > 0) {
+        return result;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   static async updateOrderStatus(id, status) {
     try {

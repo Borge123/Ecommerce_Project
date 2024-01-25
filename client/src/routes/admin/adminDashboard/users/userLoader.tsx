@@ -1,4 +1,4 @@
-import { GetUser } from "../../../features/adminDashboard/services/getUser";
+import { GetUser } from "../../../../features/adminDashboard/services/users/getUser";
 export const userQuery = (id) => ({
   queryKey: ["users", id],
 

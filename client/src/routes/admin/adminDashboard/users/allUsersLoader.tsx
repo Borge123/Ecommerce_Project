@@ -1,4 +1,4 @@
-import { GetAllUsers } from "../../../features/adminDashboard/services/getAllUsers";
+import { GetAllUsers } from "../../../../features/adminDashboard/services/users/getAllUsers";
 // export async function AllUsersLoader() {
 //   const users = await GetAllUsers();
 

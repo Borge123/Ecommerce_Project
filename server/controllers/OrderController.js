@@ -16,6 +16,18 @@ module.exports = class OrderController {
     }
   }
 
+  static async getAllOrders(req, res, next) {
+    try {
+      const orders = await OrderService.getAllOrders();
+
+      if (orders) {
+        return res.status(200).json({ "Orders": "Success", "Orders": orders });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.name + " " + error.message });
+    }
+  }
+
   static async updateOrderItems(req, res, next) {
     const { id, sku, quantity } = req.body;
     try {
