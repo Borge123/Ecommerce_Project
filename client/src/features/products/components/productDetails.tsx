@@ -28,8 +28,8 @@ export function ProductDetails() {
                     margin: "auto",
                   }}
                   className="rounded-4 fit"
-                  src={createImageSrc(product.item.img_url)}
-                  alt={product.item.img_url}
+                  src={createImageSrc(product.img_url)}
+                  alt={product.img_url}
                 />
                 {/* </Link> */}
               </div>
@@ -54,7 +54,7 @@ export function ProductDetails() {
             <main className="col-lg-6">
               <div className="ps-lg-3">
                 <h4 className="title text-dark">
-                  {product.item.name} <br />
+                  {product.name} <br />
                   Placeholder...
                 </h4>
                 <div className="d-flex flex-row my-3">
@@ -140,9 +140,9 @@ export function ProductDetails() {
                               item: {
                                 quantity: 0,
                                 _id: product._id,
-                                name: product.item.name,
-                                src: product.item.img_url,
-                                description: product.item.description,
+                                name: product.name,
+                                src: product.img_url,
+                                description: product.description,
                                 price: currentSku.price,
                                 sku: currentSku.sku,
                                 options: {
@@ -198,9 +198,9 @@ export function ProductDetails() {
                                         type: "remove",
                                         item: {
                                           _id: product._id,
-                                          name: product.item.name,
-                                          src: product.item.img_url,
-                                          description: product.item.description,
+                                          name: product.name,
+                                          src: product.img_url,
+                                          description: product.description,
                                           sku: currentSku.sku,
                                           options: {
                                             size: currentSku.options.size,
@@ -233,9 +233,9 @@ export function ProductDetails() {
                                         type: "add",
                                         item: {
                                           _id: product._id,
-                                          name: product.item.name,
-                                          src: product.item.img_url,
-                                          description: product.item.description,
+                                          name: product.name,
+                                          src: product.img_url,
+                                          description: product.description,
                                           sku: currentSku.sku,
                                           price: currentSku.price,
                                           options: {

@@ -2,27 +2,26 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const InventorySchema = new Schema(
   {
-    item: {
-      name: {
-        type: String,
-        required: true,
-        unique: true,
-      },
-
-      description: {
-        type: String,
-        required: true,
-      },
-      img_url: {
-        type: String,
-        required: true,
-      },
-
-      discount_id: {
-        type: Schema.Types.ObjectID,
-        ref: "Discount",
-      },
+    name: {
+      type: String,
+      required: true,
+      unique: true,
     },
+
+    description: {
+      type: String,
+      required: true,
+    },
+    img_url: {
+      type: String,
+      required: true,
+    },
+
+    discount_id: {
+      type: Schema.Types.ObjectID,
+      ref: "Discount",
+    },
+
     skus: [
       {
         sku: {

@@ -10,11 +10,19 @@ import { Orders } from "../../../features/adminDashboard/components/orders/order
 import { AllOrdersLoader } from "./orders/allOrdersLoader";
 import { OrderLoader } from "./orders/orderLoader";
 import { Order } from "../../../features/adminDashboard/components/orders/order";
+import { Products } from "../../../features/adminDashboard/components/products/products";
+import { ProductsLoader } from "../../public/products/productsLoaders";
+import { Product } from "../../../features/adminDashboard/components/products/product";
+import { ProductLoader } from "../../public/products/productLoader";
 export const adminDashboardRoute = {
   path: "/admindashboard",
   element: <AdminDashboardPage />,
   errorElement: <ErrorPage />,
   children: [
+    {
+      index: true,
+      element: <h1>Test admin index</h1>, //Will load in outlet when nothing else is loaded
+    },
     {
       path: "",
       element: <AdminLanding />,
@@ -31,7 +39,13 @@ export const adminDashboardRoute = {
     },
     {
       path: "products",
-      element: <p>products</p>,
+      element: <Products />,
+      loader: ProductsLoader(queryClient),
+    },
+    {
+      path: "/admindashboard/products/:_id",
+      element: <Product />,
+      loader: ProductLoader(queryClient),
     },
     {
       path: "orders",

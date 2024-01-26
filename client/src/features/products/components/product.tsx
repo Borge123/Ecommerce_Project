@@ -32,15 +32,15 @@ export default function Product({ product, onShow }) {
         <Card.Img
           onClick={onShow}
           variant="top"
-          src={createImageSrc(product.item.img_url)}
-          alt={product.item.img_url}
+          src={createImageSrc(product.img_url)}
+          alt={product.img_url}
           loading="lazy"
         />
       </Link>
       <Card.Body>
-        <Card.Title>{product.item.name}</Card.Title>
+        <Card.Title>{product.name}</Card.Title>
         {/* Todo: add a select list of different variants of a product if it has more then 1 */}
-        <Card.Text>{product.item.description}</Card.Text>
+        <Card.Text>{product.description}</Card.Text>
         <Card.Text>{currentSku.price}</Card.Text>
         <>
           {product.skus.length > 1 ? (
@@ -71,9 +71,9 @@ export default function Product({ product, onShow }) {
                   item: {
                     quantity: 0,
                     _id: product._id,
-                    name: product.item.name,
-                    src: product.item.img_url,
-                    description: product.item.description,
+                    name: product.name,
+                    src: product.img_url,
+                    description: product.description,
                     price: currentSku.price,
                     sku: currentSku.sku,
                     options: {
@@ -127,9 +127,9 @@ export default function Product({ product, onShow }) {
                             type: "remove",
                             item: {
                               _id: product._id,
-                              name: product.item.name,
-                              src: product.item.img_url,
-                              description: product.item.description,
+                              name: product.name,
+                              src: product.img_url,
+                              description: product.description,
                               sku: currentSku.sku,
                               options: {
                                 size: currentSku.options.size,
@@ -162,9 +162,9 @@ export default function Product({ product, onShow }) {
                             type: "add",
                             item: {
                               _id: product._id,
-                              name: product.item.name,
-                              src: product.item.img_url,
-                              description: product.item.description,
+                              name: product.name,
+                              src: product.img_url,
+                              description: product.description,
                               sku: currentSku.sku,
                               price: currentSku.price,
                               options: {

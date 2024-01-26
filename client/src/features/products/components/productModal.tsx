@@ -18,7 +18,7 @@ export default function ProductModal(props) {
   const [sku, setSku] = useState(product.skus[0].options.color);
   let currentSku = product.skus.find((el) => el.options.color === sku);
   console.log("sku is " + "" + sku);
-  console.log(currentSku);
+
   // Looks like a modal is rendered for all products but only the one opened recevies data which causes the bugs
   //console.log(product?.skus[0].options.color);
   //console.log(sku === product?.skus[0].options.color); // seems to be equal only with the sku rendered at the beginning
@@ -44,15 +44,15 @@ export default function ProductModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title as={"h2"} id="contained-modal-title-vcenter">
-          {product.item.name}
+          {product.name}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>{product.item.description}</p>
+        <p>{product.description}</p>
         <img
           className="img-fluid"
-          src={createImageSrc(product.item.img_url)}
-          alt={product.item.img_url}
+          src={createImageSrc(product.img_url)}
+          alt={product.img_url}
         />
         <>
           {product.skus.length >= 1 ? (
@@ -87,9 +87,9 @@ export default function ProductModal(props) {
                     item: {
                       quantity: 0,
                       _id: product._id,
-                      name: product.item.name,
-                      src: product.item.img_url,
-                      description: product.item.description,
+                      name: product.name,
+                      src: product.img_url,
+                      description: product.description,
                       price: currentSku.price,
                       sku: currentSku.sku,
                     },
@@ -155,9 +155,9 @@ export default function ProductModal(props) {
                             item: {
                               quantity: 0,
                               _id: product._id,
-                              name: product.item.name,
-                              src: product.item.img_url,
-                              description: product.item.description,
+                              name: product.name,
+                              src: product.img_url,
+                              description: product.description,
                               sku: currentSku.sku,
                               price: currentSku.price,
                             },
@@ -186,9 +186,9 @@ export default function ProductModal(props) {
                             type: "add",
                             item: {
                               _id: product._id,
-                              name: product.item.name,
-                              src: product.item.img_url,
-                              description: product.item.description,
+                              name: product.name,
+                              src: product.img_url,
+                              description: product.description,
                               sku: currentSku.sku,
                               price: currentSku.price,
                             },

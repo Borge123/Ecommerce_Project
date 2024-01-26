@@ -11,11 +11,9 @@ module.exports = class InventoryService {
       }
 
       const newItem = {
-        item: {
-          name: data.item.name,
-          description: data.item.description,
-          img_url: data.item.img_url,
-        },
+        name: data.name,
+        description: data.description,
+        img_url: data.img_url,
 
         skus: [
           {
@@ -61,7 +59,7 @@ module.exports = class InventoryService {
       const result = await Inventory.find();
       if (result.length > 0) {
         await result[0].populate({
-          path: "item.discount_id",
+          path: "discount_id",
           select: { _id: 1, name: 1, discount_percent: 1, active: 1 },
           strictPopulate: false,
         });
@@ -82,7 +80,7 @@ module.exports = class InventoryService {
       const result = await Inventory.findOne({
         _id: id,
       }).populate({
-        path: "item.discount_id",
+        path: "discount_id",
         select: { _id: 1, name: 1, discount_percent: 1, active: 1 },
         strictPopulate: false,
       });
@@ -130,11 +128,9 @@ module.exports = class InventoryService {
         },
         {
           $set: {
-            item: {
-              name: data.item.name,
-              description: data.item.description,
-              img_url: data.item.img_url,
-            },
+            name: data.name,
+            description: data.description,
+            img_url: data.img_url,
           },
         }
       );
@@ -184,7 +180,7 @@ module.exports = class InventoryService {
   static async decreasePrice(data) {
     try {
       let response;
-      let percentage = await data.item.discount_id.discount_percent;
+      let percentage = await data.discount_id.discount_percent;
       for (const el of data.skus) {
         const differential = el.price * percentage;
         let newPrice = el.price - differential;
@@ -210,7 +206,7 @@ module.exports = class InventoryService {
   static async increasePrice(data) {
     try {
       let response;
-      let percentage = data.item.discount_id.discount_percent;
+      let percentage = data.discount_id.discount_percent;
 
       for (const el of data.skus) {
         const differential = 1 - percentage;

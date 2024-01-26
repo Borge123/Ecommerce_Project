@@ -11,6 +11,8 @@ export const productsQuery = () => ({
         statusText: "Not Found",
       });
     }
+    console.log(products);
+
     return products;
   },
 });
