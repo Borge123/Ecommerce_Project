@@ -48,6 +48,14 @@ export const adminDashboardRoute = {
       loader: ProductLoader(queryClient),
     },
     {
+      path: "/admindashboard/products/:_id/edit",
+      element: <p>edit product</p>,
+    },
+    {
+      path: "/admindashboard/products/:_id/:sku/edit",
+      element: <p>edit sku</p>,
+    },
+    {
       path: "orders",
       element: <Orders />,
       loader: AllOrdersLoader(queryClient),

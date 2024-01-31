@@ -12,42 +12,12 @@ export function Product() {
   return (
     <>
       <Col>
-        {/* <div className="row">
-          <div className="col">
-            <p>{product.name}</p>
-          </div>
-          <div className="col">
-            <p>{product.description}</p>
-          </div>
-          <div className="col">
-            <img
-              style={{
-                height: "60px",
-                width: "60px",
-              }}
-              className="img-fluid"
-              src={createImageSrc(product.img_url)}
-            ></img>
-          </div>
-          <div className="col">
-            <Button
-              onClick={(e) => {
-                //TODO navigate to admindashboard/users/id
-                console.log(_id);
-                navigate(`/admindashboard/products/${_id}/edit`);
-              }}
-            >
-              Edit
-            </Button>
-          </div>
-        </div> */}
         <div>
           <section className="py-5">
             <div className="container">
               <div className="row gx-5">
                 <aside className="col-lg-6">
                   <div className="border rounded-4 mb-3 d-flex justify-content-center">
-                    {/* <Link to={`/products/${product._id}`} className="rounded-4"> */}
                     <img
                       style={{
                         maxWidth: "100%",
@@ -62,25 +32,8 @@ export function Product() {
                       )}
                       alt={product.img_url}
                     />
-                    {/* </Link> */}
                   </div>
-                  <div className="d-flex justify-content-center mb-3">
-                    {/* <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big1.webp">
-            <img width="60" height="60" class="rounded-2" src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big1.webp">
-          </a>
-          <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big2.webp">
-            <img width="60" height="60" class="rounded-2" src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big2.webp">
-          </a>
-          <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big3.webp">
-            <img width="60" height="60" class="rounded-2" src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big3.webp">
-          </a>
-          <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big4.webp">
-            <img width="60" height="60" class="rounded-2" src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big4.webp">
-          </a>
-          <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big.webp">
-            <img width="60" height="60" class="rounded-2" src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big.webp">
-          </a> */}
-                  </div>
+                  <div className="d-flex justify-content-center mb-3"></div>
                 </aside>
                 <main className="col-lg-6">
                   <div className="ps-lg-3">
@@ -102,24 +55,34 @@ export function Product() {
                     <p>{product.description}</p>
 
                     <div className="row">
-                      <dt className="col-3">Type:</dt>
-                      <dd className="col-9">Regular</dd>
+                      <h6>Options:</h6>
+                      <dt className="col-3">Size:</dt>
+                      <dd className="col-9">{currentSku.options.size}</dd>
 
                       <dt className="col-3">Color</dt>
-                      <dd className="col-9">Brown</dd>
+                      <dd className="col-9">{currentSku.options.color}</dd>
 
-                      <dt className="col-3">Material</dt>
-                      <dd className="col-9">Cotton, Jeans</dd>
+                      <dt className="col-3">Image name</dt>
+                      <dd className="col-9">{currentSku.options.img_url}</dd>
+                    </div>
 
-                      <dt className="col-3">Brand</dt>
-                      <dd className="col-9">Reebook</dd>
+                    <hr />
+
+                    <div className="row">
+                      <dt className="col-3">Category:</dt>
+                      <dd className="col-9">{product.category}</dd>
+
+                      <dt className="col-3">Sub category</dt>
+                      <dd className="col-9">{product.subcategory}</dd>
                     </div>
 
                     <hr />
 
                     <div className="row mb-4">
                       <div className="col-md-4 col-6">
-                        <label className="mb-2">Color</label>
+                        <label className="mb-2">
+                          Pick sku based on the color
+                        </label>
                         <>
                           {product.skus.length >= 1 ? (
                             <select
@@ -149,12 +112,29 @@ export function Product() {
                       >
                         <Button
                           onClick={(e) => {
-                            //TODO navigate to admindashboard/users/id
-                            console.log(_id);
-                            navigate(`/admindashboard/products/${_id}/edit`);
+                            navigate(
+                              `/admindashboard/products/${product._id}/edit`
+                            );
                           }}
                         >
-                          Edit
+                          Edit Product
+                        </Button>
+                      </div>
+                      <div
+                        className="col-md-4 col-6"
+                        style={{
+                          textAlign: "center",
+                          paddingTop: "10px",
+                        }}
+                      >
+                        <Button
+                          onClick={(e) => {
+                            navigate(
+                              `/admindashboard/products/${product._id}/${currentSku.sku}/edit`
+                            );
+                          }}
+                        >
+                          Edit Sku
                         </Button>
                       </div>
                     </div>
