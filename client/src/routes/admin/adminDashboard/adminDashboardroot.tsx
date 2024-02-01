@@ -14,6 +14,7 @@ import { Products } from "../../../features/adminDashboard/components/products/p
 import { ProductsLoader } from "../../public/products/productsLoaders";
 import { Product } from "../../../features/adminDashboard/components/products/product";
 import { ProductLoader } from "../../public/products/productLoader";
+import { SkuLoader } from "./products/productSkuLoader";
 export const adminDashboardRoute = {
   path: "/admindashboard",
   element: <AdminDashboardPage />,
@@ -54,6 +55,7 @@ export const adminDashboardRoute = {
     {
       path: "/admindashboard/products/:_id/:sku/edit",
       element: <p>edit sku</p>,
+      loader: SkuLoader(queryClient),
     },
     {
       path: "orders",

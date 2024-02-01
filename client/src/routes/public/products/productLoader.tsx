@@ -9,7 +9,7 @@ import { GetProduct } from "../../../features/products/services/getProduct";
 // }
 
 export const productQuery = (id) => ({
-  queryKey: ["products", id],
+  queryKey: ["product", id],
 
   queryFn: async () => {
     const product = await GetProduct(id);
