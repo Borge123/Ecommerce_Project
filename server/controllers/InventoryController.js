@@ -81,7 +81,7 @@ module.exports = class InventoryController {
         if (updateItem) {
           return res.status(200).json({
             "Updated item": "Success",
-            "item": itemExist?.item.name,
+            "item": itemExist?.name,
           });
         }
       } else {

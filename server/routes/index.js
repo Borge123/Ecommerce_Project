@@ -81,14 +81,14 @@ router.post(
 );
 
 router.put(
-  "/updateSku",
+  "/updatesku",
   checkIfAdmin,
   validateUpdateSku,
   InventoryController.updateSku
 );
 
 router.put(
-  "/updateItem",
+  "/updateitem",
   checkIfAdmin,
   validateUpdateItem,
   InventoryController.updateItem

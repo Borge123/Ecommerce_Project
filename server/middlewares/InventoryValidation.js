@@ -201,7 +201,7 @@ module.exports = {
   },
 
   validateUpdateItem: async (req, res, next) => {
-    const { name, description, img_url } = req.body.item;
+    const { name, description, img_url } = req.body;
     const { id } = req.body;
     if (id === undefined || id === null) {
       return res.status(400).json({ "id": "id is required." });

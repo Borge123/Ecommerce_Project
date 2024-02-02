@@ -21,6 +21,7 @@ export const skuQuery = (id, sku) => ({
         statusText: "Not Found",
       });
     }
+    //Might return the product itself as well if that info is needed
     return { currSku };
   },
 });

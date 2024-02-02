@@ -29,7 +29,7 @@ export default function ChangePasswordForm() {
       initialValues={{
         oldPassword: "",
         newPassword: "",
-        id: authState.user.userId,
+        _id: authState.user.userId,
       }}
       validateOnChange={true}
       onSubmit={async (values, { setSubmitting, setStatus, resetForm }) => {

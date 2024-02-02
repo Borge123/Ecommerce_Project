@@ -134,6 +134,7 @@ module.exports = class InventoryService {
           },
         }
       );
+
       return response;
     } catch (error) {
       console.log(error);
