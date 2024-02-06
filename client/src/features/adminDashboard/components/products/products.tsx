@@ -6,10 +6,11 @@ import "@fontsource/anek-telugu";
 import { createImageSrc } from "../../../products/helpers/createImageSrc";
 import { styled } from "@stitches/react";
 import { useNavigate } from "react-router-dom";
-
+import { queryClient } from "../../../../context/queryProvider";
 import { Table, IColumnType } from "../Table/table";
 export function Products() {
-  const users = useLoaderData();
+  //const products = useLoaderData();
+  const products = queryClient.getQueryData("products");
   const navigate = useNavigate();
   //const headers = Object.keys(users[0]);
   //console.log(users);
@@ -88,7 +89,7 @@ export function Products() {
     <Col>
       <h1>Products</h1>
       {/* <AdminTable headers={headers} data={users}></AdminTable> */}
-      <Table data={users} columns={columns} />
+      <Table data={products} columns={columns} />
     </Col>
   );
 }

@@ -13,6 +13,7 @@ export const productQuery = (id) => ({
 
   queryFn: async () => {
     const product = await GetProduct(id);
+    console.log(product);
 
     if (!product) {
       throw new Response("", {

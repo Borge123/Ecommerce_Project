@@ -126,12 +126,12 @@ module.exports = {
   },
 
   validateUpdateSku: async (req, res, next) => {
-    const { id, newsku, price, stock_quantity } = req.body;
-    if (id === undefined || id === null) {
+    const { _id, newsku, price, stock_quantity } = req.body;
+    if (_id === undefined || _id === null) {
       return res.status(400).json({ "id": "id is required." });
     }
 
-    if (id === "" || typeof id !== "string") {
+    if (_id === "" || typeof _id !== "string") {
       return res.status(400).json({
         "id": "id needs to be a string and is required.",
       });
@@ -201,13 +201,13 @@ module.exports = {
   },
 
   validateUpdateItem: async (req, res, next) => {
-    const { name, description, img_url } = req.body;
-    const { id } = req.body;
-    if (id === undefined || id === null) {
+    const { _id, name, description, img_url } = req.body;
+
+    if (_id === undefined || _id === null) {
       return res.status(400).json({ "id": "id is required." });
     }
 
-    if (id === "" || typeof id !== "string") {
+    if (_id === "" || typeof _id !== "string") {
       return res.status(400).json({
         "id": "id needs to be a string and is required.",
       });

@@ -2,13 +2,17 @@ import { useLoaderData } from "react-router-dom";
 import { createImageSrc } from "../../../products/helpers/createImageSrc";
 import { Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 export function Product() {
   const { product } = useLoaderData();
+  //console.log(product);
+
   const navigate = useNavigate();
   const [sku, setSku] = useState(product.skus[0].options.color);
-  const currentSku = product.skus.find((el) => el.options.color === sku);
-
+  const currentSku = product?.skus.find((el) => el.options.color === sku);
+  // useEffect(() => {
+  //   setSku(product.skus[0].options.color);
+  // }, [product]);
   return (
     <>
       <Col>

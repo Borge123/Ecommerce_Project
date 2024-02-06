@@ -42,15 +42,15 @@ module.exports = class InventoryController {
 
   static async updateSku(req, res, next) {
     try {
-      const { id, sku } = req.body;
-      const itemExist = await InventoryService.getItemById(id);
+      const { _id, sku } = req.body;
+      const itemExist = await InventoryService.getItemById(_id);
 
       if (itemExist) {
-        const updatedSku = await InventoryService.updateSku(id, sku, req.body);
+        const updatedSku = await InventoryService.updateSku(_id, sku, req.body);
         if (updatedSku) {
           return res.status(200).json({
             "Updated item": "Success",
-            "item": itemExist?.item.name,
+            "item": itemExist?.name,
           });
         }
       } else {
@@ -71,7 +71,7 @@ module.exports = class InventoryController {
 
   static async updateItem(req, res, next) {
     try {
-      const itemExist = await InventoryService.getItemById(req.body.id);
+      const itemExist = await InventoryService.getItemById(req.body._id);
       if (itemExist) {
         const updateItem = await InventoryService.updateItem(
           itemExist._id,
