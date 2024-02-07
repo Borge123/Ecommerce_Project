@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
+import { Form as RouterForm } from "react-router-dom";
 import * as formik from "formik";
 import * as yup from "yup";
 import { useLoaderData } from "react-router-dom";
@@ -38,17 +39,18 @@ export default function ProductEdit() {
         onSubmit={async (values, { setSubmitting, setStatus, resetForm }) => {
           setSubmitting(true);
 
-          const response = await UpdateItem(values);
+          // const response = await UpdateItem(values);
 
-          setSubmitting(false);
-          resetForm();
-          if (response === 200) {
-            setStatus("200");
-
-            alert("Successfully updated item");
-            console.log(queryClient.getQueryData(["product", product._id]));
-            navigate(`/admindashboard/products/${product._id}`);
-          }
+          // setSubmitting(false);
+          // resetForm();
+          // if (response === 200) {
+          //   setStatus("200");
+          //   queryClient.refetchQueries({ queryKey: ["products"] });
+          //   // queryClient.refetchQueries({ queryKey: ["product", product._id] });
+          //   alert("Successfully updated item");
+          //   console.log(queryClient.getQueryData(["product", product._id]));
+          //   navigate(`/admindashboard/products/${product._id}`);
+          // }
         }}
       >
         {({
@@ -71,7 +73,8 @@ export default function ProductEdit() {
             >
               <Col className="m-auto">
                 <h1>Edit product</h1>
-                <Form noValidate onSubmit={handleSubmit}>
+                {/* <Form noValidate onSubmit={handleSubmit}> */}
+                <RouterForm method="put">
                   <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Name</Form.Label>
                     <Form.Control
@@ -123,7 +126,8 @@ export default function ProductEdit() {
                   <Button type="submit" disabled={isSubmitting}>
                     Save
                   </Button>
-                </Form>
+                </RouterForm>
+                {/* </Form> */}
                 {status === "200" ? <p>Success</p> : <p></p>}
               </Col>
             </Row>

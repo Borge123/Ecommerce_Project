@@ -3,16 +3,22 @@ import { createImageSrc } from "../../../products/helpers/createImageSrc";
 import { Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useRevalidate } from "../../../../hooks/useRevalidate";
+import { useRevalidator } from "react-router-dom";
 export function Product() {
   const { product } = useLoaderData();
   //console.log(product);
-
+  //useRevalidate();
+  let revalidator = useRevalidator();
   const navigate = useNavigate();
   const [sku, setSku] = useState(product.skus[0].options.color);
   const currentSku = product?.skus.find((el) => el.options.color === sku);
-  // useEffect(() => {
-  //   setSku(product.skus[0].options.color);
-  // }, [product]);
+  useEffect(() => {
+    console.log("trigger");
+    console.log(product);
+
+    revalidator.revalidate();
+  }, [revalidator]);
   return (
     <>
       <Col>
