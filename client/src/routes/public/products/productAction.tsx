@@ -11,7 +11,11 @@ export const action =
     await UpdateItem(updates);
     //await queryClient.invalidateQueries({ queryKey: ["product", params._id] });
     await queryClient.refetchQueries({ queryKey: ["products"] });
-    console.log(await queryClient.getQueryData(["products"]));
+    await queryClient.invalidateQueries({ queryKey: ["product"] });
+    // await queryClient.invalidateQueries({
+    //   queryKey: ["product"],
+    // });
+    console.log(await queryClient.getQueriesData(["product"]));
 
     return redirect(`/admindashboard/products`);
     //TODO figure out how to trigger action

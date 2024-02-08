@@ -4,21 +4,28 @@ import { Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useRevalidate } from "../../../../hooks/useRevalidate";
+import { useFetcher } from "react-router-dom";
 import { useRevalidator } from "react-router-dom";
 export function Product() {
   const { product } = useLoaderData();
+  const fetcher = useFetcher();
   //console.log(product);
   //useRevalidate();
   let revalidator = useRevalidator();
   const navigate = useNavigate();
   const [sku, setSku] = useState(product.skus[0].options.color);
   const currentSku = product?.skus.find((el) => el.options.color === sku);
-  useEffect(() => {
-    console.log("trigger");
-    console.log(product);
 
-    revalidator.revalidate();
-  }, [revalidator]);
+  //fetcher.load(".");
+  // useEffect(() => {
+
+  //   // if (fetcher.state === "idle") {
+  //   //   fetcher.load(".");
+  //   // }
+  //   //console.log(product);
+
+  //   revalidator.revalidate();
+  // }, [revalidator]);
   return (
     <>
       <Col>

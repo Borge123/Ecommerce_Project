@@ -74,7 +74,7 @@ export function Products() {
           <Button
             onClick={(e) => {
               //TODO navigate to admindashboard/users/id
-              console.log(_id);
+
               navigate(`/admindashboard/products/${_id}`);
             }}
           >

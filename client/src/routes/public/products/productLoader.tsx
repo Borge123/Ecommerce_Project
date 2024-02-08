@@ -13,7 +13,8 @@ export const productQuery = (id) => ({
 
   queryFn: async () => {
     const product = await GetProduct(id);
-    console.log(product);
+
+    //console.log(product);
 
     if (!product) {
       throw new Response("", {
@@ -35,7 +36,7 @@ export const ProductLoader =
     // ⬇️ return data or fetch it
 
     return (
-      queryClient.getQueryData(query.queryKey) ??
-      (await queryClient.fetchQuery(query))
+      //queryClient.getQueryData(query.queryKey) ??
+      await queryClient.fetchQuery(query)
     );
   };
