@@ -7,9 +7,8 @@ import { Form as RouterForm } from "react-router-dom";
 import * as formik from "formik";
 import * as yup from "yup";
 import { useLoaderData } from "react-router-dom";
-import { UpdateItem } from "../../services/products/updateItem";
 import { useNavigate } from "react-router-dom";
-import { queryClient } from "../../../../context/queryProvider";
+
 export default function ProductEdit() {
   const { Formik } = formik;
   const { product } = useLoaderData();
@@ -38,19 +37,6 @@ export default function ProductEdit() {
         validateOnChange={true}
         onSubmit={async (values, { setSubmitting, setStatus, resetForm }) => {
           setSubmitting(true);
-
-          // const response = await UpdateItem(values);
-
-          // setSubmitting(false);
-          // resetForm();
-          // if (response === 200) {
-          //   setStatus("200");
-          //   queryClient.refetchQueries({ queryKey: ["products"] });
-          //   // queryClient.refetchQueries({ queryKey: ["product", product._id] });
-          //   alert("Successfully updated item");
-          //   console.log(queryClient.getQueryData(["product", product._id]));
-          //   navigate(`/admindashboard/products/${product._id}`);
-          // }
         }}
       >
         {({
