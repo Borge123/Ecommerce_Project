@@ -138,7 +138,7 @@ module.exports = {
     }
 
     if (newsku === undefined || newsku === null) {
-      return res.status(400).json({ "sku": "sku is required." });
+      return res.status(400).json({ "newsku": "sku is required." });
     }
 
     if (newsku === "" || typeof newsku !== "string") {
@@ -151,9 +151,9 @@ module.exports = {
       return res.status(400).json({ "price": "price is required." });
     }
 
-    if (price === "" || typeof price !== "number") {
+    if (price === "" || typeof price !== "string") {
       return res.status(400).json({
-        "price": "price needs to be a number and is required.",
+        "price": "price needs to be a string and is required.",
       });
     }
     if (stock_quantity === undefined || stock_quantity === null) {
@@ -162,10 +162,10 @@ module.exports = {
         .json({ "stock_quantity": "stock_quantity is required." });
     }
 
-    if (stock_quantity === "" || typeof stock_quantity !== "number") {
+    if (stock_quantity === "" || typeof stock_quantity !== "string") {
       return res.status(400).json({
         "stock_quantity":
-          "stock_quantity needs to be a number and is required.",
+          "stock_quantity needs to be a string and is required.",
       });
     }
     const { size, color, img_url } = req.body.options;

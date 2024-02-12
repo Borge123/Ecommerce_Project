@@ -102,8 +102,8 @@ module.exports = class InventoryService {
           $set: {
             "skus.$": {
               sku: data.newsku,
-              price: data.price,
-              stock_quantity: data.stock_quantity,
+              price: parseInt(data.price),
+              stock_quantity: parseInt(data.stock_quantity),
               options: {
                 size: data.options.size,
                 color: data.options.color,

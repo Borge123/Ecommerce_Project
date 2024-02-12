@@ -17,8 +17,9 @@ import { ProductLoader } from "../../public/products/productLoader";
 import { SkuLoader } from "./products/productSkuLoader";
 import ProductEdit from "../../../features/adminDashboard/components/products/productEdit";
 import SkuEdit from "../../../features/adminDashboard/components/products/skuEdit";
-import { action } from "../../public/products/productAction";
-import { QueryClient } from "react-query";
+import { action as productEditAction } from "../../public/products/productAction";
+import { action as skuEditAction } from "../../public/products/productSkuAction";
+
 export const adminDashboardRoute = {
   path: "/admindashboard",
   element: <AdminDashboardPage />,
@@ -56,12 +57,13 @@ export const adminDashboardRoute = {
       path: "/admindashboard/products/:_id/edit",
       element: <ProductEdit />,
       loader: ProductLoader(queryClient),
-      action: action(queryClient),
+      action: productEditAction(queryClient),
     },
     {
       path: "/admindashboard/products/:_id/:sku/edit",
       element: <SkuEdit />,
       loader: SkuLoader(queryClient),
+      action: skuEditAction(queryClient),
     },
     {
       path: "orders",

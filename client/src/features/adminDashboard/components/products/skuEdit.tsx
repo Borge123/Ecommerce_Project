@@ -118,48 +118,50 @@ export default function SkuEdit() {
                     <Form.Label>Size</Form.Label>
                     <Form.Control
                       type="text"
-                      name="size"
-                      value={values.options.size}
+                      name="options.size"
+                      value={values.options?.size}
                       onChange={handleChange}
-                      onBlur={handleBlur("size")}
-                      isValid={touched.size && !errors.size}
-                      isInvalid={!!errors.size}
+                      onBlur={handleBlur("options.size")}
+                      isValid={touched.options?.size && !errors.options?.size}
+                      isInvalid={!!errors.options?.size}
                       placeholder={currSku.options.size}
                     />
                     <Form.Control.Feedback type="invalid">
-                      {errors.size}
+                      {errors.options?.size}
                     </Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Color</Form.Label>
                     <Form.Control
                       type="text"
-                      name="color"
-                      value={values.options.color}
+                      name="options.color"
+                      value={values.options?.color}
                       onChange={handleChange}
-                      onBlur={handleBlur("color")}
-                      isValid={touched.color && !errors.color}
-                      isInvalid={!!errors.color}
+                      onBlur={handleBlur("options.color")}
+                      isValid={touched.options?.color && !errors.options?.color}
+                      isInvalid={!!errors.options?.color}
                       placeholder={currSku.options.color}
                     />
                     <Form.Control.Feedback type="invalid">
-                      {errors.color}
+                      {errors.options?.color}
                     </Form.Control.Feedback>
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Img URL</Form.Label>
                     <Form.Control
                       type="text"
-                      name="img_url"
-                      value={values.options.img_url}
+                      name="options.img_url"
+                      value={values.options?.img_url}
                       onChange={handleChange}
-                      onBlur={handleBlur("img_url")}
-                      isValid={touched.img_url && !errors.img_url}
-                      isInvalid={!!errors.img_url}
+                      onBlur={handleBlur("options.img_url")}
+                      isValid={
+                        touched.options?.img_url && !errors.options?.img_url
+                      }
+                      isInvalid={!!errors.options?.img_url}
                       placeholder={currSku.options.img_url}
                     />
                     <Form.Control.Feedback type="invalid">
-                      {errors.img_url}
+                      {errors.options?.img_url}
                     </Form.Control.Feedback>
                   </Form.Group>
                   <Button type="submit" disabled={isSubmitting}>
