@@ -10,20 +10,18 @@ export const refreshToken = async () => {
       credentials: "include",
     });
 
-    if (!res.ok) {
-      return;
-    }
-
     // setItem("jwtToken", jwtToken);
-    if (!res.ok) return;
-    const data = await res.json();
-    const jwtToken = data.jwtToken;
-    const now = new Date();
-    const jwtExpire = now.setTime(now.getTime() + 0.01 * 3600 * 1000);
+    if (res.ok) {
+      const data = await res.json();
+      const jwtToken = data.jwtToken;
+      const now = new Date();
+      const jwtExpire = now.setTime(now.getTime() + 0.01 * 3600 * 1000);
 
-    localStorage.setItem("jwtExpire", jwtExpire);
+      localStorage.setItem("jwtExpire", jwtExpire);
 
-    return jwtToken;
+      return jwtToken;
+    }
+    return;
   } catch (error) {
     console.log(error);
   }

@@ -23,48 +23,38 @@ export function AuthProvider({ children }) {
   const now = new Date();
   //hook to track route changes
   const location = useLocation();
-  // useEffect(() => {
-  //   const user = getUserItem.getItem("user");
 
-  //   if (user) {
-  //     const parsedUser = JSON.parse(user);
-  //     if (
-  //       Object.keys(parsedUser).length === 0 &&
-  //       parsedUser.constructor === Object
-  //     ) {
-  //       console.log(parsedUser);
-  //       throw new Error("Localstorage user object empty");
-  //     }
-  //     dispatch({
-  //       type: "setuser",
-  //       status: "success",
-  //       user: parsedUser,
-  //       token: getItem("jwtToken"),
-  //       error: null,
-  //     });
-  //   }
-  // }, []);
   useEffect(() => {
     const user = getUserItem.getItem("user");
     let expires = getJwtExpiration.getItem("jwtExpire");
     //if expired and user exists in authState
 
     if (expires < now.getTime() && user != null) {
-      console.log("need to refresh token");
       refreshToken().then((value) => {
-        dispatch({
-          type: "refreshtoken",
-          status: "success",
-          user: JSON.parse(user),
-          token: value,
-          error: null,
-        });
-        console.log(value);
+        if (value) {
+          dispatch({
+            type: "refreshtoken",
+            status: "success",
+            user: JSON.parse(user),
+            token: value,
+            error: null,
+          });
+          console.log(value);
 
-        expires = getJwtExpiration.getItem("jwtExpire");
-        setItem("jwtToken", value);
+          expires = getJwtExpiration.getItem("jwtExpire");
+          setItem("jwtToken", value);
+        } else {
+          localStorage.removeItem("user");
+          localStorage.removeItem("jwtExpire");
+          dispatch({
+            type: "setuser",
+            status: "idle",
+            user: null,
+            error: null,
+            token: null,
+          });
+        }
       });
-      //Possibly temporary fix, still need to figure out why reload causes authstate to be lost
     } else if (user != null && authState.user === null) {
       dispatch({
         type: "setuser",
