@@ -97,7 +97,45 @@ module.exports = class OrderService {
       }
     } catch (error) {
       console.log(error);
-      throw error;
+    }
+  }
+
+  static async addToOrder(id, newItems) {
+    try {
+      const order = await Order.findById(id);
+      const orderItems = order.items;
+      //TODO go through new array and update quantity if item already exist
+      for (const i = 0; i < orderItems.length; i++) {
+        for (const j = 0; j < newItems.length; j++) {
+          if (newItems[j].sku === orderItems[i].sku) {
+            orderItems[i].quantity =
+              orderItems[i].quantity + newItems[j].quantity;
+          } else {
+            orderItems.push(newItems[j]);
+          }
+        }
+      }
+      const newOrderItems = [...order.items, ...newItems];
+      let result;
+      const total = orderItems.reduce(
+        (acc, currentVal) => acc + currentVal.price * currentVal.quantity,
+        0
+      );
+      result = await Order.updateOne(
+        { _id: id },
+        {
+          $set: {
+            items: orderItems,
+            total: total,
+          },
+        }
+      );
+
+      if (result) {
+        return result;
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 

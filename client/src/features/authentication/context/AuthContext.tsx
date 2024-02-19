@@ -39,7 +39,6 @@ export function AuthProvider({ children }) {
             token: value,
             error: null,
           });
-          console.log(value);
 
           expires = getJwtExpiration.getItem("jwtExpire");
           setItem("jwtToken", value);
