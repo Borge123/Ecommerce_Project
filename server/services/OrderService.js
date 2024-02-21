@@ -17,7 +17,7 @@ module.exports = class OrderService {
       }
       const order = {
         user_id: user_id,
-        status: "in process",
+        status: "in progress",
 
         items: [
           {
@@ -100,22 +100,28 @@ module.exports = class OrderService {
     }
   }
 
-  static async addToOrder(id, newItems) {
+  static async addToExistingOrder(id, prevOrder, newItems) {
     try {
-      const order = await Order.findById(id);
-      const orderItems = order.items;
-      //TODO go through new array and update quantity if item already exist
-      for (const i = 0; i < orderItems.length; i++) {
-        for (const j = 0; j < newItems.length; j++) {
+      //console.log(prevOrder.items);
+      let orderItems = prevOrder.items;
+      const prevOrderLength = prevOrder.items.length;
+
+      for (let i = 0; i < prevOrderLength; i++) {
+        for (let j = 0; j < newItems.length; j++) {
           if (newItems[j].sku === orderItems[i].sku) {
             orderItems[i].quantity =
               orderItems[i].quantity + newItems[j].quantity;
-          } else {
+          }
+
+          if (!orderItems.some((e) => e.sku === newItems[j].sku)) {
             orderItems.push(newItems[j]);
+            console.log("no duplicate");
           }
         }
       }
-      const newOrderItems = [...order.items, ...newItems];
+
+      //const newOrderItems = orderItems;
+
       let result;
       const total = orderItems.reduce(
         (acc, currentVal) => acc + currentVal.price * currentVal.quantity,
@@ -209,8 +215,23 @@ module.exports = class OrderService {
   static async getAllUserOrders(user_id) {
     try {
       const orders = await Order.find({ user_id: user_id });
-      console.log(orders);
+
       if (orders.length > 0) {
+        return orders;
+      } else {
+        throw new Error("did not find any orders");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  static async getUserOrderInProgress(user_id) {
+    try {
+      const orders = await Order.findOne({
+        user_id: user_id,
+      });
+
+      if (orders) {
         return orders;
       } else {
         throw new Error("did not find any orders");

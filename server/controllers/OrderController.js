@@ -28,7 +28,7 @@ module.exports = class OrderController {
     }
   }
 
-  static async updateOrderItems(req, res, next) {
+  static async updateOrderItem(req, res, next) {
     const { id, sku, quantity } = req.body;
     try {
       const checkIfExists = await OrderService.getOrderById(id);
@@ -39,6 +39,34 @@ module.exports = class OrderController {
           const inspectUpdate = await OrderService.getOrderById(id);
           const total = await calcTotal(inspectUpdate.items);
           await OrderService.updateOrderTotal(id, total);
+
+          return res
+            .status(200)
+            .json({ "Order": "Success", "updated": result });
+        }
+      } else {
+        return res.status(400).json({ "Order": "order not found" });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.name + " " + error.message });
+    }
+  }
+
+  static async addItemsToExistingOrder(req, res, next) {
+    const items = req.body;
+    //TODO find order currently in progress
+
+    try {
+      const order = await OrderService.getUserOrderInProgress(req.userId);
+
+      if (order) {
+        const id = order._id.toString();
+
+        const result = await OrderService.addToExistingOrder(id, order, items);
+        if (result) {
+          // const inspectUpdate = await OrderService.getOrderById(id);
+          // const total = await calcTotal(inspectUpdate.items);
+          // await OrderService.updateOrderTotal(id, total);
 
           return res
             .status(200)

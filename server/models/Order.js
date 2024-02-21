@@ -12,13 +12,13 @@ const OrderSchema = new Schema(
       type: String,
       required: true,
       validate(status) {
-        const validStatuses = ["in process", "cancelled", "complete"];
+        const validStatuses = ["in progress", "cancelled", "complete"];
         if (!validStatuses.includes(status.toLowerCase())) {
           throw new Error("Not a valid status");
         }
       },
 
-      default: "in process",
+      default: "in progress",
     },
 
     discount_id: {

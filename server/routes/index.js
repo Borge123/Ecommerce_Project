@@ -138,7 +138,14 @@ router.put(
   "/updateOrderItems",
   validateUpdateOrderItem,
   authorize,
-  OrderController.updateOrderItems
+  OrderController.updateOrderItem
+);
+router.put(
+  "/addItemsToExistingOrder",
+  validateNewOrder,
+
+  authorize,
+  OrderController.addItemsToExistingOrder
 );
 
 router.put(
