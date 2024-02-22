@@ -48,6 +48,7 @@ export function CheckoutForm() {
       validateOnChange={true}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setSubmitting(true);
+        //Possible update is to check if billinginfo is present and confirm that it is correct before updating it automatically
         const updateBilling = updateBillingInfo(values);
         updateBilling.then((status) => {
           if (status === 200) {

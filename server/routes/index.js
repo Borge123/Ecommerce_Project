@@ -128,6 +128,11 @@ router.delete(
 //orders
 router.get("/alluserorders", authorize, OrderController.getAllUserOrders);
 router.get("/orders", checkIfAdmin, OrderController.getAllOrders);
+router.get(
+  "/orderinprogress",
+  authorize,
+  OrderController.getUserOrderInProgress
+);
 router.post(
   "/createorder",
   authorize,

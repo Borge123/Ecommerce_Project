@@ -1,6 +1,6 @@
 import { GetOrder } from "../../../../features/adminDashboard/services/orders/getOrder";
 export const orderQuery = (id) => ({
-  queryKey: ["orders", id],
+  queryKey: ["order", id],
 
   queryFn: async () => {
     const order = await GetOrder(id);

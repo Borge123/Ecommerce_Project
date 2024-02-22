@@ -4,6 +4,7 @@ import CheckoutPage from "../../../pages/CheckoutPage";
 import { CartSummary } from "../../../features/checkout/components/cartsummary";
 import { PaymentForm } from "../../../features/checkout/components/paymentForm";
 import { OrderCreated } from "../../../features/checkout/components/orderCreated";
+import { ExistingOrderInProgressLoader } from "./existingOrderInProgressLoader";
 export const checkout = {
   path: "checkout",
   element: <CheckoutPage />,
@@ -22,6 +23,7 @@ export const checkout = {
     {
       path: "/checkout/payment",
       element: <PaymentForm />,
+      loader: ExistingOrderInProgressLoader,
     },
 
     {

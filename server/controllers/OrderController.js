@@ -54,7 +54,6 @@ module.exports = class OrderController {
 
   static async addItemsToExistingOrder(req, res, next) {
     const items = req.body;
-    //TODO find order currently in progress
 
     try {
       const order = await OrderService.getUserOrderInProgress(req.userId);
@@ -94,6 +93,20 @@ module.exports = class OrderController {
         }
       } else {
         return res.status(400).json({ "Orders": "orders not found" });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.name + " " + error.message });
+    }
+  }
+
+  static async getUserOrderInProgress(req, res, next) {
+    try {
+      const order = await OrderService.getUserOrderInProgress(req.userId);
+
+      if (order) {
+        return res.status(200).json({ "Order": order });
+      } else {
+        return res.status(400).json({ "Order": "order not found" });
       }
     } catch (error) {
       return res.status(500).json({ error: error.name + " " + error.message });
