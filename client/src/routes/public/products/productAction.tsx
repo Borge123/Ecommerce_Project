@@ -14,7 +14,6 @@ export const action =
     // await queryClient.invalidateQueries({
     //   queryKey: ["product"],
     // });
-    console.log(await queryClient.getQueriesData(["product"]));
 
     return redirect(`/admindashboard/products`);
     //TODO figure out how to trigger action

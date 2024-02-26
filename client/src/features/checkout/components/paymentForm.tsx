@@ -10,13 +10,12 @@ import { useCart, useCartDispatch } from "../../cart/context/cart";
 import { createOrder } from "../services/createOrder";
 import { addToExistingOrder } from "../services/addToExistingOrder";
 import { useLoaderData } from "react-router-dom";
-import { queryClient } from "../../../context/queryProvider";
+import { Form as RouterForm } from "react-router-dom";
 export function PaymentForm() {
-  const hasOrderInProgress = useLoaderData();
+  //const hasOrderInProgress = useLoaderData();
 
   const { Formik } = formik;
-  const cart = useCart();
-  const dispatch = useCartDispatch();
+
   const navigate = useNavigate();
   const schema = yup.object().shape({
     name: yup
@@ -51,28 +50,27 @@ export function PaymentForm() {
       validateOnChange={true}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setSubmitting(true);
-        //TODO check if order in progress is present then if it is allow customer to add to existing order
-        //TODO allow customer to choose which order to add to
-        let order;
-        if (hasOrderInProgress) {
-          order = addToExistingOrder(cart);
-        } else {
-          order = createOrder(cart);
-        }
-        order.then((status) => {
-          //TODO dispatch to cart to empty it
-          //change ui on success
-          if (status === 200) {
-            //queryClient.refetchQueries({ queryKey: ["order"] });
-            //might have to send form data to loader and trigger rerender with action
-            localStorage.setItem("cart", JSON.stringify([]));
-            navigate("/checkout/ordercreated");
-          }
-          return <p>error</p>;
-        });
 
-        resetForm();
-        setSubmitting(false);
+        // let order;
+        // if (hasOrderInProgress) {
+        //   order = addToExistingOrder(cart);
+        // } else {
+        //   order = createOrder(cart);
+        // }
+        // order.then((status) => {
+        //   //TODO dispatch to cart to empty it
+        //   //change ui on success
+        //   if (status === 200) {
+        //     //queryClient.refetchQueries({ queryKey: ["order"] });
+        //     //might have to send form data to loader and trigger rerender with action
+        //     localStorage.setItem("cart", JSON.stringify([]));
+        //     navigate("/checkout/ordercreated");
+        //   }
+        //   return <p>error</p>;
+        // });
+
+        // resetForm();
+        // setSubmitting(false);
       }}
     >
       {({
@@ -105,7 +103,7 @@ export function PaymentForm() {
 
           <hr className="mb-4" />
           <h4 className="mb-3">Payment</h4>
-          <div className="d-block my-3">
+          {/* <div className="d-block my-3">
             <div className="custom-control custom-radio">
               <input
                 id="credit"
@@ -139,8 +137,8 @@ export function PaymentForm() {
                 PayPal
               </label>
             </div>
-          </div>
-          <Form noValidate onSubmit={handleSubmit}>
+          </div> */}
+          <RouterForm method="post">
             <Row>
               <Form.Group
                 className="col-md-6 mb-3"
@@ -228,7 +226,7 @@ export function PaymentForm() {
             <button className="btn btn-primary btn-lg btn-block" type="submit">
               Create order
             </button>
-          </Form>
+          </RouterForm>
         </Container>
       )}
     </Formik>

@@ -4,7 +4,6 @@ export const orderQuery = (id) => ({
 
   queryFn: async () => {
     const order = await GetOrder(id);
-    console.log(order);
 
     if (!order) {
       throw new Response("", {
@@ -26,7 +25,7 @@ export const OrderLoader =
     // ⬇️ return data or fetch it
 
     return (
-      queryClient.getQueryData(query.queryKey) ??
-      (await queryClient.fetchQuery(query))
+      //queryClient.getQueryData(query.queryKey) ??
+      await queryClient.fetchQuery(query)
     );
   };

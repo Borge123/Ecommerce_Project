@@ -1,9 +1,10 @@
 import { GetAllOrders } from "./getAllOrders";
-const orders = await GetAllOrders();
-
+import { queryClient } from "../../../../context/queryProvider";
 export async function GetOrder(id) {
-  //only call once on first render
-
-  const order = orders.find((order) => order._id === id);
-  return order ?? null;
+  const orders =
+    (await queryClient.getQueryData(["orders"])) ?? (await GetAllOrders());
+  if (orders) {
+    const order = orders.find((order) => order._id === id);
+    return order ?? null;
+  }
 }

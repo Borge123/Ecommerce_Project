@@ -4,12 +4,30 @@ const ObjectId = require("mongoose").Types.ObjectId;
 module.exports = class OrderController {
   static async createOrder(req, res, next) {
     try {
-      const newOrder = await OrderService.createOrder(req.userId, req.body);
+      const items = req.body;
+      const order = await OrderService.getUserOrderInProgress(req.userId);
 
-      if (newOrder) {
-        return res
-          .status(200)
-          .json({ "Order": "Success", "Created": newOrder });
+      if (order) {
+        const id = order._id.toString();
+
+        const result = await OrderService.addToExistingOrder(id, order, items);
+        if (result) {
+          // const inspectUpdate = await OrderService.getOrderById(id);
+          // const total = await calcTotal(inspectUpdate.items);
+          // await OrderService.updateOrderTotal(id, total);
+
+          return res
+            .status(200)
+            .json({ "Order": "Success", "updated": result });
+        }
+      } else {
+        const newOrder = await OrderService.createOrder(req.userId, items);
+
+        if (newOrder) {
+          return res
+            .status(200)
+            .json({ "Order": "Success", "Created": newOrder });
+        }
       }
     } catch (error) {
       return res.status(500).json({ error: error.name + " " + error.message });

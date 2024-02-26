@@ -23,7 +23,7 @@ export default function ProductEdit() {
 
     img_url: yup.string().required("Required"),
   });
-  // TODO try to add react router form
+
   return (
     <Col>
       <Formik
