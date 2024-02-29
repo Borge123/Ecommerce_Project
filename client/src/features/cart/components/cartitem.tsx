@@ -42,6 +42,9 @@ export function CartItem({ cartItem, onShow, dispatch }) {
               <a className="ws-product__title ws-hyphens-hack" href="/">
                 {cartItem.name}
               </a>
+              <div className="ws-product__subtitle">
+                {cartItem.options.color}
+              </div>
               <div className="ws-product__subtitle">{cartItem.description}</div>
               <div className="ws-product__price">
                 <div className="ws-price">

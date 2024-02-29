@@ -24,7 +24,7 @@ export function Cart() {
   //TODO count from localstorage number of items in cart and set cart to closed if 0 items
   //TODO Get products data and find product based on id or sku in cart and use the data to be able to always know quantity per sku of an item
   const itemsInCart = cart?.length;
-  const total = cart.reduce(
+  const total = cart?.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
