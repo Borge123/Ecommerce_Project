@@ -1,4 +1,5 @@
 const OrderService = require("../services/OrderService");
+const InventoryService = require("../services/InventoryService");
 const { calcTotal } = require("../helpers/calcTotal");
 const ObjectId = require("mongoose").Types.ObjectId;
 module.exports = class OrderController {

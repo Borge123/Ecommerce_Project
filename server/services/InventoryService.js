@@ -120,6 +120,32 @@ module.exports = class InventoryService {
     }
   }
 
+  static async updateQuantity(id, sku, quantity) {
+    try {
+      const item = await Inventory.findById(id);
+      if (item) {
+        const sku = item.find((el) => el.sku === sku);
+        if (sku.stock_quantity >= quantity) {
+          const response = await Inventory.updateOne(
+            { _id: id, "skus.sku": sku },
+            {
+              $set: {
+                "skus.$": {
+                  stock_quantity: sku.stock_quantity - parseInt(quantity),
+                },
+              },
+            }
+          );
+          return response;
+        } else {
+          throw new Error("Out of stock");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   static async updateItem(id, data) {
     try {
       const response = await Inventory.updateOne(
@@ -161,7 +187,6 @@ module.exports = class InventoryService {
       }
     } catch (error) {
       console.log(error);
-      throw error;
     }
   }
 

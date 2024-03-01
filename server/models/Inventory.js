@@ -38,6 +38,7 @@ const InventorySchema = new Schema(
         stock_quantity: {
           type: Number,
           required: true,
+          min: 0,
         },
 
         options: {
