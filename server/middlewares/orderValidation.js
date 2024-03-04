@@ -1,8 +1,17 @@
+const InventoryService = require("../services/InventoryService");
 module.exports = {
   validateNewOrder: async (req, res, next) => {
     //Possibly pick a discount based on order total
     for (const el of req.body) {
       const { name, sku, quantity, price } = el;
+      let item = await InventoryService.getItemById(el._id);
+      if (item) {
+        for (const sku of item.skus) {
+          if (sku.stock_quantity === 0 || sku.stock_quantity - quantity <= 0) {
+            return res.status(400).json({ "quantity": "Not enough in stock" });
+          }
+        }
+      }
       if (name === undefined || name === null) {
         return res.status(400).json({ "name": "name is required." });
       }

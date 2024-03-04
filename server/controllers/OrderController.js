@@ -4,6 +4,7 @@ const { calcTotal } = require("../helpers/calcTotal");
 const ObjectId = require("mongoose").Types.ObjectId;
 module.exports = class OrderController {
   static async createOrder(req, res, next) {
+    //TODO figure out how to check entire order for valid quantity numbers before order can be created
     try {
       const items = req.body;
       const order = await OrderService.getUserOrderInProgress(req.userId);
@@ -28,6 +29,25 @@ module.exports = class OrderController {
           return res
             .status(200)
             .json({ "Order": "Success", "Created": newOrder });
+        }
+      }
+      //TODO test if i can loop over order then update each item
+      for (const el of items) {
+        let item = await InventoryService.getItemById(el._id);
+        if (item) {
+          let updateQuantity = await InventoryService.subtractQuantity(
+            el._id,
+            el.sku,
+            el.quantity
+          );
+
+          if (updateQuantity) {
+            return res.status(200).json({ "Updated quantity": updateQuantity });
+          } else {
+            return res
+              .status(400)
+              .json({ "Updated quantity error": updateQuantity });
+          }
         }
       }
     } catch (error) {

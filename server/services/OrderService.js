@@ -102,7 +102,6 @@ module.exports = class OrderService {
 
   static async addToExistingOrder(id, prevOrder, newItems) {
     try {
-      //console.log(prevOrder.items);
       let orderItems = prevOrder.items;
       const prevOrderLength = prevOrder.items.length;
 

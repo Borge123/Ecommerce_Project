@@ -120,18 +120,19 @@ module.exports = class InventoryService {
     }
   }
 
-  static async updateQuantity(id, sku, quantity) {
+  static async subtractQuantity(id, sku, quantity) {
+    //Use for when new order is created or when adding more to an existing order
     try {
       const item = await Inventory.findById(id);
       if (item) {
-        const sku = item.find((el) => el.sku === sku);
-        if (sku.stock_quantity >= quantity) {
+        const foundsku = item.find((el) => el.sku === sku);
+        if (foundsku.stock_quantity >= quantity) {
           const response = await Inventory.updateOne(
             { _id: id, "skus.sku": sku },
             {
               $set: {
                 "skus.$": {
-                  stock_quantity: sku.stock_quantity - parseInt(quantity),
+                  stock_quantity: foundsku.stock_quantity - parseInt(quantity),
                 },
               },
             }
@@ -140,6 +141,30 @@ module.exports = class InventoryService {
         } else {
           throw new Error("Out of stock");
         }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async addQuantity(id, sku, quantity) {
+    //Use for updating stock after order cancelation
+    try {
+      const item = await Inventory.findById(id);
+      if (item) {
+        const foundsku = item.find((el) => el.sku === sku);
+
+        const response = await Inventory.updateOne(
+          { _id: id, "skus.sku": sku },
+          {
+            $set: {
+              "skus.$": {
+                stock_quantity: foundsku.stock_quantity + parseInt(quantity),
+              },
+            },
+          }
+        );
+        return response;
       }
     } catch (error) {
       console.log(error);
