@@ -138,7 +138,7 @@ router.post(
   authorize,
   validateNewOrder,
   OrderController.createOrder,
-  OrderController.updateItemQuantity
+  OrderController.createOrderUpdateItemQuantity
 );
 router.put(
   "/updateOrderItems",
@@ -161,6 +161,12 @@ router.put(
   OrderController.updateOrderStatus
 );
 
+router.delete(
+  "/cancelOrder",
+  authorize,
+  OrderController.cancelOrder,
+  OrderController.cancelOrderUpdateItems
+);
 // discounts
 
 router.post(

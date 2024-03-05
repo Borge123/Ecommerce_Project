@@ -37,12 +37,11 @@ module.exports = class OrderController {
       return res.status(500).json({ error: error.name + " " + error.message });
     }
   }
-  static async updateItemQuantity(req, res, next) {
+  static async createOrderUpdateItemQuantity(req, res, next) {
     //TODO figure out how to check entire order for valid quantity numbers before order can be created
     try {
       const items = req.body;
 
-      //TODO test if i can loop over order then update each item
       for (const el of items) {
         let item = await InventoryService.getItemById(el._id);
         if (item) {
@@ -127,6 +126,53 @@ module.exports = class OrderController {
     }
   }
 
+  static async cancelOrder(req, res, next) {
+    try {
+      // const userId = new ObjectId(req.userId);
+      // console.log(userId);
+      const id = req.body._id;
+      const order = await OrderService.getOrderById(id);
+      if (order) {
+        const req = await OrderService.deleteOrder(id);
+        if (req) {
+          next();
+        }
+      } else {
+        return res.status(400).json({ "Order": "order not found" });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.name + " " + error.message });
+    }
+  }
+
+  static async cancelOrderUpdateItems(req, res, next) {
+    try {
+      const id = req.body._id;
+      const orderToDelete = await OrderService.getOrderById(id);
+      if (orderToDelete) {
+        for (const el of orderToDelete.items) {
+          let item = await InventoryService.getItemById(el._id);
+          if (item) {
+            let updateQuantity = await InventoryService.addQuantity(
+              el._id,
+              el.sku,
+              el.quantity
+            );
+
+            if (updateQuantity) {
+              return res
+                .status(200)
+                .json({
+                  "Order cancelled and quantity updated": updateQuantity,
+                });
+            }
+          }
+        }
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.name + " " + error.message });
+    }
+  }
   static async updateOrderStatus(req, res, next) {
     const { id, status } = req.body;
     try {
