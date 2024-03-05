@@ -7,8 +7,13 @@ export const action =
 
     const parsedCart = JSON.parse(localStorage.getItem("cart"));
     console.log(parsedCart);
-    localStorage.setItem("cart", JSON.stringify([]));
-    await createOrder(parsedCart);
+
+    const res = await createOrder(parsedCart);
+    if (res === 200) {
+      localStorage.setItem("cart", JSON.stringify([]));
+    } else {
+      return "Order creation failed";
+    }
 
     await queryClient.refetchQueries({ queryKey: ["orders"] });
     await queryClient.invalidateQueries({ queryKey: ["order"] });

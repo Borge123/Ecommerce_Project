@@ -137,7 +137,8 @@ router.post(
   "/createorder",
   authorize,
   validateNewOrder,
-  OrderController.createOrder
+  OrderController.createOrder,
+  OrderController.updateItemQuantity
 );
 router.put(
   "/updateOrderItems",

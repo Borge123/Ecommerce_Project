@@ -18,19 +18,30 @@ module.exports = class OrderController {
           // const total = await calcTotal(inspectUpdate.items);
           // await OrderService.updateOrderTotal(id, total);
 
-          return res
-            .status(200)
-            .json({ "Order": "Success", "updated": result });
+          // return res
+          //   .status(200)
+          //   .json({ "Order": "Success", "updated": result });
+          next();
         }
       } else {
         const newOrder = await OrderService.createOrder(req.userId, items);
 
         if (newOrder) {
-          return res
-            .status(200)
-            .json({ "Order": "Success", "Created": newOrder });
+          // return res
+          //   .status(200)
+          //   .json({ "Order": "Success", "Created": newOrder });
+          next();
         }
       }
+    } catch (error) {
+      return res.status(500).json({ error: error.name + " " + error.message });
+    }
+  }
+  static async updateItemQuantity(req, res, next) {
+    //TODO figure out how to check entire order for valid quantity numbers before order can be created
+    try {
+      const items = req.body;
+
       //TODO test if i can loop over order then update each item
       for (const el of items) {
         let item = await InventoryService.getItemById(el._id);
@@ -42,11 +53,9 @@ module.exports = class OrderController {
           );
 
           if (updateQuantity) {
-            return res.status(200).json({ "Updated quantity": updateQuantity });
-          } else {
             return res
-              .status(400)
-              .json({ "Updated quantity error": updateQuantity });
+              .status(200)
+              .json({ "Order created and quantity updated": updateQuantity });
           }
         }
       }

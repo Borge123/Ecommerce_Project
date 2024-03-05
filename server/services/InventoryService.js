@@ -125,18 +125,19 @@ module.exports = class InventoryService {
     try {
       const item = await Inventory.findById(id);
       if (item) {
-        const foundsku = item.find((el) => el.sku === sku);
+        const foundsku = item.skus.find((el) => el.sku === sku);
+
         if (foundsku.stock_quantity >= quantity) {
           const response = await Inventory.updateOne(
             { _id: id, "skus.sku": sku },
             {
               $set: {
-                "skus.$": {
-                  stock_quantity: foundsku.stock_quantity - parseInt(quantity),
-                },
+                "skus.$.stock_quantity":
+                  foundsku.stock_quantity - parseInt(quantity),
               },
             }
           );
+
           return response;
         } else {
           throw new Error("Out of stock");
@@ -158,9 +159,8 @@ module.exports = class InventoryService {
           { _id: id, "skus.sku": sku },
           {
             $set: {
-              "skus.$": {
-                stock_quantity: foundsku.stock_quantity + parseInt(quantity),
-              },
+              "skus.$.stock_quantity":
+                foundsku.stock_quantity + parseInt(quantity),
             },
           }
         );

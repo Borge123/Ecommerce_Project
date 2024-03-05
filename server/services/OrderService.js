@@ -232,8 +232,6 @@ module.exports = class OrderService {
 
       if (orders) {
         return orders;
-      } else {
-        throw new Error("did not find any orders");
       }
     } catch (error) {
       console.log(error);
