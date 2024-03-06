@@ -135,7 +135,24 @@ module.exports = class OrderController {
       if (order) {
         const req = await OrderService.deleteOrder(id);
         if (req) {
-          next();
+          return res.status(200).json({
+            "Order cancelled": "success",
+          });
+        } else {
+          //if order cancel fails update stock again
+          for (const el of order.items) {
+            let item = await InventoryService.getItemById(el._id);
+            if (item) {
+              let updateQuantity = await InventoryService.subtractQuantity(
+                el._id,
+                el.sku,
+                el.quantity
+              );
+            }
+          }
+          return res
+            .status(400)
+            .json({ "Order cancel error": "stock has been updated" });
         }
       } else {
         return res.status(400).json({ "Order": "order not found" });
@@ -158,16 +175,9 @@ module.exports = class OrderController {
               el.sku,
               el.quantity
             );
-
-            if (updateQuantity) {
-              return res
-                .status(200)
-                .json({
-                  "Order cancelled and quantity updated": updateQuantity,
-                });
-            }
           }
         }
+        next();
       }
     } catch (error) {
       return res.status(500).json({ error: error.name + " " + error.message });

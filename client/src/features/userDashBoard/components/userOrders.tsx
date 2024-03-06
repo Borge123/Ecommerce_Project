@@ -1,4 +1,6 @@
 import { useLoaderData } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import { CancelOrder } from "../services/cancelOrder";
 export function UserOrders() {
   const { orders } = useLoaderData();
 
@@ -49,7 +51,27 @@ export function UserOrders() {
                     </div>
                   </div>
                   {/* <span className="text-muted">${cartItem.price}</span> */}
-                  <p>${order.total}</p>
+                  <div className="col">
+                    <p>${order.total}</p>
+                  </div>
+
+                  <div className="col-6 m-auto pt-2">
+                    <Button
+                      onClick={async () => {
+                        if (
+                          confirm("Do you really want to cancel order?") ===
+                          true
+                        ) {
+                          const res = await CancelOrder(order._id);
+                          if (res != 200) {
+                            throw new Error("cancel order error");
+                          }
+                        }
+                      }}
+                    >
+                      Cancel order
+                    </Button>
+                  </div>
                 </li>
               );
             })

@@ -164,8 +164,8 @@ router.put(
 router.delete(
   "/cancelOrder",
   authorize,
-  OrderController.cancelOrder,
-  OrderController.cancelOrderUpdateItems
+  OrderController.cancelOrderUpdateItems,
+  OrderController.cancelOrder
 );
 // discounts
 

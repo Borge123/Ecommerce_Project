@@ -1,4 +1,5 @@
 const InventoryService = require("../services/InventoryService");
+const OrderService = require("../services/OrderService");
 module.exports = {
   validateNewOrder: async (req, res, next) => {
     //Possibly pick a discount based on order total

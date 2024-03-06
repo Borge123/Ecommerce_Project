@@ -260,7 +260,6 @@ module.exports = class OrderService {
       }
     } catch (error) {
       console.log(error);
-      throw error;
     }
   }
 };
