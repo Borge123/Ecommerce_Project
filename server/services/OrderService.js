@@ -21,6 +21,7 @@ module.exports = class OrderService {
 
         items: [
           {
+            _id: data[itemsLength]._id,
             name: data[itemsLength].name,
             sku: data[itemsLength].sku,
             quantity: data[itemsLength].quantity,
@@ -217,8 +218,6 @@ module.exports = class OrderService {
 
       if (orders.length > 0) {
         return orders;
-      } else {
-        throw new Error("did not find any orders");
       }
     } catch (error) {
       console.log(error);

@@ -153,7 +153,7 @@ module.exports = class InventoryService {
     try {
       const item = await Inventory.findById(id);
       if (item) {
-        const foundsku = item.find((el) => el.sku === sku);
+        const foundsku = item.skus.find((el) => el.sku === sku);
 
         const response = await Inventory.updateOne(
           { _id: id, "skus.sku": sku },
@@ -164,7 +164,36 @@ module.exports = class InventoryService {
             },
           }
         );
+
         return response;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  static async addQuantityTest(items) {
+    console.log("add quantity called");
+    //test if this works better then the previous function
+    try {
+      for (let i = 0; i < items.length; i++) {
+        let item = await Inventory.findById(items[i]._id);
+        if (item) {
+          const foundsku = item.find((el) => el.sku === sku);
+
+          const response = await Inventory.updateOne(
+            { _id: item._id, "skus.sku": foundsku.sku },
+            {
+              $set: {
+                "skus.$.stock_quantity":
+                  foundsku.stock_quantity + parseInt(items[i].quantity),
+              },
+            }
+          );
+          if (response) {
+            console.log(response);
+            return response;
+          }
+        }
       }
     } catch (error) {
       console.log(error);
@@ -209,6 +238,8 @@ module.exports = class InventoryService {
 
       if (item) {
         return item;
+      } else {
+        throw new Error("Did not find item");
       }
     } catch (error) {
       console.log(error);

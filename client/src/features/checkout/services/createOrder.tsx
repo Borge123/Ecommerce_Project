@@ -2,6 +2,7 @@ type order = {
   items: [item];
 };
 type item = {
+  _id: string;
   sku: string;
   quantity: number;
   price: number;

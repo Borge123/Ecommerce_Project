@@ -1,9 +1,9 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useSubmit } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { CancelOrder } from "../services/cancelOrder";
 export function UserOrders() {
   const { orders } = useLoaderData();
-
+  const submit = useSubmit();
   return (
     <div className="col-md-4 order-md-2 mb-4">
       <ul className="list-group mb-3 sticky-top">
@@ -62,10 +62,15 @@ export function UserOrders() {
                           confirm("Do you really want to cancel order?") ===
                           true
                         ) {
-                          const res = await CancelOrder(order._id);
-                          if (res != 200) {
-                            throw new Error("cancel order error");
-                          }
+                          submit(order, {
+                            method: "delete",
+                            encType: "application/json",
+                            action: "/account/orders",
+                          });
+                          // const res = await CancelOrder(order._id);
+                          // if (res != 200) {
+                          //   throw new Error("cancel order error");
+                          // }
                         }
                       }}
                     >

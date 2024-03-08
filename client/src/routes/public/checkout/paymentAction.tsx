@@ -20,5 +20,4 @@ export const action =
     console.log(await queryClient.getQueriesData(["order"]));
 
     return redirect(`/admindashboard/orders`);
-    //TODO figure out how to trigger action
   };

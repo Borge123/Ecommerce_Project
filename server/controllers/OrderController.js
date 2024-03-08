@@ -38,7 +38,6 @@ module.exports = class OrderController {
     }
   }
   static async createOrderUpdateItemQuantity(req, res, next) {
-    //TODO figure out how to check entire order for valid quantity numbers before order can be created
     try {
       const items = req.body;
 
@@ -130,29 +129,17 @@ module.exports = class OrderController {
     try {
       // const userId = new ObjectId(req.userId);
       // console.log(userId);
-      const id = req.body._id;
-      const order = await OrderService.getOrderById(id);
+      const order = req.body;
+
       if (order) {
-        const req = await OrderService.deleteOrder(id);
+        const req = await OrderService.deleteOrder(order._id);
         if (req) {
-          return res.status(200).json({
-            "Order cancelled": "success",
-          });
+          console.log("next called");
+          next();
         } else {
           //if order cancel fails update stock again
-          for (const el of order.items) {
-            let item = await InventoryService.getItemById(el._id);
-            if (item) {
-              let updateQuantity = await InventoryService.subtractQuantity(
-                el._id,
-                el.sku,
-                el.quantity
-              );
-            }
-          }
-          return res
-            .status(400)
-            .json({ "Order cancel error": "stock has been updated" });
+
+          return res.status(400).json({ "Order cancel error": "try again" });
         }
       } else {
         return res.status(400).json({ "Order": "order not found" });
@@ -164,10 +151,29 @@ module.exports = class OrderController {
 
   static async cancelOrderUpdateItems(req, res, next) {
     try {
-      const id = req.body._id;
-      const orderToDelete = await OrderService.getOrderById(id);
+      const orderToDelete = req.body;
+
       if (orderToDelete) {
-        for (const el of orderToDelete.items) {
+        // console.log("test1");
+        // let item = await InventoryService.getItemById(
+        //   orderToDelete.items[0]._id
+        // );
+        // if (item) {
+        //   console.log("test2");
+        //   let updateQuantity = await InventoryService.addQuantity(
+        //     orderToDelete.items[0]._id,
+        //     orderToDelete.items[0].sku,
+        //     orderToDelete.items[0].quantity
+        //   );
+        //   if (updateQuantity) {
+        //     return res.status(200).json({
+        //       "Order cancelled and quantity updated": "...",
+        //     });
+        //   }
+        // }
+        for (let i = 0; i < orderToDelete.items.length; i++) {
+          let el = orderToDelete.items[i];
+
           let item = await InventoryService.getItemById(el._id);
           if (item) {
             let updateQuantity = await InventoryService.addQuantity(
@@ -175,9 +181,23 @@ module.exports = class OrderController {
               el.sku,
               el.quantity
             );
+            if (updateQuantity) {
+            }
           }
         }
-        next();
+        return res.status(200).json({
+          "Order cancelled and quantity updated": "...",
+        });
+        // for (const el of orderToDelete.items) {
+        //   let item = await InventoryService.getItemById(el._id);
+        //   if (item) {
+        //     let updateQuantity = await InventoryService.addQuantity(
+        //       el._id,
+        //       el.sku,
+        //       el.quantity
+        //     );
+        //   }
+        // }
       }
     } catch (error) {
       return res.status(500).json({ error: error.name + " " + error.message });
@@ -225,7 +245,7 @@ module.exports = class OrderController {
       if (orders) {
         return res.status(200).json({ "Orders": orders });
       } else {
-        return res.status(400).json({ "Order": "order not found" });
+        return res.status(404).json({ "Order": "order not found" });
       }
     } catch (error) {
       console.log(error);
