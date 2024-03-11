@@ -1,6 +1,6 @@
 export async function GetAllOrders() {
   try {
-    const authRes = await fetch("http://api.app.localhost:3000/orders", {
+    const res = await fetch("http://api.app.localhost:3000/orders", {
       method: "GET",
       headers: {
         "Accept": "application/json",
@@ -9,8 +9,12 @@ export async function GetAllOrders() {
 
       credentials: "include",
     });
-    if (!authRes.ok) return;
-    const data = await authRes.json();
+    if (!res.ok) {
+      // const status = res.status;
+      // throw new Error(status + " " + "Error");
+      return;
+    }
+    const data = await res.json();
 
     return data.Orders;
   } catch (error) {

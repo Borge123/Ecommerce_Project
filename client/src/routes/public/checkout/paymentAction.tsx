@@ -11,13 +11,12 @@ export const action =
     const res = await createOrder(parsedCart);
     if (res === 200) {
       localStorage.setItem("cart", JSON.stringify([]));
+      await queryClient.refetchQueries({ queryKey: ["orders"] });
+      await queryClient.invalidateQueries({ queryKey: ["order"] });
+      console.log(await queryClient.getQueriesData(["order"]));
+
+      return redirect(`/account/orders`);
     } else {
       return "Order creation failed";
     }
-
-    await queryClient.refetchQueries({ queryKey: ["orders"] });
-    await queryClient.invalidateQueries({ queryKey: ["order"] });
-    console.log(await queryClient.getQueriesData(["order"]));
-
-    return redirect(`/admindashboard/orders`);
   };

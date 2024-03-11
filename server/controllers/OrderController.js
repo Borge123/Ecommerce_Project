@@ -68,6 +68,8 @@ module.exports = class OrderController {
 
       if (orders) {
         return res.status(200).json({ "Orders": "Success", "Orders": orders });
+      } else {
+        return res.status(404).json({ "Orders:": "Not found" });
       }
     } catch (error) {
       return res.status(500).json({ error: error.name + " " + error.message });

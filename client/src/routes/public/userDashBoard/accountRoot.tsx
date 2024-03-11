@@ -6,7 +6,7 @@ import { UserInfoLoader } from "./userInfoLoader";
 import { ChangePassword } from "../../../features/userDashBoard/components/changePassword";
 import { UserOrdersLoader } from "./ordersLoader";
 import { UserOrders } from "../../../features/userDashBoard/components/userOrders";
-import { action as CancelOrderAction } from "./ordersAction";
+import { action as CancelOrderAction } from "./cancelOrderAction";
 export const accountRoute = {
   path: "/account",
   element: <AccountPage />,

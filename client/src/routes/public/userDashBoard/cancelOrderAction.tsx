@@ -1,5 +1,6 @@
 import { CancelOrder } from "../../../features/userDashBoard/services/cancelOrder";
 import { redirect } from "react-router-dom";
+import { queryClient } from "../../../context/queryProvider";
 export const action = async ({ request, params }) => {
   const data = await request.json();
 
@@ -7,6 +8,6 @@ export const action = async ({ request, params }) => {
   if (res != 200) {
     throw new Error("cancel order error");
   }
-
-  return redirect(`/account/orders`);
+  await queryClient.refetchQueries({ queryKey: ["orders"] });
+  return redirect(`/account`);
 };
