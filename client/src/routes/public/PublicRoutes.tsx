@@ -5,6 +5,7 @@ import { loginRoute } from "./login/loginRoot";
 import { signupRoute } from "./signup/signupRoot";
 import { accountRoute } from "./userDashBoard/accountRoot";
 import { adminDashboardRoute } from "../admin/adminDashboard/adminDashboardroot";
+import { searchRoute } from "./search/searchRoot";
 export const publicRoutes = [
   productsRoute,
   product,
@@ -12,4 +13,5 @@ export const publicRoutes = [
   signupRoute,
   accountRoute,
   checkout,
+  searchRoute,
 ];

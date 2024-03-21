@@ -10,7 +10,6 @@ export const ordersQuery = () => ({
 
   queryFn: async () => {
     const orders = await GetAllOrders();
-    console.log(orders);
 
     if (!orders) {
       throw new Response("", {

@@ -6,14 +6,28 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-
+import {
+  Form as RouterForm,
+  useNavigate,
+  createSearchParams,
+  useLocation,
+  useSubmit,
+  useLoaderData,
+} from "react-router-dom";
 import { NavLink, Link } from "react-router-dom";
 import { logout } from "../../../features/authentication/services/logoutServices";
 import Logout from "../../../features/authentication/components/logout/logout";
 import { useUser } from "../../../features/authentication/context/AuthContext";
 export default function Navigation() {
   const authState = useUser();
-
+  const navigate = useNavigate();
+  const location = useLocation();
+  const submit = useSubmit();
+  const params = location.search;
+  //const [query, setQuery] = useState(q);
+  // useEffect(() => {
+  //   setQuery(q);
+  // }, [q]);
   return (
     <header style={{ height: "88px" }}>
       {/* <Navbar expand="lg" className="bg-body-tertiary">
@@ -55,14 +69,33 @@ export default function Navigation() {
               </Navbar.Brand>
             </Nav>
             <Nav style={{ flex: "1 1 50%" }}>
-              <Form className="d-flex w-50">
+              <RouterForm className="d-flex w-50" role="search">
                 <Form.Control
                   type="search"
                   placeholder="Search"
                   className="me-2 w-100"
                   aria-label="Search"
+                  name="q"
+                  // value = {query}
+                  onChange={(e) => {
+                    // const isFirstSearch = q == null;
+                    // submit(e.currentTarget.form, {
+                    //   replace: !isFirstSearch,
+                    // });
+                    console.log("changed search ");
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      //event.preventDefault();
+                      //Navigate to /search/products + search query
+                      navigate({
+                        pathname: "/search/products",
+                        search: `?${createSearchParams(params)}`,
+                      });
+                    }
+                  }}
                 />
-              </Form>
+              </RouterForm>
             </Nav>
 
             <Nav className="">

@@ -14,7 +14,6 @@ module.exports = class DiscountService {
       return response;
     } catch (error) {
       console.log(error);
-      throw error;
     }
   }
 
@@ -75,7 +74,6 @@ module.exports = class DiscountService {
       }
     } catch (error) {
       console.log(error);
-      throw error;
     }
   }
 
