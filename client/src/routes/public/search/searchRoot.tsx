@@ -5,5 +5,5 @@ export const searchRoute = {
   path: "/search/products",
   //element: <ProductsPage />,
   element: <h1>Search Route</h1>,
-  //loader: loader,
+  loader: loader,
 };

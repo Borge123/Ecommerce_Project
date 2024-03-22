@@ -24,10 +24,20 @@ export default function Navigation() {
   const location = useLocation();
   const submit = useSubmit();
   const params = location.search;
+  const q = useLoaderData();
   //const [query, setQuery] = useState(q);
-  // useEffect(() => {
-  //   setQuery(q);
-  // }, [q]);
+  useEffect(() => {
+    document.getElementById("q").value = q;
+  }, [q]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    //Navigate to /search/products + search query
+    navigate({
+      pathname: "/search/products",
+      search: `?${createSearchParams(params)}`,
+    });
+  };
   return (
     <header style={{ height: "88px" }}>
       {/* <Navbar expand="lg" className="bg-body-tertiary">
@@ -69,31 +79,39 @@ export default function Navigation() {
               </Navbar.Brand>
             </Nav>
             <Nav style={{ flex: "1 1 50%" }}>
-              <RouterForm className="d-flex w-50" role="search">
+              <RouterForm
+                className="d-flex w-50"
+                role="search"
+                onSubmit={handleSubmit}
+              >
                 <Form.Control
                   type="search"
                   placeholder="Search"
                   className="me-2 w-100"
+                  id="q"
                   aria-label="Search"
                   name="q"
-                  // value = {query}
+                  defaultValue={q}
                   onChange={(e) => {
-                    // const isFirstSearch = q == null;
-                    // submit(e.currentTarget.form, {
-                    //   replace: !isFirstSearch,
-                    // });
-                    console.log("changed search ");
+                    e.preventDefault();
+                    const isFirstSearch = q == null;
+                    submit(e.currentTarget.form, {
+                      replace: !isFirstSearch,
+                    });
+
+                    console.log(e.currentTarget.form);
                   }}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter") {
-                      //event.preventDefault();
-                      //Navigate to /search/products + search query
-                      navigate({
-                        pathname: "/search/products",
-                        search: `?${createSearchParams(params)}`,
-                      });
-                    }
-                  }}
+
+                  // onKeyDown={(event) => {
+                  //   if (event.key === "Enter") {
+                  //     event.preventDefault();
+                  //     //Navigate to /search/products + search query
+                  //     navigate({
+                  //       pathname: "/search/products",
+                  //       search: `?${createSearchParams(params)}`,
+                  //     });
+                  //   }
+                  // }}
                 />
               </RouterForm>
             </Nav>
