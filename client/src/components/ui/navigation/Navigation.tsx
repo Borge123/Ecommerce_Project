@@ -10,6 +10,7 @@ import {
   Form as RouterForm,
   useNavigate,
   createSearchParams,
+  useSearchParams,
   useLocation,
   useSubmit,
   useLoaderData,
@@ -25,18 +26,23 @@ export default function Navigation() {
   const submit = useSubmit();
   const params = location.search;
   const q = useLoaderData();
-  //const [query, setQuery] = useState(q);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
+
   useEffect(() => {
-    document.getElementById("q").value = q;
-  }, [q]);
+    setSearchParams({ q: searchQuery });
+    //document.getElementById("q").value = q;
+  }, [searchQuery]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     //Navigate to /search/products + search query
-    navigate({
-      pathname: "/search/products",
-      search: `?${createSearchParams(params)}`,
-    });
+    setSearchParams({ q: searchQuery });
+    navigate(`/search/products?q=${encodeURIComponent(searchQuery)}`);
+    // navigate({
+    //   pathname: "/search/products",
+    //   search: `?${createSearchParams(params)}`,
+    // });
   };
   return (
     <header style={{ height: "88px" }}>
@@ -86,20 +92,27 @@ export default function Navigation() {
               >
                 <Form.Control
                   type="search"
-                  placeholder="Search"
+                  placeholder="Search..."
                   className="me-2 w-100"
                   id="q"
                   aria-label="Search"
                   name="q"
-                  defaultValue={q}
+                  value={searchQuery}
+                  // defaultValue={q}
                   onChange={(e) => {
-                    e.preventDefault();
+                    // e.preventDefault();
                     const isFirstSearch = q == null;
-                    submit(e.currentTarget.form, {
-                      replace: !isFirstSearch,
-                    });
+                    setSearchQuery(e.target.value);
+                    // submit(e.currentTarget.form, {
+                    //   replace: !isFirstSearch,
+                    //   action: `/search/products?q=${encodeURIComponent(
+                    //     searchQuery
+                    //   )}`,
+                    // });
 
-                    console.log(e.currentTarget.form);
+                    console.log(q);
+                    console.log(searchQuery);
+                    console.log(isFirstSearch);
                   }}
 
                   // onKeyDown={(event) => {
