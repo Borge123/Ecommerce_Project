@@ -19,6 +19,8 @@ import { NavLink, Link } from "react-router-dom";
 import { logout } from "../../../features/authentication/services/logoutServices";
 import Logout from "../../../features/authentication/components/logout/logout";
 import { useUser } from "../../../features/authentication/context/AuthContext";
+import $ from "jquery";
+
 export default function Navigation() {
   const authState = useUser();
   const navigate = useNavigate();
@@ -30,7 +32,7 @@ export default function Navigation() {
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
 
   useEffect(() => {
-    setSearchParams({ q: searchQuery });
+    //setSearchParams({ q: searchQuery });
     //document.getElementById("q").value = q;
   }, [searchQuery]);
 
@@ -38,7 +40,7 @@ export default function Navigation() {
     event.preventDefault();
     //Navigate to /search/products + search query
     setSearchParams({ q: searchQuery });
-    navigate(`/search/products?q=${encodeURIComponent(searchQuery)}`);
+    navigate(`/search/products/?q=${encodeURIComponent(searchQuery)}`);
     // navigate({
     //   pathname: "/search/products",
     //   search: `?${createSearchParams(params)}`,
@@ -84,51 +86,76 @@ export default function Navigation() {
                 E-Commerce
               </Navbar.Brand>
             </Nav>
-            <Nav style={{ flex: "1 1 50%" }}>
-              <RouterForm
-                className="d-flex w-50"
-                role="search"
-                onSubmit={handleSubmit}
+            <div
+              style={{
+                flex: "1 1 50%",
+              }}
+            >
+              <div
+                style={{
+                  position: "static",
+                  height: "auto",
+                  display: "block",
+                }}
               >
-                <Form.Control
-                  type="search"
-                  placeholder="Search..."
-                  className="me-2 w-100"
-                  id="q"
-                  aria-label="Search"
-                  name="q"
-                  value={searchQuery}
-                  // defaultValue={q}
-                  onChange={(e) => {
-                    // e.preventDefault();
-                    const isFirstSearch = q == null;
-                    setSearchQuery(e.target.value);
-                    // submit(e.currentTarget.form, {
-                    //   replace: !isFirstSearch,
-                    //   action: `/search/products?q=${encodeURIComponent(
-                    //     searchQuery
-                    //   )}`,
-                    // });
+                <RouterForm
+                  className="w-50"
+                  role="search"
+                  onSubmit={handleSubmit}
+                >
+                  <Form.Control
+                    type="search"
+                    placeholder="Search..."
+                    className="me-2 w-100"
+                    id="q"
+                    aria-label="Search"
+                    name="q"
+                    value={searchQuery}
+                    // defaultValue={q}
+                    onChange={(e) => {
+                      // e.preventDefault();
+                      const isFirstSearch = q == null;
+                      setSearchQuery(e.target.value);
 
-                    console.log(q);
-                    console.log(searchQuery);
-                    console.log(isFirstSearch);
-                  }}
+                      // $(".dropdown").addClass("show");
+                      // $(".dropdown-toggle").addClass("show");
+                      $(".dropdown-menu").toggleClass("show");
+                      // submit(e.currentTarget.form, {
+                      //   replace: !isFirstSearch,
+                      //   action: `/search/products?q=${encodeURIComponent(
+                      //     searchQuery
+                      //   )}`,
+                      // });
+                    }}
 
-                  // onKeyDown={(event) => {
-                  //   if (event.key === "Enter") {
-                  //     event.preventDefault();
-                  //     //Navigate to /search/products + search query
-                  //     navigate({
-                  //       pathname: "/search/products",
-                  //       search: `?${createSearchParams(params)}`,
-                  //     });
-                  //   }
-                  // }}
-                />
-              </RouterForm>
-            </Nav>
-
+                    // onKeyDown={(event) => {
+                    //   if (event.key === "Enter") {
+                    //     event.preventDefault();
+                    //     //Navigate to /search/products + search query
+                    //     navigate({
+                    //       pathname: "/search/products",
+                    //       search: `?${createSearchParams(params)}`,
+                    //     });
+                    //   }
+                    // }}
+                  />
+                </RouterForm>
+                <div style={{ position: "relative" }}>
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "0",
+                      left: "0",
+                      right: "0",
+                      zIndex: "100",
+                      transform: `translateY(8px)`,
+                    }}
+                  >
+                    <p>test</p>
+                  </div>
+                </div>
+              </div>
+            </div>
             <Nav className="">
               <Nav.Link
                 as={NavLink}
