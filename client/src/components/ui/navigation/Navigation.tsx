@@ -20,6 +20,8 @@ import { logout } from "../../../features/authentication/services/logoutServices
 import Logout from "../../../features/authentication/components/logout/logout";
 import { useUser } from "../../../features/authentication/context/AuthContext";
 import $ from "jquery";
+import { queryClient } from "../../../context/queryProvider";
+import fetchProducts from "../../../features/products/services/fetchProducts";
 
 export default function Navigation() {
   const authState = useUser();
@@ -30,11 +32,61 @@ export default function Navigation() {
   const q = useLoaderData();
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
+  //use for dynamic filtering of search
+  //need to setup fucntionality to manually load in data if products is empty
+  const productsQuery = () => ({
+    queryKey: ["products"],
+  });
+
+  const [allProducts, setProducts] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([""]);
 
   useEffect(() => {
+    const productsQuery = () => ({
+      queryKey: ["products"],
+
+      queryFn: async () => {
+        const products = await fetchProducts();
+        if (!products) {
+          throw new Response("", {
+            status: 404,
+            statusText: "Not Found",
+          });
+        }
+        console.log(products);
+
+        return products;
+      },
+    });
+
+    const ProductsLoader = async () => {
+      const query = productsQuery();
+
+      // ⬇️ return data or fetch it
+
+      return (
+        queryClient.getQueryData(query.queryKey) ??
+        (await queryClient.fetchQuery(query))
+      );
+    };
+
+    const fetchData = async () => {
+      // get the data from the api
+      const data = await ProductsLoader();
+      // convert the data to json
+
+      // set state with the result
+      setProducts(data);
+    };
+
+    // call the function
+    fetchData()
+      // make sure to catch any error
+      .catch(console.error);
+
     //setSearchParams({ q: searchQuery });
     //document.getElementById("q").value = q;
-  }, [searchQuery]);
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -113,9 +165,26 @@ export default function Navigation() {
                     value={searchQuery}
                     // defaultValue={q}
                     onChange={(e) => {
+                      //console.log(products);
+
                       // e.preventDefault();
                       const isFirstSearch = q == null;
                       setSearchQuery(e.target.value);
+
+                      if (e.target.value === "" || e.target === null) {
+                        $("#dynamic-search").css("opacity", "0");
+                        setFilteredProducts([""]);
+                      } else {
+                        const filtered = allProducts.filter((el) =>
+                          el.name
+                            .toLowerCase()
+                            .includes(e.target.value.toLowerCase())
+                        );
+                        console.log(filtered);
+                        setFilteredProducts(filtered);
+                        // filter product search result
+                        $("#dynamic-search").css("opacity", "1");
+                      }
 
                       // $(".dropdown").addClass("show");
                       // $(".dropdown-toggle").addClass("show");
@@ -142,6 +211,7 @@ export default function Navigation() {
                 </RouterForm>
                 <div style={{ position: "relative" }}>
                   <div
+                    id="dynamic-search"
                     style={{
                       position: "absolute",
                       top: "0",
@@ -149,9 +219,37 @@ export default function Navigation() {
                       right: "0",
                       zIndex: "100",
                       transform: `translateY(8px)`,
+                      opacity: "0",
                     }}
                   >
-                    <p>test</p>
+                    <div style={{ maxHeight: "80vh", overflowY: "scroll" }}>
+                      {/* {filteredProducts != ""  ? } */}
+                      {searchQuery != "" && filteredProducts[0] === "" ? (
+                        <p>No results</p>
+                      ) : (
+                        // <ul>
+                        // filteredProducts.map((el) => {
+
+                        //       <li key={el._id}>
+                        //         <div>
+                        //           <p>{el.name}</p>
+                        //         </div>
+                        //       </li>
+
+                        // })
+                        // </ul>
+
+                        <ul>
+                          {filteredProducts.map((el) => (
+                            // Setting "index" as key because name and age can be repeated, It will be better if you assign uniqe id as key
+                            <li key={el._id}>
+                              <span>name: {el.name}</span>{" "}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                      {/* <p>test</p> */}
+                    </div>
                   </div>
                 </div>
               </div>
