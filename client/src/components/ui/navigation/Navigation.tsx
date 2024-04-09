@@ -39,7 +39,7 @@ export default function Navigation() {
   });
 
   const [allProducts, setProducts] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState([""]);
+  const [filteredProducts, setFilteredProducts] = useState("");
 
   useEffect(() => {
     const productsQuery = () => ({
@@ -53,7 +53,6 @@ export default function Navigation() {
             statusText: "Not Found",
           });
         }
-        console.log(products);
 
         return products;
       },
@@ -173,14 +172,14 @@ export default function Navigation() {
 
                       if (e.target.value === "" || e.target === null) {
                         $("#dynamic-search").css("opacity", "0");
-                        setFilteredProducts([""]);
+                        setFilteredProducts("");
                       } else {
                         const filtered = allProducts.filter((el) =>
                           el.name
                             .toLowerCase()
                             .includes(e.target.value.toLowerCase())
                         );
-                        console.log(filtered);
+
                         setFilteredProducts(filtered);
                         // filter product search result
                         $("#dynamic-search").css("opacity", "1");
@@ -224,7 +223,7 @@ export default function Navigation() {
                   >
                     <div style={{ maxHeight: "80vh", overflowY: "scroll" }}>
                       {/* {filteredProducts != ""  ? } */}
-                      {searchQuery != "" && filteredProducts[0] === "" ? (
+                      {searchQuery != "" && filteredProducts === "" ? (
                         <p>No results</p>
                       ) : (
                         // <ul>
@@ -240,12 +239,15 @@ export default function Navigation() {
                         // </ul>
 
                         <ul>
-                          {filteredProducts.map((el) => (
-                            // Setting "index" as key because name and age can be repeated, It will be better if you assign uniqe id as key
-                            <li key={el._id}>
-                              <span>name: {el.name}</span>{" "}
-                            </li>
-                          ))}
+                          {filteredProducts.length > 0
+                            ? filteredProducts?.map((el) => {
+                                return (
+                                  <li key={el._id}>
+                                    <span>name: {el.name}</span>{" "}
+                                  </li>
+                                );
+                              })
+                            : ""}
                         </ul>
                       )}
                       {/* <p>test</p> */}
