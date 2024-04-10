@@ -238,17 +238,24 @@ export default function Navigation() {
                         // })
                         // </ul>
 
-                        <ul>
+                        <div>
                           {filteredProducts.length > 0
                             ? filteredProducts?.map((el) => {
                                 return (
-                                  <li key={el._id}>
-                                    <span>name: {el.name}</span>{" "}
-                                  </li>
+                                  <div key={el._id}>
+                                    {/* TODO: Create links that link to the given product */}
+
+                                    <Link
+                                      to={`/products/${el._id}`}
+                                      style={{ textDecoration: "none" }}
+                                    >
+                                      <span> {el.name}</span>{" "}
+                                    </Link>
+                                  </div>
                                 );
                               })
                             : ""}
-                        </ul>
+                        </div>
                       )}
                       {/* <p>test</p> */}
                     </div>

@@ -36,7 +36,7 @@ export const ProductLoader =
     // ⬇️ return data or fetch it
 
     return (
-      //queryClient.getQueryData(query.queryKey) ??
-      await queryClient.fetchQuery(query)
+      queryClient.getQueryData(query.queryKey) ??
+      (await queryClient.fetchQuery(query))
     );
   };

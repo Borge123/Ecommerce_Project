@@ -11,11 +11,10 @@ export async function GetProduct(id) {
     (await queryClient.getQueryData(["products"])) ?? (await fetchProducts());
   //console.log(products);
   //const products = await queryClient.getQueryData(["products"]);
+  let product;
   if (products) {
-    const product = products.find((product) => product._id === id);
+    product = products.find((product) => product._id === id);
     //console.log(product);
-
-    return product ?? null;
   }
-  return;
+  return product ?? null;
 }
