@@ -22,7 +22,7 @@ import { useUser } from "../../../features/authentication/context/AuthContext";
 import $ from "jquery";
 import { queryClient } from "../../../context/queryProvider";
 import fetchProducts from "../../../features/products/services/fetchProducts";
-
+import { createImageSrc } from "../../../features/products/helpers/createImageSrc";
 export default function Navigation() {
   const authState = useUser();
   const navigate = useNavigate();
@@ -98,7 +98,15 @@ export default function Navigation() {
     // });
   };
   return (
-    <header style={{ height: "88px" }}>
+    <header
+      style={{
+        height: "88px",
+        position: "sticky",
+        top: "0",
+        isolation: "isolate",
+        zIndex: "2",
+      }}
+    >
       {/* <Navbar expand="lg" className="bg-body-tertiary">
         <Container className="">
           <Nav className="">
@@ -123,12 +131,13 @@ export default function Navigation() {
         </Container>
       </Navbar> */}
       <Navbar
+        sticky="top"
         collapseOnSelect
         expand="lg"
         className="bg-body-tertiary pb-4"
         data-bs-theme="auto"
       >
-        <Container>
+        <Container fluid>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
           <Navbar.Collapse id="responsive-navbar-nav">
@@ -147,6 +156,8 @@ export default function Navigation() {
                   position: "static",
                   height: "auto",
                   display: "block",
+                  minWidth: "340px",
+                  maxWidth: "560px",
                 }}
               >
                 <RouterForm
@@ -208,7 +219,11 @@ export default function Navigation() {
                     // }}
                   />
                 </RouterForm>
-                <div style={{ position: "relative" }}>
+                <div
+                  style={{
+                    position: "relative",
+                  }}
+                >
                   <div
                     id="dynamic-search"
                     style={{
@@ -217,6 +232,7 @@ export default function Navigation() {
                       left: "0",
                       right: "0",
                       zIndex: "100",
+                      backgroundColor: "white",
                       transform: `translateY(8px)`,
                       opacity: "0",
                     }}
@@ -243,14 +259,122 @@ export default function Navigation() {
                             ? filteredProducts?.map((el) => {
                                 return (
                                   <div key={el._id}>
-                                    {/* TODO: Create links that link to the given product */}
-
                                     <Link
                                       to={`/products/${el._id}`}
                                       style={{ textDecoration: "none" }}
                                     >
-                                      <span> {el.name}</span>{" "}
+                                      <div style={{ display: "flex" }}>
+                                        {/* inner container2 */}
+                                        <div>
+                                          {/* Image section */}
+                                          <img
+                                            src={createImageSrc(el.img_url)}
+                                            alt=""
+                                            width="84"
+                                            height="84"
+                                          />
+                                        </div>
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            color: " black",
+                                            flexGrow: "1",
+                                          }}
+                                        >
+                                          {/* name, price, info */}
+                                          <div style={{ display: "block" }}>
+                                            <div
+                                              style={{
+                                                display: "flex",
+                                                flexDirection: "column",
+                                              }}
+                                            >
+                                              {" "}
+                                              <span
+                                                style={{ fontWeight: "700" }}
+                                              >
+                                                {el.name}
+                                              </span>
+                                            </div>
+                                          </div>
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              flexDirection: "row",
+                                            }}
+                                          >
+                                            {" "}
+                                            <span style={{ fontWeight: "700" }}>
+                                              {el.description}
+                                            </span>
+                                          </div>
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              justifyContent: "space-between",
+                                              alignItems: "center",
+                                            }}
+                                          >
+                                            <div>
+                                              {/* price */}
+                                              <div
+                                                style={{
+                                                  alignItems: "center",
+                                                  flexDirection: "row",
+                                                }}
+                                              >
+                                                <span
+                                                  style={{ fontWeight: "700" }}
+                                                >
+                                                  kr {el.skus[0].price}
+                                                </span>
+                                              </div>
+                                            </div>
+                                            <div>
+                                              {/* add icon */}
+                                              <div
+                                                style={{
+                                                  position: "relative",
+                                                  zIndex: "1",
+                                                }}
+                                              >
+                                                <div
+                                                  style={{
+                                                    display: "inline-flex",
+                                                    paddingRight: "5px",
+                                                  }}
+                                                >
+                                                  {" "}
+                                                  <button
+                                                    style={{
+                                                      position: "relative",
+                                                      display: "inline-flex",
+                                                      justifyContent: "center",
+                                                      alignItems: "center",
+                                                    }}
+                                                  >
+                                                    {" "}
+                                                    <span>
+                                                      {/* Add icon here */}
+                                                      button
+                                                    </span>
+                                                  </button>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div>{/* add to cart button */}</div>
+                                      </div>
                                     </Link>
+                                    <hr
+                                      style={{
+                                        height: "1px",
+                                        width: "100%",
+                                        borderTop: "1px solid",
+                                      }}
+                                    />
                                   </div>
                                 );
                               })
