@@ -23,6 +23,7 @@ import $ from "jquery";
 import { queryClient } from "../../../context/queryProvider";
 import fetchProducts from "../../../features/products/services/fetchProducts";
 import { createImageSrc } from "../../../features/products/helpers/createImageSrc";
+
 export default function Navigation() {
   const authState = useUser();
   const navigate = useNavigate();
@@ -157,7 +158,7 @@ export default function Navigation() {
                   height: "auto",
                   display: "block",
                   minWidth: "340px",
-                  maxWidth: "560px",
+                  maxWidth: "480px",
                 }}
               >
                 <RouterForm
@@ -331,8 +332,7 @@ export default function Navigation() {
                                                 </span>
                                               </div>
                                             </div>
-                                            <div>
-                                              {/* add icon */}
+                                            {/* <div>
                                               <div
                                                 style={{
                                                   position: "relative",
@@ -346,7 +346,7 @@ export default function Navigation() {
                                                   }}
                                                 >
                                                   {" "}
-                                                  <button
+                                                  <Button
                                                     style={{
                                                       position: "relative",
                                                       display: "inline-flex",
@@ -355,14 +355,11 @@ export default function Navigation() {
                                                     }}
                                                   >
                                                     {" "}
-                                                    <span>
-                                                      {/* Add icon here */}
-                                                      button
-                                                    </span>
-                                                  </button>
+                                                    <span>Add to cart</span>
+                                                  </Button>
                                                 </div>
                                               </div>
-                                            </div>
+                                            </div> */}
                                           </div>
                                         </div>
                                         <div>{/* add to cart button */}</div>

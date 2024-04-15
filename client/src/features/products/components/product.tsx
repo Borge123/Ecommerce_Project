@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { useCartDispatch, useCart } from "../../cart/context/cart";
 import "../../cart/styles/cart.css";
-
 import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 //const productImages = import.meta.glob("../assets/images/*");
