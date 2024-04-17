@@ -23,7 +23,7 @@ import $ from "jquery";
 import { queryClient } from "../../../context/queryProvider";
 import fetchProducts from "../../../features/products/services/fetchProducts";
 import { createImageSrc } from "../../../features/products/helpers/createImageSrc";
-
+import { HiMiniXMark } from "react-icons/hi2";
 export default function Navigation() {
   const authState = useUser();
   const navigate = useNavigate();
@@ -86,7 +86,7 @@ export default function Navigation() {
 
     //setSearchParams({ q: searchQuery });
     //document.getElementById("q").value = q;
-  }, []);
+  }, [searchQuery]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -166,59 +166,79 @@ export default function Navigation() {
                   role="search"
                   onSubmit={handleSubmit}
                 >
-                  <Form.Control
-                    type="search"
-                    placeholder="Search..."
-                    className="me-2 w-100"
-                    id="q"
-                    aria-label="Search"
-                    name="q"
-                    value={searchQuery}
-                    // defaultValue={q}
-                    onChange={(e) => {
-                      //console.log(products);
-
-                      // e.preventDefault();
-                      const isFirstSearch = q == null;
-                      setSearchQuery(e.target.value);
-
-                      if (e.target.value === "" || e.target === null) {
-                        $("#dynamic-search").css("opacity", "0");
-                        setFilteredProducts("");
-                      } else {
-                        const filtered = allProducts.filter((el) =>
-                          el.name
-                            .toLowerCase()
-                            .includes(e.target.value.toLowerCase())
-                        );
-
-                        setFilteredProducts(filtered);
-                        // filter product search result
-                        $("#dynamic-search").css("opacity", "1");
-                      }
-
-                      // $(".dropdown").addClass("show");
-                      // $(".dropdown-toggle").addClass("show");
-                      $(".dropdown-menu").toggleClass("show");
-                      // submit(e.currentTarget.form, {
-                      //   replace: !isFirstSearch,
-                      //   action: `/search/products?q=${encodeURIComponent(
-                      //     searchQuery
-                      //   )}`,
-                      // });
+                  <div
+                    style={{
+                      display: "flex",
+                      border: "2px solid black",
+                      borderRadius: "4px",
+                      height: "40px",
+                      alignItems: "center",
+                      padding: "4px",
                     }}
+                  >
+                    <input
+                      type="search"
+                      placeholder="Search..."
+                      className="me-2 w-100"
+                      id="q"
+                      aria-label="Search"
+                      name="q"
+                      value={searchQuery}
+                      style={{ border: "none", outline: "none" }}
+                      // defaultValue={q}
+                      onChange={(e) => {
+                        //console.log(products);
 
-                    // onKeyDown={(event) => {
-                    //   if (event.key === "Enter") {
-                    //     event.preventDefault();
-                    //     //Navigate to /search/products + search query
-                    //     navigate({
-                    //       pathname: "/search/products",
-                    //       search: `?${createSearchParams(params)}`,
-                    //     });
-                    //   }
-                    // }}
-                  />
+                        // e.preventDefault();
+                        const isFirstSearch = q == null;
+                        setSearchQuery(e.target.value);
+
+                        if (e.target.value === "" || e.target === null) {
+                          $("#dynamic-search").css("opacity", "0");
+                          setFilteredProducts("");
+                        } else {
+                          const filtered = allProducts.filter((el) =>
+                            el.name
+                              .toLowerCase()
+                              .includes(e.target.value.toLowerCase())
+                          );
+
+                          setFilteredProducts(filtered);
+                          // filter product search result
+                          $("#dynamic-search").css("opacity", "1");
+                        }
+
+                        // $(".dropdown").addClass("show");
+                        // $(".dropdown-toggle").addClass("show");
+                        $(".dropdown-menu").toggleClass("show");
+                        // submit(e.currentTarget.form, {
+                        //   replace: !isFirstSearch,
+                        //   action: `/search/products?q=${encodeURIComponent(
+                        //     searchQuery
+                        //   )}`,
+                        // });
+                      }}
+
+                      // onKeyDown={(event) => {
+                      //   if (event.key === "Enter") {
+                      //     event.preventDefault();
+                      //     //Navigate to /search/products + search query
+                      //     navigate({
+                      //       pathname: "/search/products",
+                      //       search: `?${createSearchParams(params)}`,
+                      //     });
+                      //   }
+                      // }}
+                    />
+                    <a
+                      onClick={() => {
+                        $("#q").val("");
+                        setSearchQuery("");
+                      }}
+                    >
+                      <HiMiniXMark />
+                    </a>
+                  </div>
                 </RouterForm>
                 <div
                   style={{
@@ -240,99 +260,85 @@ export default function Navigation() {
                   >
                     <div style={{ maxHeight: "80vh", overflowY: "scroll" }}>
                       {/* {filteredProducts != ""  ? } */}
-                      {searchQuery != "" && filteredProducts === "" ? (
-                        <p>No results</p>
+                      {searchQuery === "" || filteredProducts === "" ? (
+                        ""
                       ) : (
-                        // <ul>
-                        // filteredProducts.map((el) => {
-
-                        //       <li key={el._id}>
-                        //         <div>
-                        //           <p>{el.name}</p>
-                        //         </div>
-                        //       </li>
-
-                        // })
-                        // </ul>
-
                         <div>
-                          {filteredProducts.length > 0
-                            ? filteredProducts?.map((el) => {
-                                return (
-                                  <div key={el._id}>
-                                    <Link
-                                      to={`/products/${el._id}`}
-                                      style={{ textDecoration: "none" }}
-                                    >
-                                      <div style={{ display: "flex" }}>
-                                        {/* inner container2 */}
-                                        <div>
-                                          {/* Image section */}
-                                          <img
-                                            src={createImageSrc(el.img_url)}
-                                            alt=""
-                                            width="84"
-                                            height="84"
-                                          />
-                                        </div>
-                                        <div
-                                          style={{
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            color: " black",
-                                            flexGrow: "1",
-                                          }}
-                                        >
-                                          {/* name, price, info */}
-                                          <div style={{ display: "block" }}>
-                                            <div
-                                              style={{
-                                                display: "flex",
-                                                flexDirection: "column",
-                                              }}
-                                            >
-                                              {" "}
-                                              <span
-                                                style={{ fontWeight: "700" }}
-                                              >
-                                                {el.name}
-                                              </span>
-                                            </div>
-                                          </div>
+                          {filteredProducts.length > 0 ? (
+                            filteredProducts?.map((el) => {
+                              return (
+                                <div key={el._id}>
+                                  <Link
+                                    to={`/products/${el._id}`}
+                                    style={{ textDecoration: "none" }}
+                                  >
+                                    <div style={{ display: "flex" }}>
+                                      {/* inner container2 */}
+                                      <div>
+                                        {/* Image section */}
+                                        <img
+                                          src={createImageSrc(el.img_url)}
+                                          alt=""
+                                          width="84"
+                                          height="84"
+                                        />
+                                      </div>
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "column",
+                                          color: " black",
+                                          flexGrow: "1",
+                                        }}
+                                      >
+                                        {/* name, price, info */}
+                                        <div style={{ display: "block" }}>
                                           <div
                                             style={{
                                               display: "flex",
-                                              flexDirection: "row",
+                                              flexDirection: "column",
                                             }}
                                           >
                                             {" "}
                                             <span style={{ fontWeight: "700" }}>
-                                              {el.description}
+                                              {el.name}
                                             </span>
                                           </div>
-                                          <div
-                                            style={{
-                                              display: "flex",
-                                              justifyContent: "space-between",
-                                              alignItems: "center",
-                                            }}
-                                          >
-                                            <div>
-                                              {/* price */}
-                                              <div
-                                                style={{
-                                                  alignItems: "center",
-                                                  flexDirection: "row",
-                                                }}
+                                        </div>
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                          }}
+                                        >
+                                          {" "}
+                                          <span style={{ fontWeight: "700" }}>
+                                            {el.description}
+                                          </span>
+                                        </div>
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                          }}
+                                        >
+                                          <div>
+                                            {/* price */}
+                                            <div
+                                              style={{
+                                                alignItems: "center",
+                                                flexDirection: "row",
+                                              }}
+                                            >
+                                              <span
+                                                style={{ fontWeight: "700" }}
                                               >
-                                                <span
-                                                  style={{ fontWeight: "700" }}
-                                                >
-                                                  kr {el.skus[0].price}
-                                                </span>
-                                              </div>
+                                                kr {el.skus[0].price}
+                                              </span>
                                             </div>
-                                            {/* <div>
+                                          </div>
+                                          {/* <div>
                                               <div
                                                 style={{
                                                   position: "relative",
@@ -360,22 +366,24 @@ export default function Navigation() {
                                                 </div>
                                               </div>
                                             </div> */}
-                                          </div>
                                         </div>
-                                        <div>{/* add to cart button */}</div>
                                       </div>
-                                    </Link>
-                                    <hr
-                                      style={{
-                                        height: "1px",
-                                        width: "100%",
-                                        borderTop: "1px solid",
-                                      }}
-                                    />
-                                  </div>
-                                );
-                              })
-                            : ""}
+                                      <div>{/* add to cart button */}</div>
+                                    </div>
+                                  </Link>
+                                  <hr
+                                    style={{
+                                      height: "1px",
+                                      width: "100%",
+                                      borderTop: "1px solid",
+                                    }}
+                                  />
+                                </div>
+                              );
+                            })
+                          ) : (
+                            <p>No results</p>
+                          )}
                         </div>
                       )}
                       {/* <p>test</p> */}

@@ -221,7 +221,7 @@ export function Cart() {
         className="topmenu__button menu-button menu-button--primary hidden-desktop"
         title="Ãpne menyen"
       >
-        <span className="visuallyhidden">Ã…pne eller lukke hovedmenyen</span>
+        {/* <span className="visuallyhidden">Ã…pne eller lukke hovedmenyen</span> */}
 
         <svg
           width="20"
