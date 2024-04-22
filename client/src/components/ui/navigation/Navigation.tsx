@@ -161,16 +161,12 @@ export default function Navigation() {
                   maxWidth: "480px",
                 }}
               >
-                <RouterForm
-                  className="w-50"
-                  role="search"
-                  onSubmit={handleSubmit}
-                >
+                <RouterForm className="" role="search" onSubmit={handleSubmit}>
                   <div
                     style={{
                       display: "flex",
                       border: "2px solid black",
-                      borderRadius: "4px",
+                      borderRadius: "6px",
                       height: "40px",
                       alignItems: "center",
                       padding: "4px",

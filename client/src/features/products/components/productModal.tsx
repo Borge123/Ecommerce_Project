@@ -92,6 +92,11 @@ export default function ProductModal(props) {
                       description: product.description,
                       price: currentSku.price,
                       sku: currentSku.sku,
+                      options: {
+                        size: currentSku.options.size,
+                        color: currentSku.options.color,
+                        src: currentSku.options.img_url,
+                      },
                     },
                   });
                 }}
