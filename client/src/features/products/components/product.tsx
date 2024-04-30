@@ -28,13 +28,16 @@ export default function Product({ product, onShow }) {
   return (
     <Card>
       <Link to={`/products/${product._id}`}>
-        <Card.Img
-          onClick={onShow}
-          variant="top"
-          src={createImageSrc(product.img_url)}
-          alt={product.img_url}
-          loading="lazy"
-        />
+        <div style={{}}>
+          <Card.Img
+            onClick={onShow}
+            variant="top"
+            src={createImageSrc(product.img_url)}
+            alt={product.img_url}
+            loading="lazy"
+            style={{ minHeight: `100%`, minWidth: `100%` }}
+          />
+        </div>
       </Link>
       <Card.Body>
         <Card.Title>{product.name}</Card.Title>

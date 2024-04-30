@@ -3,8 +3,6 @@ import { createImageSrc } from "../../products/helpers/createImageSrc";
 import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 export function CartItem({ cartItem, onShow, dispatch }) {
-  console.log(cartItem);
-
   return (
     <li className="ws-cart-items__item">
       <div className="ws-product">

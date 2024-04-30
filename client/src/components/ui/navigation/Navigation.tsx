@@ -165,8 +165,9 @@ export default function Navigation() {
                   <div
                     style={{
                       display: "flex",
-                      border: "2px solid black",
-                      borderRadius: "6px",
+                      borderColor: "#0000002d",
+                      borderStyle: "solid",
+                      borderRadius: "4px",
                       height: "40px",
                       alignItems: "center",
                       padding: "4px",
@@ -181,11 +182,7 @@ export default function Navigation() {
                       name="q"
                       value={searchQuery}
                       style={{ border: "none", outline: "none" }}
-                      // defaultValue={q}
                       onChange={(e) => {
-                        //console.log(products);
-
-                        // e.preventDefault();
                         const isFirstSearch = q == null;
                         setSearchQuery(e.target.value);
 

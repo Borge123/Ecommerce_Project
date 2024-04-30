@@ -17,7 +17,6 @@ export default function ProductModal(props) {
   const cart = useCart();
   const [sku, setSku] = useState(product.skus[0].options.color);
   let currentSku = product.skus.find((el) => el.options.color === sku);
-  console.log("sku is " + "" + sku);
 
   // Looks like a modal is rendered for all products but only the one opened recevies data which causes the bugs
   //console.log(product?.skus[0].options.color);
@@ -28,8 +27,6 @@ export default function ProductModal(props) {
   //console.log(product);
 
   useEffect(() => {
-    console.log("effect called");
-
     setSku(product.skus[0].options.color);
     //currentSku = product.skus.find((el) => el.options.color === sku);
   }, [product]);
