@@ -9,12 +9,6 @@ import { useCartDispatch, useCart } from "../../cart/context/cart";
 import "../../cart/styles/cart.css";
 import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
-//const productImages = import.meta.glob("../assets/images/*");
-// function findImage(images, imageName) {
-//   const endIndex = imageName.indexOf("laptop1.jpg");
-//   const image = images.find((el) => el === imageName);
-//   return image;
-// }
 
 export default function Product({ product, onShow }) {
   //TODO: access sku data based on what sku is at
